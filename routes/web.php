@@ -15,7 +15,7 @@ Route::get('/', function () {
 	return view('welcome');
 });
 
-Auth::routes();
+// Auth::routes();
 
 Route::resource('/home', 'HomeController');
 Route::resource('/teacher', 'TeacherController');
