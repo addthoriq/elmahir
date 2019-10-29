@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 // Auth::routes();
 
+Route::get('/user/dbtb', 'UserController@dbTables')->name('user.dbtb');
+
 Route::resource('/home', 'HomeController');
 Route::resource('/teacher', 'TeacherController');
 Route::resource('/student', 'StudentController');
@@ -25,3 +27,4 @@ Route::resource('/class', 'ClassController');
 Route::resource('/section', 'SectionController');
 Route::resource('/task', 'TaskController');
 Route::resource('/user', 'UserController');
+Route::put('/user/{id}/avatar', 'UserController@updateAva')->name('user.ava');

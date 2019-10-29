@@ -41,5 +41,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at'    => now(),
             ],
         ];
+        DB::table('users')->truncate();
+        DB::table('users')->insert($data);
     }
 }

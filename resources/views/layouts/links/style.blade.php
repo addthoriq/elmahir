@@ -10,3 +10,6 @@
 <link href="{{ asset('inspinia/css/animate.css') }}" rel="stylesheet">
 <link href="{{ asset('inspinia/css/style.css') }}" rel="stylesheet">
 <link href="{{ asset('inspinia/css/plugins/dataTables/datatables.min.css') }}" rel="stylesheet">
+
+<link href="{{asset('inspinia/css/animate.css')}}" rel="stylesheet">
+<link href="{{asset('inspinia/css/style.css')}}" rel="stylesheet">

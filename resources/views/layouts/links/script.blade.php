@@ -41,14 +41,3 @@
 
 <!-- Toastr -->
 <script src="{{ asset('inspinia/js/plugins/toastr/toastr.min.js') }}"></script>
-
-<!-- Page-Level Scripts -->
-<script>
-    $(document).ready(function(){
-        $('.dataTables-example').DataTable({
-            pageLength: 10,
-            responsive: true
-        });
-
-    });
-</script>

@@ -29,58 +29,66 @@
             </div>
             <div class="ibox-content">
                 <div class="mb-3 mt-0">
-                <button class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</button>
-                <button class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Import</button>
-                <button class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</button>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-striped table-hover dataTables-example" style="border-spacing:0px;">
-                    <thead>
-                        <tr>
-                            <th style="width: 20px;">#</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Ahmad Nasyith</td>
-                            <td>ahmadnasyith@gmail.com</td>
-                            <td><span class="label label-warning">Administrator</span></td>
-                            <td>
-                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i> Detail</button>
-                                <button class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Edit</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Susi Susanti</td>
-                            <td>susisusanti@gmail.com</td>
-                            <td><span class="label label-primary">Guru</span></td>
-                            <td>
-                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i> Detail</button>
-                                <button class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Edit</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Budi Doremi</td>
-                            <td>budidoremi@gmail.com</td>
-                            <td><span class="label label-info">Siswa</span></td>
-                            <td>
-                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i> Detail</button>
-                                <button class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Edit</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    <a href="{{route('user.create')}}" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
+                    <a href="#" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Export</a>
+                    <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</a>
+                </div>
+                @if (session('status'))
+                    <div class="alert alert-success alert-dismissable">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        {{session('status')}}
+                    </div>
+                @endif
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover dataTables-example" style="border-spacing:0px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 20px;">No</th>
+                                <th>Sebagai</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
     </div>
 </div>
+@endsection
+@section('script')
+    <script type="text/javascript">
+        var table;
+        $(function() {
+            table = $('.dataTables-example').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{$ajax}}',
+                order: [[0,'asc']],
+                columns: [
+                    { data: 'id', searchable: true, orderable: true},
+                    { data: 'role_id', searchable: true, orderable: true},
+                    { data: 'name', searchable: true, orderable: true},
+                    { data: 'email', searchable: true, orderable: true},
+                    { data: 'status', searchable: true, orderable: false},
+                    { data: 'action', searchable: false, orderable: false}
+                ],
+                columnDefs: [{
+                  "targets": 0,
+                  "searchable": false,
+                  "orderable": false,
+                  "data": null,
+                  "title": 'No',
+                  "render": function (data, type, full, meta) {
+                      return meta.settings._iDisplayStart + meta.row + 1;
+                  }
+                }],
+            });
+        });
+    </script>
 @endsection

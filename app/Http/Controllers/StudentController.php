@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\Student;
 
 class StudentController extends Controller
 {
+    protected $folder     = 'pages.students';
+    protected $rdr        = 'pages/students';
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +27,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        return view($this->folder.'.create');
     }
 
     /**
@@ -34,7 +38,14 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data     = new Student;
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->password = $request->password;
+        $data->status = 1;
+        $data->save();
+
+        return redirect($this->rdr)->with('status', 'Data berhasil ditambahkan!');
     }
 
     /**
@@ -56,7 +67,8 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Student::findOrFals($id);
+        return view($this->folder.'.edit', compact('data'));
     }
 
     /**
