@@ -4,7 +4,6 @@
 
 @section('style')
     <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
 @endsection
@@ -56,10 +55,10 @@
                     </div>
 
                     <div class="ibox-content">
-                        @if (session('status'))
+                        @if (session('notif'))
                             <div class="alert alert-success alert-dismissable">
                                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                {{session('status')}}
+                                {{session('notif')}}
                             </div>
                         @endif
                         <div class="text-center">
@@ -74,7 +73,7 @@
                             <div class="m-b-sm">
                                 @if($data->role_id === 1)
                                     <span class='label label-warning'>Admin</span>
-                                @elseif($data->role_id === 2)
+                                @elseif ($data->role_id === 2)
                                     <span class='label label-primary'>Operator 1</span>
                                 @else
                                     <span class='label label-success'>Operator 2</span>
@@ -130,92 +129,12 @@
 @endsection
 
 @section('script')
-    <!-- Steps -->
-    <script src="{{asset('inspinia/js/plugins/steps/jquery.steps.min.js')}}"></script>
-    <!-- Jquery Validate -->
-    <script src="{{asset('inspinia/js/plugins/validate/jquery.validate.min.js')}}"></script>
     <!-- Jasny -->
     <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
     <!-- iCheck -->
     <script src="{{asset('inspinia/js/plugins/iCheck/icheck.min.js')}}"></script>
     <script>
         $(document).ready(function(){
-            $("#wizard").steps();
-            $("#form").steps({
-                bodyTag: "fieldset",
-                onStepChanging: function (event, currentIndex, newIndex)
-                {
-                    // Always allow going backward even if the current step contains invalid fields!
-                    if (currentIndex > newIndex)
-                    {
-                        return true;
-                    }
-
-                    // Forbid suppressing "Warning" step if the user is to young
-                    if (newIndex === 3 && Number($("#age").val()) < 18)
-                    {
-                        return false;
-                    }
-
-                    var form = $(this);
-
-                    // Clean up if user went backward before
-                    if (currentIndex < newIndex)
-                    {
-                        // To remove error styles
-                        $(".body:eq(" + newIndex + ") label.error", form).remove();
-                        $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
-                    }
-
-                    // Disable validation on fields that are disabled or hidden.
-                    form.validate().settings.ignore = ":disabled,:hidden";
-
-                    // Start validation; Prevent going forward if false
-                    return form.valid();
-                },
-                onStepChanged: function (event, currentIndex, priorIndex)
-                {
-                    // Suppress (skip) "Warning" step if the user is old enough.
-                    if (currentIndex === 2 && Number($("#age").val()) >= 18)
-                    {
-                        $(this).steps("next");
-                    }
-
-                    // // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
-                    // if (currentIndex === 2 && priorIndex === 3)
-                    // {
-                    //     $(this).steps("previous");
-                    // }
-                },
-                onFinishing: function (event, currentIndex)
-                {
-                    var form = $(this);
-
-                    // Disable validation on fields that are disabled.
-                    // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
-                    form.validate().settings.ignore = ":disabled";
-
-                    // Start validation; Prevent form submission if false
-                    return form.valid();
-                },
-                onFinished: function (event, currentIndex)
-                {
-                    var form = $(this);
-
-                    // Submit form input
-                    form.submit();
-                }
-            }).validate({
-                errorPlacement: function (error, element)
-                {
-                    element.before(error);
-                },
-                rules: {
-                    confirm: {
-                        equalTo: "#password"
-                    }
-                }
-            });
             $('.i-checks').iCheck({
                 radioClass: 'iradio_square-green',
             });

@@ -5,6 +5,8 @@
 @section('style')
     <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
+    <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -24,9 +26,6 @@
                 </li>
             </ol>
         </div>
-        <div class="col-lg-2">
-
-        </div>
     </div>
 
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -35,96 +34,120 @@
                 <div class="ibox">
                     <div class="ibox-title">
                         <h5>Tambah Data Siswa</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#" class="dropdown-item">Config option 1</a>
-                                </li>
-                                <li><a href="#" class="dropdown-item">Config option 2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
                     </div>
                     <div class="ibox-content">
                         <h2>
-                            Validation Wizard Form
+                            Data Siswa
                         </h2>
                         <p>
-                            This example show how to use Steps with jQuery Validation plugin.
+                            Data Siswa ini berfungsi sebagai pengurus dan pengelola e-learning ini
                         </p>
 
-                        <form id="form" action="#" class="wizard-big">
-                            <h1>Account</h1>
+                        <form id="form" action="{{route('student.store')}}" class="wizard-big" method="post" enctype="multipart/form-data">
+                            @csrf
+
+                            <h1>Akun</h1>
                             <fieldset>
-                                <h2>Account Information</h2>
+                                <h2>Informasi Akun</h2>
                                 <div class="row">
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Siswaname *</label>
-                                            <input id="userName" name="userName" type="text" class="form-control required">
+                                            <label>NISN *</label>
+                                            <input id="nisn" name="nisn" type="number" class="form-control ">
                                         </div>
                                         <div class="form-group">
-                                            <label>Password *</label>
-                                            <input id="password" name="password" type="text" class="form-control required">
+                                            <label>Nama *</label>
+                                            <input id="name" name="name" type="text" class="form-control ">
                                         </div>
                                         <div class="form-group">
-                                            <label>Confirm Password *</label>
-                                            <input id="confirm" name="confirm" type="text" class="form-control required">
+                                            <label for="email">Email *</label>
+                                            <input id="email" name="email" type="text" class="form-control ">
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="text-center">
-                                            <div style="margin-top: 20px">
-                                                <i class="fa fa-sign-in" style="font-size: 180px;color: #e5e5e5 "></i>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="password1">Password *</label>
+                                            <input id="password1" type="password" class="form-control ">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Konfirmasi Password *</label>
+                                            <input id="password" name="password" type="password" class="form-control ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <h1>Profil</h1>
+                            <fieldset>
+                                <h2>Informasi Profil</h2>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Tahun Masuk *</label>
+                                            <input id="start_year" name="start_year" type="number" class="form-control ">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Kelas *</label>
+                                            <select class="form-control m-b" name="class_id">
+                                                <option>-- Pilih Kelas --</option>
+                                                @foreach ($classes as $class)
+                                                    <option value="{{$class->id}}">{{$class->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Tahun Ajaran *</label>
+                                            <select class="form-control m-b" name="school_year_id">
+                                                <option>-- Pilih Tahun Ajaran --</option>
+                                                @foreach ($years as $year)
+                                                    <option value="{{$year->id}}">{{$year->start_year}}/{{$year->end_year}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Jenis Kelamin</label>
+                                            <div class="i-checks col-sm-6">
+                                                <label>
+                                                    <input type="radio" value="L" name="gender">
+                                                    <i></i>
+                                                    Laki-Laki
+                                                </label>
+                                            </div>
+                                            <div class="i-checks col-sm-6">
+                                                <label>
+                                                    <input type="radio" value="P" name="gender">
+                                                    <i></i>
+                                                    Perempuan
+                                                </label>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </fieldset>
-                            <h1>Profile</h1>
+
+                            <h1>Avatar</h1>
                             <fieldset>
-                                <h2>Profile Information</h2>
+                                <div class="alert alert-danger print-error-msg" style="display:none">
+                                  <ul></ul>
+                                </div>
                                 <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>First name *</label>
-                                            <input id="name" name="name" type="text" class="form-control required">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Last name *</label>
-                                            <input id="surname" name="surname" type="text" class="form-control required">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Email *</label>
-                                            <input id="email" name="email" type="text" class="form-control required email">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Address *</label>
-                                            <input id="address" name="address" type="text" class="form-control">
+                                    <div class="col-lg-12">
+                                        <div class="custom-file">
+                                            <input id="logo" type="file" name="avatar" class="custom-file-input ava">
+                                            <label for="logo" class="custom-file-label">Pilih Gambar</label>
                                         </div>
                                     </div>
                                 </div>
+
                             </fieldset>
-                            <h1>Warning</h1>
+
+                            <h1>Selesai</h1>
                             <fieldset>
-                                <div class="text-center" style="margin-top: 120px">
-                                    <h2>You did it Man :-)</h2>
-                                </div>
-                            </fieldset>
-                            <h1>Finish</h1>
-                            <fieldset>
-                                <h2>Terms and Conditions</h2>
-                                <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                                <h2>Syarat dan Ketentuan Berlaku</h2>
+                                <input id="acceptTerms" name="acceptTerms" type="checkbox" class=""> <label for="acceptTerms">Saya menyetujui untuk membuat Siswa baru</label>
                             </fieldset>
                         </form>
 
@@ -140,6 +163,10 @@
     <script src="{{asset('inspinia/js/plugins/steps/jquery.steps.min.js')}}"></script>
     <!-- Jquery Validate -->
     <script src="{{asset('inspinia/js/plugins/validate/jquery.validate.min.js')}}"></script>
+    <!-- Jasny -->
+    <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
+    <!-- iCheck -->
+    <script src="{{asset('inspinia/js/plugins/iCheck/icheck.min.js')}}"></script>
     <script>
         $(document).ready(function(){
             $("#wizard").steps();
@@ -153,7 +180,7 @@
                         return true;
                     }
 
-                    // Forbid suppressing "Warning" step if the user is to young
+                    // Forbid suppressing "Warning" step if the student is to young
                     if (newIndex === 3 && Number($("#age").val()) < 18)
                     {
                         return false;
@@ -161,7 +188,7 @@
 
                     var form = $(this);
 
-                    // Clean up if user went backward before
+                    // Clean up if student went backward before
                     if (currentIndex < newIndex)
                     {
                         // To remove error styles
@@ -177,17 +204,17 @@
                 },
                 onStepChanged: function (event, currentIndex, priorIndex)
                 {
-                    // Suppress (skip) "Warning" step if the user is old enough.
+                    // Suppress (skip) "Warning" step if the student is old enough.
                     if (currentIndex === 2 && Number($("#age").val()) >= 18)
                     {
                         $(this).steps("next");
                     }
 
-                    // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
-                    if (currentIndex === 2 && priorIndex === 3)
-                    {
-                        $(this).steps("previous");
-                    }
+                    // // Suppress (skip) "Warning" step if the student is old enough and wants to the previous step.
+                    // if (currentIndex === 2 && priorIndex === 3)
+                    // {
+                    //     $(this).steps("previous");
+                    // }
                 },
                 onFinishing: function (event, currentIndex)
                 {
@@ -207,17 +234,26 @@
                     // Submit form input
                     form.submit();
                 }
-            }).validate({
-                        errorPlacement: function (error, element)
-                        {
-                            element.before(error);
-                        },
-                        rules: {
-                            confirm: {
-                                equalTo: "#password"
-                            }
-                        }
-                    });
+            })
+            .validate({
+                errorPlacement: function (error, element)
+                {
+                    element.before(error);
+                },
+                rules: {
+                    password: {
+                        equalTo: "#password"
+                    }
+                }
+            });
+            $('.i-checks').iCheck({
+                radioClass: 'iradio_square-green',
+            });
+            $('.custom-file-input').on('change', function() {
+                let fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').addClass("selected").html(fileName);
+            });
+
        });
     </script>
 @endsection

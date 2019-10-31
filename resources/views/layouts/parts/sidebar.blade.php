@@ -22,7 +22,7 @@
         <li class="{{ Request::is('student') || Request::is('student/*')? 'active' : '' }}">
             <a href="{{ route('student.index') }}"><i class="fa fa-graduation-cap"></i> <span class="nav-label">Data Siswa</span></a>
         </li>
-        
+
         {{-- Manajemen Kelas dan Mapel --}}
         <li class="text-secondary py-2 px-3" style="background-color: #2F4050">
             <span class="nav-label">Manajemen Kelas & Mapel</span>
@@ -30,10 +30,10 @@
         <li class="{{ Request::is('course') || Request::is('course/*')? 'active' : '' }}">
             <a href="{{ route('course.index') }}"><i class="fa fa-window-restore"></i> <span class="nav-label">Mata Pelajaran</span></a>
         </li>
-        <li class="{{ Request::is('class') || Request::is('class/*')? 'active' : '' }}">
-            <a href="{{ route('class.index') }}"><i class="fa fa-pie-chart"></i> <span class="nav-label">Manajemen Kelas</span></a>
+        <li class="{{ Request::is('classroom','year') || Request::is('classroom/*','year/*') ? 'active' : '' }}">
+            <a href="{{ route('classroom.index') }}"><i class="fa fa-pie-chart"></i> <span class="nav-label">Manajemen Kelas</span></a>
         </li>
-    
+
         {{-- Kompetensi Siswa --}}
         <li class="text-secondary py-2 px-3" style="background-color: #2F4050">
             <span class="nav-label">Kompetensi Siswa</span>
@@ -44,7 +44,7 @@
         <li class="{{ Request::is('task') || Request::is('task/*')? 'active' : '' }}">
             <a href="{{ route('task.index') }}"><i class="fa fa-tasks"></i> <span class="nav-label">Tugas</span></a>
         </li>
-    
+
         {{-- Sistem Seting --}}
         <li class="text-secondary py-2 px-3" style="background-color: #2F4050">
             <span class="nav-label">Pengaturan</span>

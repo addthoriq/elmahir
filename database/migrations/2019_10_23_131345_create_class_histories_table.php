@@ -15,10 +15,14 @@ class CreateClassHistoriesTable extends Migration
     {
         Schema::create('class_histories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('class_id');
             $table->unsignedBigInteger('student_id');
+            $table->unsignedInteger('school_year_id');
+            $table->unsignedInteger('class_id');
             $table->boolean('status'); // Kelas Saat ini == 1 && Kelas lalu == 0
             $table->timestamps();
+            $table->foreign('student_id')->references('id')->on('students');
+            $table->foreign('school_year_id')->references('id')->on('school_years');
+            $table->foreign('class_id')->references('id')->on('classrooms');
         });
     }
 

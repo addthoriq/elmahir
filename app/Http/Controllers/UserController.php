@@ -84,7 +84,7 @@ class UserController extends Controller
         }
         $data->status   = 1;
         $data->save();
-        return redirect($this->rdr)->with('status', 'Data User berhasil ditambahkan');
+        return redirect($this->rdr)->with('notif', 'Data User berhasil ditambahkan');
     }
 
     /**
@@ -108,9 +108,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $roles     = Role::all();
-        $data     = User::find($id);
-        return view($this->folder.'.edit', compact('data', 'roles'));
+        //
     }
 
     /**
@@ -138,7 +136,7 @@ class UserController extends Controller
                 'status'   => $request->status,
             ]);
         }
-        return redirect()->route('user.show', [$id])->with('status', 'Informasi Profil berhasil diubah');
+        return redirect()->route('user.show', [$id])->with('notif', 'Informasi Profil berhasil diubah');
     }
 
     /**
@@ -162,7 +160,7 @@ class UserController extends Controller
         }
         $user->save();
 
-        return redirect()->route('user.show', [$id])->with('status', 'Poto Profil berhasil diubah');
+        return redirect()->route('user.show', [$id])->with('notif', 'Poto Profil berhasil diubah');
     }
 
     /**
@@ -175,6 +173,6 @@ class UserController extends Controller
     {
         $data     = User::findOrFail($id);
         $data->delete();
-        return redirect($this->rdr)->with('status', 'Data User berhasil dihapus');
+        return redirect($this->rdr)->with('notif', 'Data User berhasil dihapus');
     }
 }
