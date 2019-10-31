@@ -21,7 +21,10 @@ class CreateStudentsTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('avatar')->nullable();
-            $table->boolean('status');
+            $table->string('nisn');
+            $table->year('start_year');
+            $table->enum('gender', ['L', 'P']);
+            $table->boolean('status'); //Siswa == 1 && Alumni == 0
             $table->timestamps();
         });
     }

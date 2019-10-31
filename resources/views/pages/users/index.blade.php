@@ -33,10 +33,10 @@
                     <a href="#" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Export</a>
                     <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</a>
                 </div>
-                @if (session('status'))
+                @if (session('notif'))
                     <div class="alert alert-success alert-dismissable">
                         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                        {{session('status')}}
+                        {{session('notif')}}
                     </div>
                 @endif
                 <div class="table-responsive">

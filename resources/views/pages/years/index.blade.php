@@ -1,22 +1,22 @@
 @extends('layouts.app')
 
-@section('title', 'Data Siswa')
+@section('title', 'Data Kelas')
 
 @section('content')
 <div class="row wrapper white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Data Siswa</h2>
+        <h2>Data Tahun Ajar</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="{{ route('home.index') }}">Beranda</a>
             </li>
+            <li class="breadcrumb-item">
+                <a href="{{ route('classroom.index') }}">Manajemen Kelas</a>
+            </li>
             <li class="breadcrumb-item active">
-                <strong>Data Siswa</strong>
+                <strong>Manajemen Tahun Ajar</strong>
             </li>
         </ol>
-    </div>
-    <div class="col-lg-2">
-
     </div>
 </div>
 
@@ -25,18 +25,19 @@
         <div class="col-lg-12">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>Daftar Nama Siswa</h5>
+                <h5>Daftar Tahun Ajar</h5>
             </div>
             <div class="ibox-content">
                 <div class="mb-3 mt-0">
-                    <a href="{{route('student.create')}}" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
+                    <a data-toggle="modal" class="btn btn-sm btn-success" href="#store"><i class="fa fa-plus-circle"></i> Tambah</a>
                     <a href="#" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Export</a>
                     <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</a>
                 </div>
-                @if (session('notif'))
+                @include('pages.years.create')
+                @if (session('status'))
                     <div class="alert alert-success alert-dismissable">
                         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                        {{session('notif')}}
+                        {{session('status')}}
                     </div>
                 @endif
                 <div class="table-responsive">
@@ -44,15 +45,12 @@
                         <thead>
                             <tr>
                                 <th style="width: 20px;">No</th>
-                                <th>Avatar</th>
-                                <th>NISN</th>
-                                <th>Nama</th>
-                                <th>Gender</th>
+                                <th>Semester 1</th>
+                                <th>Semester 2</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
@@ -72,10 +70,8 @@
                 order: [[0,'asc']],
                 columns: [
                     { data: 'id', searchable: true, orderable: true},
-                    { data: 'avatar', searchable: false, orderable: false},
-                    { data: 'nisn', searchable: true, orderable: true},
-                    { data: 'name', searchable: true, orderable: true},
-                    { data: 'gender', searchable: true, orderable: false},
+                    { data: 'start_year', searchable: true, orderable: true},
+                    { data: 'end_year', searchable: true, orderable: true},
                     { data: 'action', searchable: false, orderable: false}
                 ],
                 columnDefs: [{

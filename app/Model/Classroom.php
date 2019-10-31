@@ -4,13 +4,13 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SchoolYear extends Model
+class Classroom extends Model
 {
     protected $fillable = [
-        'start_year', 'end_year'
+        'teacher_name', 'name', 'max_student'
     ];
     public function classHistories()
     {
-        return $this->hasMany(ClassHistory::class);
+        return $this->hasMany(ClassHistory::class, 'class_id');
     }
 }

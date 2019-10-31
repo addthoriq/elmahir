@@ -20,8 +20,11 @@ class CreateTeachersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->string('avatar');
-            $table->boolean('status');
+            $table->string('avatar')->nullable();
+            $table->string('nisn');
+            $table->year('start_year');
+            $table->enum('gender', ['L', 'P']);
+            $table->boolean('status'); //Aktif == 1 && Berhenti == 0
             $table->timestamps();
         });
     }

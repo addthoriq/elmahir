@@ -6,114 +6,86 @@
     <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('inspinia/css/plugins/cropper/cropper.min.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')
     <div class="row wrapper white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Data User</h2>
+            <h2>Data Kelas</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('home.index') }}">Beranda</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('user.index') }}">Data User</a>
+                    <a href="{{ route('classroom.index') }}">Data Kelas</a>
                 </li>
                 </li>
                 <li class="breadcrumb-item active">
-                    <strong>Tambah User</strong>
+                    <strong>Tambah Kelas</strong>
                 </li>
             </ol>
         </div>
-        <div class="col-lg-2">
-
-        </div>
     </div>
 
-    <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="wrapper wrapper-content animated fadeInRight" id="app">
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-title">
-                        <h5>Tambah Data User</h5>
+                        <h5>Tambah Data Kelas</h5>
                     </div>
                     <div class="ibox-content">
                         <h2>
-                            Data User
+                            Data Kelas
                         </h2>
                         <p>
-                            Data User ini berfungsi sebagai pengurus dan pengelola e-learning ini
+                            Data Kelas ini merujuk pada Kelas-Kelas yang ada di sekolah
                         </p>
 
-                        <form id="form" action="{{route('user.store')}}" class="wizard-big" method="post" enctype="multipart/form-data">
+                        <form id="form" action="{{route('classroom.store')}}" class="wizard-big" method="post">
                             @csrf
 
-                            <h1>Akun</h1>
+                            <h1>Informasi Kelas</h1>
                             <fieldset>
-                                <h2>Informasi Akun</h2>
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <div class="form-group">
-                                            <label for="email">Email *</label>
-                                            <input id="email" name="email" type="text" class="form-control required">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password">Password *</label>
-                                            <input id="password" type="password" class="form-control required">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Confirm Password *</label>
-                                            <input id="password" name="password" type="password" class="form-control required">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="text-center">
-                                            <div style="margin-top: 20px">
-                                                <i class="fa fa-sign-in" style="font-size: 180px;color: #e5e5e5 "></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-
-                            <h1>Profil</h1>
-                            <fieldset>
-                                <h2>Informasi Profil</h2>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Nama *</label>
-                                            <input id="name" name="name" type="text" class="form-control required">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Sebagai *</label>
-                                            <select class="form-control m-b" name="role_id">
-                                                <option>-- Pilih Sebagai --</option>
-                                                @foreach ($roles as $role)
-                                                    <option value="{{$role->id}}">{{$role->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-
-                            <h1>Avatar</h1>
-                            <fieldset>
-                                <div class="alert alert-danger print-error-msg" style="display:none">
-                                  <ul></ul>
-                                </div>
+                                <h2>Informasi data Kelas</h2>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="custom-file">
-                                            <input id="logo" type="file" name="avatar" class="custom-file-input ava">
-                                            <label for="logo" class="custom-file-label">Pilih Gambar</label>
+                                        <div class="form-group">
+                                            <label>Nama Kelas *</label>
+                                            <input id="name" type="text" name="name" class="form-control required">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="teacher_id">Wali Kelas *</label>
+                                            <input id="teacher_id" type="text" name="teacher_id" class="form-control required">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="max_student">Jumlah Maksimal Siswa *</label>
+                                            <input id="max_student" type="number" name="max_student" class="form-control required">
                                         </div>
                                     </div>
                                 </div>
+                            </fieldset>
 
+                            <h1>Informasi Kelas</h1>
+                            <fieldset>
+                                <h2>Informasi data Kelas</h2>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Nama Kelas *</label>
+                                            <input id="name" type="text" class="form-control" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="teacher_id">Wali Kelas *</label>
+                                            <input id="teacher_id" type="text" class="form-control" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="max_student">Jumlah Maksimal Siswa *</label>
+                                            <input id="max_student" type="number" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                </div>
                             </fieldset>
 
                             <h1>Selesai</h1>
@@ -137,6 +109,8 @@
     <script src="{{asset('inspinia/js/plugins/validate/jquery.validate.min.js')}}"></script>
     <!-- Jasny -->
     <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
+    <!-- Vue.Js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0/dist/vue.js"></script>
     <script>
         $(document).ready(function(){
             $("#wizard").steps();
@@ -175,7 +149,7 @@
                 onStepChanged: function (event, currentIndex, priorIndex)
                 {
                     // Suppress (skip) "Warning" step if the user is old enough.
-                    if (currentIndex === 2 && Number($("#age").val()) >= 18)
+                    if (currentIndex === 2 && Number($("#age").val()) >= 3)
                     {
                         $(this).steps("next");
                     }
@@ -211,17 +185,11 @@
                     element.before(error);
                 },
                 rules: {
-                    password: {
+                    confirm: {
                         equalTo: "#password"
                     }
                 }
             });
-
-            $('.custom-file-input').on('change', function() {
-                let fileName = $(this).val().split('\\').pop();
-                $(this).next('.custom-file-label').addClass("selected").html(fileName);
-            });
-
        });
     </script>
 @endsection
