@@ -16,6 +16,23 @@
                         <label>Tahun Kedua</label>
                         <input type="number" placeholder="Contoh: 2020" name="end_year" class="form-control">
                     </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <div class="i-checks col-sm-6">
+                            <label>
+                                <input type="radio" value="1" name="status" >
+                                <i></i>
+                                Tahun saat ini
+                            </label>
+                        </div>
+                        <div class="i-checks col-sm-6">
+                            <label>
+                                <input type="radio" value="0" name="status" >
+                                <i></i>
+                                Telah Usai
+                            </label>
+                        </div>
+                    </div>
                     <div>
                         <button type="submit" class="btn btn-sm btn-primary float-right m-t-n-xs"><i class="fa fa-send"></i> Tambah</button>
                     </div>

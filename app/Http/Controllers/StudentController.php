@@ -21,12 +21,12 @@ class StudentController extends Controller
     public function index()
     {
         $ajax     = route('student.dbtb');
-        return view('pages.students.index', compact('ajax'));
+        return view($this->folder.'.index', compact('ajax'));
     }
 
     public function dbTables(Request $request)
     {
-        $data     = Student::all();
+        $data     = Student::where('status', 1)->get();
         return Datatables::of($data)
         ->editColumn('avatar', function($index){
             if ($index->avatar) {
@@ -44,9 +44,9 @@ class StudentController extends Controller
             }
         })
         ->addColumn('action', function($index){
-            $tag     = Form::open(["url"=>route('student.destroy', $index->id), "method" => "DELETE"]);
+            $tag     = Form::open(["url"=>route('student.alumni', $index->id), "method" => "PUT"]);
             $tag    .= "<a href=". route('student.show', $index->id) ." class='btn btn-xs btn-info' ><i class='fa fa-search'></i> Detail</a> ";
-            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)' ><i class='fa fa-trash'></i> Hapus</button>";
+            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menjadikan siswa ini Alumni?`)' ><i class='fa fa-graduation-cap'></i> Lulus</button>";
             $tag    .= Form::close();
             return $tag;
         })
@@ -80,9 +80,9 @@ class StudentController extends Controller
         $data->status   = 1;
         $data->save();
         $kelas     = new ClassHistory;
+        $kelas->student_id = $data->id;
         $kelas->school_year_id = $request->school_year_id;
         $kelas->class_id = $request->class_id;
-        $kelas->student_id = $data->id;
         $kelas->status     = 1;
         $kelas->save();
         return redirect($this->rdr)->with('notif', 'Data Siswa berhasil ditambahkan');
@@ -91,7 +91,7 @@ class StudentController extends Controller
     public function show($id)
     {
         $data      = Student::findOrFail($id);
-        $histories = ClassHistory::find($id);
+        $histories = ClassHistory::where('student_id',$id)->orderBy('created_at', 'desc')->first();
         $history   = ClassHistory::where('student_id',$id)->get();
         $classroom = Classroom::all();
         $years     = SchoolYear::all();
@@ -164,19 +164,30 @@ class StudentController extends Controller
 
     public function updateClassHis(Request $request, $id)
     {
-        $data                  = new ClassHistory;
-        $data->student_id      = $id;
-        $data->school_year_id  = $request->school_year_id;
-        $data->class_id        = $request->class_id;
-        if ($request->status) {
-            $data->status          = 1;
-        }else {
+        if ($request->status == 0) {
             ClassHistory::where('student_id', $id)->update([
-                'status'    => $request->status,
+                'status' => 0,
             ]);
+        }else {
+            $data                  = new ClassHistory;
+            $data->student_id      = $id;
+            $data->school_year_id  = $request->school_year_id;
+            $data->class_id        = $request->class_id;
+            $data->status          = 1;
+            $data->save();
         }
-        $data->save();
         return redirect()->route('student.show', [$id])->with('notif', 'Data Kelas berhasil diubah');
+    }
+
+    public function alumni(Request $request, $id)
+    {
+        Student::findOrFail($id)->update([
+            'status'    => 0
+        ]);
+        ClassHistory::where('student_id', $id)->update([
+            'status'    => 0,
+        ]);
+        return redirect()->route('student.show', [$id])->with('notif', 'Siswa ini telah menjadi Alumnus');
     }
 
     public function destroy($id)

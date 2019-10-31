@@ -67,6 +67,28 @@
                                     <th>Kapasitas Maksimal Siswa</th>
                                     <td>{{$data->max_student}}</td>
                                 </tr>
+                                <tr>
+                                    <th>Jumlah Siswa</th>
+                                    <td>{{$data->classHistories()->whereHas('school_year', function($q){$q->where('status',1);})->count()}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Anggota Kelas: </th>
+                                    <td>
+                                        <ul>
+                                            @if (!$stds)
+                                                @foreach ($stds as $std)
+                                                    @if ($std->status)
+                                                        <li>{{$std->student->name}}</li>
+                                                    @else
+                                                        <i>Belum ada siswa disini</i>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                <i>Belum ada siswa disini</i>
+                                            @endif
+                                        </ul>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <form action="{{route('classroom.destroy',$data->id)}}" method="post">

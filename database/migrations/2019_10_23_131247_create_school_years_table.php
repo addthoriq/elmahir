@@ -18,6 +18,7 @@ class CreateSchoolYearsTable extends Migration
             $table->year('start_year')->unique();
             $table->year('end_year');
             $table->boolean('status');
+            $table->timestamps();
         });
     }
 

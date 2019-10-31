@@ -70,17 +70,38 @@
                                     <th>Tahun Kedua (Semester 2)</th>
                                     <td>{{$data->end_year}}</td>
                                 </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td>
+                                        @if ($data->status)
+                                            <span class="label label-primary">Saat ini</span>
+                                        @else
+                                            <span class="label label-danger">Telah berakhir</span>
+                                        @endif
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
-                        <form action="{{route('year.destroy',$data->id)}}" method="post">
+                        <form action="{{route('year.update',$data->id)}}" method="post">
                             @csrf
-                            @method('DELETE')
+                            @method('PUT')
                             <a href="{{route('year.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
-                            <button type="submit" class="btn btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)'><i class="fa fa-trash"></i> Hapus</button>
+                            <button type="submit" class="btn btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin mengakhiri Tahun Ajaran ini?`)'><i class="fa fa-minus-square"></i> Akhiri TA</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <!-- Jasny -->
+    <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
+    <!-- iCheck -->
+    <script src="{{asset('inspinia/js/plugins/iCheck/icheck.min.js')}}"></script>
+    <script type="text/javascript">
+        $('.i-checks').iCheck({
+            radioClass: 'iradio_square-green',
+        });
+    </script>
 @endsection
