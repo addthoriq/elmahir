@@ -38,17 +38,23 @@
                     <div class="ibox-title">
                         <h5>Tahun Ajar</h5>
                         <div class="ibox-tools">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li>
-                                    <a data-toggle="modal" class="dropdown-item" href="#edit">Ubah Tahun Ajar</a>
-                                </li>
-                            </ul>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
+                            @if ($data->status)
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li>
+                                        <a data-toggle="modal" class="dropdown-item" href="#edit">Ubah Tahun Ajar</a>
+                                    </li>
+                                </ul>
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                            @else
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                            @endif
                         </div>
                         @include('pages.years.edit')
                     </div>
@@ -82,12 +88,16 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <form action="{{route('year.update',$data->id)}}" method="post">
-                            @csrf
-                            @method('PUT')
+                        @if ($data->status)
+                            <form action="{{route('year.update',$data->id)}}" method="post">
+                                @csrf
+                                @method('PUT')
+                                <a href="{{route('year.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
+                                <button type="submit" class="btn btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin mengakhiri Tahun Ajaran ini?`)'><i class="fa fa-minus-square"></i> Akhiri TA</button>
+                            </form>
+                        @else
                             <a href="{{route('year.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
-                            <button type="submit" class="btn btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin mengakhiri Tahun Ajaran ini?`)'><i class="fa fa-minus-square"></i> Akhiri TA</button>
-                        </form>
+                        @endif
                     </div>
                 </div>
             </div>

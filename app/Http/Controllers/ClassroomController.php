@@ -58,7 +58,7 @@ class ClassroomController extends Controller
     public function show($id)
     {
         $data      = Classroom::findOrFail($id);
-        $stds      = ClassHistory::where('class_id', $id)->get();
+        $stds      = ClassHistory::where([['status', 1],['class_id', $id]])->get();
         return view($this->folder.'.show', compact('data', 'stds'));
     }
 

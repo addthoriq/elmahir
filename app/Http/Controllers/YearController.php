@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\SchoolYear;
+use App\Model\ClassHistory;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Form;
@@ -58,7 +59,10 @@ class YearController extends Controller
         SchoolYear::findOrFail($id)->update([
             'status'    => 0,
         ]);
-        return redirect($this->folder.'.index')->with('notif', 'Tahun Ajar berhasil diubah');
+        ClassHistory::where('status',1)->update([
+            'status'    => 0
+        ]);
+        return redirect($this->rdr)->with('notif', 'Tahun Ajar berhasil diubah');
     }
     public function destroy($id)
     {

@@ -76,7 +76,7 @@
                     { data: 'avatar', searchable: false, orderable: false},
                     { data: 'nisn', searchable: true, orderable: true},
                     { data: 'name', searchable: true, orderable: true},
-                    { data: 'gender', searchable: true, orderable: false},
+                    { data: 'gender', searchable: true, orderable: true},
                     { data: 'action', searchable: false, orderable: false}
                 ],
                 columnDefs: [{

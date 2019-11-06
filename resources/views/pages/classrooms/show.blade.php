@@ -69,19 +69,15 @@
                                 </tr>
                                 <tr>
                                     <th>Jumlah Siswa</th>
-                                    <td>{{$data->classHistories()->whereHas('school_year', function($q){$q->where('status',1);})->count()}}</td>
+                                    <td>{{$stds->count()}}</td>
                                 </tr>
                                 <tr>
                                     <th>Anggota Kelas: </th>
                                     <td>
                                         <ul>
-                                            @if (!$stds)
+                                            @if ($stds)
                                                 @foreach ($stds as $std)
-                                                    @if ($std->status)
-                                                        <li>{{$std->student->name}}</li>
-                                                    @else
-                                                        <i>Belum ada siswa disini</i>
-                                                    @endif
+                                                    <li>{{$std->student->name}}</li>
                                                 @endforeach
                                             @else
                                                 <i>Belum ada siswa disini</i>

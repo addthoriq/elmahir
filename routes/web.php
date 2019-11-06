@@ -17,12 +17,17 @@ Route::get('/', function () {
 
 // Auth::routes();
 
+//Yajra
 Route::get('/user/dbtb', 'UserController@dbTables')->name('user.dbtb');
 Route::get('/classroom/dbtb', 'ClassroomController@dbTables')->name('classroom.dbtb');
 Route::get('/year/dbtb', 'YearController@dbTables')->name('year.dbtb');
 Route::get('/student/dbtb', 'StudentController@dbTables')->name('student.dbtb');
 Route::get('/alumni/dbtb', 'AlumnusController@dbTables')->name('alumni.dbtb');
 
+Route::get('/home/chartMurid', 'HomeController@chartMurid')->name('home.chartMurid');
+Route::get('/home/chartGuru', 'HomeController@chartGuru')->name('home.chartGuru');
+
+//Default
 Route::resource('/home', 'HomeController');
 Route::resource('/teacher', 'TeacherController');
 Route::resource('/course', 'CourseController');
