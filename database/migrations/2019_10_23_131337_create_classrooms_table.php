@@ -19,6 +19,8 @@ class CreateClassroomsTable extends Migration
             $table->string('name');
             $table->integer('max_student');
             $table->timestamps();
+
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
         });
     }
 

@@ -29,9 +29,9 @@
             </div>
             <div class="ibox-content">
                 <div class="mb-3 mt-0">
-                <button class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</button>
-                <button class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Import</button>
-                <button class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</button>
+                <a href="{{ route('task.create') }}" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
+                <a href="" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Import</a>
+                <a href="" class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-hover dataTables-example" style="border-spacing:0px;">
@@ -53,18 +53,18 @@
                                 <a href="project_detail.html">Mengerjakan latihan soal bab 1</a>
                                 <br/>
                                 <small class="mr-3"><i class="fa fa-comments-o"></i> Komentar (2)</small>
-                                <small class="mr-3"><i class="fa fa-clock-o"></i> 1 jam yang lalu</small>
+                                <small class="mr-3"><i class="fa fa-clock-o"></i> 12 Desember 2019</small>
                                 <small class="mr-3"><i class="fa fa-user"></i> Ahmad Sudibyo</small>                                    
                             </td>
                             <td>
                                 <span class="label label-primary">Kelas I</span>
                             </td>
                             <td>
-                                <span class="label label-primary">Dikumpulkan</span>
+                                <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Tutup </a>
                             </td>
-                            <td class="project-actions">
-                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                            <td>
+                                <a href="#" class="btn btn-info btn-xs"><i class="fa fa-search"></i> Detail </a>
+                                <a href="#" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i> Edit </a>
                             </td>
                         </tr>
                         <tr>
@@ -75,18 +75,18 @@
                                 <a href="project_detail.html">Membuat makalah tanaman hias</a>
                                 <br/>
                                 <small class="mr-3"><i class="fa fa-comments-o"></i> Komentar (32)</small>
-                                <small class="mr-3"><i class="fa fa-clock-o"></i> 1 Hari yang lalu</small>
+                                <small class="mr-3"><i class="fa fa-clock-o"></i> 1 Mei 2019</small>
                                 <small class="mr-3"><i class="fa fa-user"></i> Muhammad Qudus</small>                                    
                             </td>
                             <td>
                                 <span class="label label-primary">Kelas I</span>
                             </td>
                             <td>
-                                <span class="label label-primary">Dikumpulkan</span>
+                                <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-check"></i> Terbitkan </a>
                             </td>
-                            <td class="project-actions">
-                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                            <td>
+                                <a href="#" class="btn btn-info btn-xs"><i class="fa fa-search"></i> Detail </a>
+                                <a href="#" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i> Edit </a>
                             </td>
                         </tr>
                     </tbody>
