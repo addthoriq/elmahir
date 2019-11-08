@@ -19,7 +19,7 @@
         <li class="{{ Request::is('teacher') || Request::is('teacher/*')? 'active' : '' }}">
             <a href="{{ route('teacher.index') }}"><i class="fa fa-graduation-cap"></i> <span class="nav-label">Data Guru</span></a>
         </li>
-        <li class="{{ Request::is('student') || Request::is('student/*')? 'active' : '' }}">
+        <li class="{{ Request::is('student','alumni') || Request::is('student/*','alumni/*')? 'active' : '' }}">
             <a href="{{ route('student.index') }}"><i class="fa fa-graduation-cap"></i> <span class="nav-label">Data Siswa</span></a>
         </li>
 

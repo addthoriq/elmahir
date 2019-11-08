@@ -53,36 +53,36 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Nama Kelas *</label>
-                                            <input id="name" type="text" name="name" class="form-control required">
+                                            <input id="name" type="text" name="name" class="form-control ">
                                         </div>
                                         <div class="form-group">
                                             <label for="teacher_id">Wali Kelas *</label>
-                                            <input id="teacher_id" type="text" name="teacher_id" class="form-control required">
+                                            <input id="teacher_id" type="text" name="teacher_id" class="form-control ">
                                         </div>
                                         <div class="form-group">
                                             <label for="max_student">Jumlah Maksimal Siswa *</label>
-                                            <input id="max_student" type="number" name="max_student" class="form-control required">
+                                            <input id="max_student" type="number" name="max_student" class="form-control ">
                                         </div>
                                     </div>
                                 </div>
                             </fieldset>
 
-                            <h1>Informasi Kelas</h1>
+                            <h1>Pengecekan Ulang</h1>
                             <fieldset>
-                                <h2>Informasi data Kelas</h2>
+                                <h2>Konfirmasi Ulang</h2>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Nama Kelas *</label>
-                                            <input id="name" type="text" class="form-control" readonly>
+                                            <input id="cn" type="text" class="form-control" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="teacher_id">Wali Kelas *</label>
-                                            <input id="teacher_id" type="text" class="form-control" readonly>
+                                            <input id="tn" type="text" class="form-control" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="max_student">Jumlah Maksimal Siswa *</label>
-                                            <input id="max_student" type="number" class="form-control" readonly>
+                                            <input id="ms" type="number" class="form-control" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                             <h1>Selesai</h1>
                             <fieldset>
                                 <h2>Syarat dan Ketentuan Berlaku</h2>
-                                <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms">Saya menyetujui untuk membuat User baru</label>
+                                <input id="acceptTerms" name="acceptTerms" type="checkbox" class=""> <label for="acceptTerms">Saya menyetujui untuk membuat User baru</label>
                             </fieldset>
                         </form>
 
@@ -109,10 +109,15 @@
     <script src="{{asset('inspinia/js/plugins/validate/jquery.validate.min.js')}}"></script>
     <!-- Jasny -->
     <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
-    <!-- Vue.Js -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0/dist/vue.js"></script>
     <script>
         $(document).ready(function(){
+            function k(){
+                var k = $("#name").val();
+                $("#cn").val(k);
+            }
+            $("#cn").focus(function(){
+                k();
+            });
             $("#wizard").steps();
             $("#form").steps({
                 bodyTag: "fieldset",

@@ -67,6 +67,24 @@
                                     <th>Kapasitas Maksimal Siswa</th>
                                     <td>{{$data->max_student}}</td>
                                 </tr>
+                                <tr>
+                                    <th>Jumlah Siswa</th>
+                                    <td>{{$stds->count()}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Anggota Kelas: </th>
+                                    <td>
+                                        <ul>
+                                            @if ($stds)
+                                                @foreach ($stds as $std)
+                                                    <li>{{$std->student->name}}</li>
+                                                @endforeach
+                                            @else
+                                                <i>Belum ada siswa disini</i>
+                                            @endif
+                                        </ul>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <form action="{{route('classroom.destroy',$data->id)}}" method="post">

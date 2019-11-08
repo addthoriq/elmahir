@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Classroom;
+use App\Model\ClassHistory;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Form;
@@ -57,7 +58,8 @@ class ClassroomController extends Controller
     public function show($id)
     {
         $data      = Classroom::findOrFail($id);
-        return view($this->folder.'.show', compact('data'));
+        $stds      = ClassHistory::where([['status', 1],['class_id', $id]])->get();
+        return view($this->folder.'.show', compact('data', 'stds'));
     }
 
     public function update(Request $request, $id)

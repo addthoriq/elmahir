@@ -2,6 +2,12 @@
 
 @section('title', 'Data Kelas')
 
+@section('style')
+    <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
+    <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
+@endsection
+
 @section('content')
 <div class="row wrapper white-bg page-heading">
     <div class="col-lg-10">
@@ -47,6 +53,7 @@
                                 <th style="width: 20px;">No</th>
                                 <th>Semester 1</th>
                                 <th>Semester 2</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -60,31 +67,41 @@
 </div>
 @endsection
 @section('script')
-    <script type="text/javascript">
-        var table;
-        $(function() {
-            table = $('.dataTables-example').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{$ajax}}',
-                order: [[0,'asc']],
-                columns: [
-                    { data: 'id', searchable: true, orderable: true},
-                    { data: 'start_year', searchable: true, orderable: true},
-                    { data: 'end_year', searchable: true, orderable: true},
-                    { data: 'action', searchable: false, orderable: false}
-                ],
-                columnDefs: [{
-                  "targets": 0,
-                  "searchable": false,
-                  "orderable": false,
-                  "data": null,
-                  "title": 'No',
-                  "render": function (data, type, full, meta) {
-                      return meta.settings._iDisplayStart + meta.row + 1;
-                  }
-                }],
+    <!-- Jasny -->
+    <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
+    <!-- iCheck -->
+    <script src="{{asset('inspinia/js/plugins/iCheck/icheck.min.js')}}"></script>
+    <script>
+        $(document).ready(function(){
+            var table;
+            $(function() {
+                table = $('.dataTables-example').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{{$ajax}}',
+                    order: [[0,'asc']],
+                    columns: [
+                        { data: 'id', searchable: true, orderable: true},
+                        { data: 'start_year', searchable: true, orderable: true},
+                        { data: 'end_year', searchable: true, orderable: true},
+                        { data: 'status', searchable: true, orderable: true},
+                        { data: 'action', searchable: false, orderable: false}
+                    ],
+                    columnDefs: [{
+                      "targets": 0,
+                      "searchable": false,
+                      "orderable": false,
+                      "data": null,
+                      "title": 'No',
+                      "render": function (data, type, full, meta) {
+                          return meta.settings._iDisplayStart + meta.row + 1;
+                      }
+                    }],
+                });
             });
-        });
+            $('.i-checks').iCheck({
+                radioClass: 'iradio_square-green',
+            });
+       });
     </script>
 @endsection

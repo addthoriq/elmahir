@@ -20,9 +20,12 @@
                 <li class="breadcrumb-item">
                     <a href="{{ route('student.index') }}">Data Siswa</a>
                 </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('student.index') }}">Data Alumni</a>
+                </li>
                 </li>
                 <li class="breadcrumb-item active">
-                    <strong>Detail Siswa</strong>
+                    <strong>Detail Alumni</strong>
                 </li>
             </ol>
         </div>
@@ -51,7 +54,6 @@
                         {{-- Modal disini --}}
                         @include('pages.students.editAccount')
                         @include('pages.students.editProfile')
-                        @include('pages.students.editAvatar')
 
 
                     </div>
@@ -85,6 +87,10 @@
                                 <tr>
                                     <th>Tahun Masuk</th>
                                     <td>{{$data->start_year}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Tahun Lulus</th>
+                                    <td>{{$histories->school_year->end_year}}</td>
                                 </tr>
                                 <tr>
                                     <th>NISN</th>
@@ -201,8 +207,8 @@
                             <tbody>
                                 <tr>
                                     <th>No</th>
-                                    <th>Tahun Ajaran</th>
                                     <th>Kelas</th>
+                                    <th>Tahun Ajaran</th>
                                     <th>Status</th>
                                 </tr>
                                 @php
@@ -211,25 +217,14 @@
                                 @foreach ($history as $h)
                                     <tr>
                                         <td>{{$no++}}</td>
-                                        <td>{{$h->school_year->start_year}}/{{$h->school_year->end_year}}</td>
                                         <td>{{$h->classroom->name}}</td>
-                                        <td>
-                                            @if ($h->status)
-                                                <span class='label label-success'>Kelas Sekarang</span>
-                                            @else
-                                                <span class='label label-danger'>Telah Selesai</span>
-                                            @endif
-                                        </td>
+                                        <td>{{$h->school_year->start_year}}/{{$h->school_year->end_year}}</td>
+                                        <td>{{($h->status)?'Kelas Saat ini':'Telah Selesai'}}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        <form action="{{route('student.alumni',$data->id)}}" method="post">
-                            @csrf
-                            @method('PUT')
-                            <a href="{{route('student.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
-                            <button type="submit" class="btn btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin menjadikan siswa ini alumni?`)'><i class="fa fa-graduation-cap"></i> Jadikan Alumni</button>
-                        </form>
+                        <a href="{{route('student.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
                     </div>
                 </div>
             </div>

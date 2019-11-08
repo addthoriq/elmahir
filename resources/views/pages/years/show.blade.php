@@ -38,17 +38,23 @@
                     <div class="ibox-title">
                         <h5>Tahun Ajar</h5>
                         <div class="ibox-tools">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li>
-                                    <a data-toggle="modal" class="dropdown-item" href="#edit">Ubah Tahun Ajar</a>
-                                </li>
-                            </ul>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
+                            @if ($data->status)
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li>
+                                        <a data-toggle="modal" class="dropdown-item" href="#edit">Ubah Tahun Ajar</a>
+                                    </li>
+                                </ul>
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                            @else
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                            @endif
                         </div>
                         @include('pages.years.edit')
                     </div>
@@ -70,17 +76,42 @@
                                     <th>Tahun Kedua (Semester 2)</th>
                                     <td>{{$data->end_year}}</td>
                                 </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td>
+                                        @if ($data->status)
+                                            <span class="label label-primary">Saat ini</span>
+                                        @else
+                                            <span class="label label-danger">Telah berakhir</span>
+                                        @endif
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
-                        <form action="{{route('year.destroy',$data->id)}}" method="post">
-                            @csrf
-                            @method('DELETE')
+                        @if ($data->status)
+                            <form action="{{route('year.update',$data->id)}}" method="post">
+                                @csrf
+                                @method('PUT')
+                                <a href="{{route('year.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
+                                <button type="submit" class="btn btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin mengakhiri Tahun Ajaran ini?`)'><i class="fa fa-minus-square"></i> Akhiri TA</button>
+                            </form>
+                        @else
                             <a href="{{route('year.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
-                            <button type="submit" class="btn btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)'><i class="fa fa-trash"></i> Hapus</button>
-                        </form>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <!-- Jasny -->
+    <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
+    <!-- iCheck -->
+    <script src="{{asset('inspinia/js/plugins/iCheck/icheck.min.js')}}"></script>
+    <script type="text/javascript">
+        $('.i-checks').iCheck({
+            radioClass: 'iradio_square-green',
+        });
+    </script>
 @endsection

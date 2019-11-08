@@ -16,14 +16,7 @@ class SchoolYearTableSeeder extends Seeder
             [
                 'start_year'       => '2019',
                 'end_year'          => '2020',
-            ],
-            [
-                'start_year'       => '2020',
-                'end_year'          => '2021',
-            ],
-            [
-                'start_year'       => '2021',
-                'end_year'          => '2022',
+                'status'            => 1
             ],
         ];
         DB::table('school_years')->truncate();
