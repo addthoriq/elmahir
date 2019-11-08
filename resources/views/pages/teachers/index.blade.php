@@ -29,34 +29,29 @@
             </div>
             <div class="ibox-content">
             <div class="mb-3 mt-0">
-                <button class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</button>
-                <button class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Import</button>
-                <button class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</button>
+                <a href="{{ route('teacher.create') }}" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
+                <a href="" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Import</a>
+                <a href="" class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</a>
             </div>
+            @if (session('notif'))
+                <div class="alert alert-success alert-dismissable">
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                    {{session('notif')}}
+                </div>
+            @endif
             <div class="table-responsive">
                 <table class="table table-striped table-hover dataTables-example" style="border-spacing:0px;">
                     <thead>
                         <tr>
                             <th style="width: 20px;">#</th>
-                            <th>Nama</th>
                             <th>NIP</th>
+                            <th>Nama</th>
                             <th>No HP</th>
                             <th>Gol</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Drs. H Literzet Sobri, M. Pd</td>
-                            <td>19600602 198703 1 006</td>
-                            <td>089654327861</td>
-                            <td><label class="label label-xs label-success">Gol I</label></td>
-                            <td>
-                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i> Detail</button>
-                                <button class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Edit</button>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -65,4 +60,36 @@
     </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+        var table;
+        $(function() {
+            table = $('.dataTables-example').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{$ajax}}',
+                order: [[0,'asc']],
+                columns: [
+                    { data: 'id', searchable: true, orderable: true},
+                    { data: 'avatar', searchable: false, orderable: false},
+                    { data: 'nisn', searchable: true, orderable: true},
+                    { data: 'name', searchable: true, orderable: true},
+                    { data: 'gender', searchable: true, orderable: false},
+                    { data: 'action', searchable: false, orderable: false}
+                ],
+                columnDefs: [{
+                  "targets": 0,
+                  "searchable": false,
+                  "orderable": false,
+                  "data": null,
+                  "title": 'No',
+                  "render": function (data, type, full, meta) {
+                      return meta.settings._iDisplayStart + meta.row + 1;
+                  }
+                }],
+            });
+        });
+    </script>
 @endsection

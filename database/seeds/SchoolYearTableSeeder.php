@@ -16,6 +16,16 @@ class SchoolYearTableSeeder extends Seeder
             [
                 'start_year'       => '2019',
                 'end_year'          => '2020',
+                'status'            => 0,
+            ],
+            [
+                'start_year'       => '2020',
+                'end_year'          => '2021',
+                'status'            => 0,
+            ],
+            [
+                'start_year'       => '2021',
+                'end_year'          => '2022',
                 'status'            => 1
             ],
         ];

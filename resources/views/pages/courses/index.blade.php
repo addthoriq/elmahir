@@ -29,9 +29,9 @@
             </div>
             <div class="ibox-content">
                 <div class="mb-3 mt-0">
-                <button class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</button>
-                <button class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Import</button>
-                <button class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</button>
+                <a href="{{ route('course.create') }}" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
+                <a href="" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Import</a>
+                <a href="" class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-hover dataTables-example" style="border-spacing:0px;">
@@ -39,28 +39,14 @@
                         <tr>
                             <th style="width: 20px;">#</th>
                             <th>Nama Mapel</th>
-                            <th>Kode</th>
+                            <th>Kelas</th>
                             <th>Pengajar</th>
+                            <th>Asisten</th>
+                            <th>Semester</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Bahasa Indonesia</td>
-                            <td>A101</td>
-                            <td class="d-flex align-items-start">
-                                <ul class="pl-2">
-                                    <li>Suradi, S.Pd</li>
-                                    <li>Subagyo, S.Kom</li>
-                                    <li>Sudibyo, S.Pd</li>
-                                </ul>
-                            </td>
-                            <td>
-                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i> Detail</button>
-                                <button class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Edit</button>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -69,4 +55,37 @@
     </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+        var table;
+        $(function() {
+            table = $('.dataTables-example').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{$ajax}}',
+                order: [[0,'asc']],
+                columns: [
+                    { data: 'id', searchable: true, orderable: true},
+                    { data: 'name', searchable: false, orderable: false},
+                    { data: 'class_id', searchable: true, orderable: true},
+                    { data: 'teacher_id', searchable: true, orderable: true},
+                    { data: 'assistant', searchable: true, orderable: false},
+                    { data: 'semester', searchable: true, orderable: false},
+                    { data: 'action', searchable: false, orderable: false}
+                ],
+                columnDefs: [{
+                  "targets": 0,
+                  "searchable": false,
+                  "orderable": false,
+                  "data": null,
+                  "title": 'No',
+                  "render": function (data, type, full, meta) {
+                      return meta.settings._iDisplayStart + meta.row + 1;
+                  }
+                }],
+            });
+        });
+    </script>
 @endsection

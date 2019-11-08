@@ -30,10 +30,10 @@ class StudentController extends Controller
         return Datatables::of($data)
         ->editColumn('avatar', function($index){
             if ($index->avatar) {
-                return "<img src=".Storage::url($index->avatar)." width='70px' height='70px' />";
+                return "<img class='rounded-circle' src=".Storage::url($index->avatar)." width='38px' height='38px' />";
             }else {
                 $ava     = new Avatar;
-                return "<img src=".$ava->create($index->name)->toBase64() ." width='70px' height='70px' />";
+                return "<img class='rounded-circle' src=".$ava->create($index->name)->toBase64() ." width='38px' height='38px' />";
             }
         })
         ->editColumn('gender',function($index){

@@ -22,6 +22,8 @@ class CreateCoursesTable extends Migration
             $table->string('semester');
             $table->timestamps();
 
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
+            $table->foreign('class_id')->references('id')->on('classrooms')->onDelete('cascade');
         });
     }
 
