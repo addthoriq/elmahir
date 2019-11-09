@@ -88,7 +88,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Kelas *</label>
-                                            <select class="form-control m-b" name="class_id">
+                                            <select class="form-control m-b" name="classroom_id">
                                                 <option>-- Pilih Kelas --</option>
                                                 @foreach ($classes as $class)
                                                     <option value="{{$class->id}}">{{$class->name}}</option>

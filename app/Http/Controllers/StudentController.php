@@ -43,6 +43,10 @@ class StudentController extends Controller
                 return "<span class='label label-success'>Perempuan</span>";
             }
         })
+        ->addColumn('classroom', function($index){
+            $ch    = Student::findOrFail($index->id)->classroom->name;
+            return $ch;
+        })
         ->addColumn('action', function($index){
             $tag     = Form::open(["url"=>route('student.alumni', $index->id), "method" => "PUT"]);
             $tag    .= "<a href=". route('student.show', $index->id) ." class='btn btn-xs btn-info' ><i class='fa fa-search'></i> Detail</a> ";
@@ -66,6 +70,7 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $data     = new Student;
+        $data->classroom_id = $request->classroom_id;
         $data->name = $request->name;
         $data->email = $request->email;
         $data->password = bcrypt($request->password);
@@ -82,7 +87,7 @@ class StudentController extends Controller
         $kelas     = new ClassHistory;
         $kelas->student_id = $data->id;
         $kelas->school_year_id = $request->school_year_id;
-        $kelas->class_id = $request->class_id;
+        $kelas->classroom_id = $request->classroom_id;
         $kelas->status     = 1;
         $kelas->save();
         return redirect($this->rdr)->with('notif', 'Data Siswa berhasil ditambahkan');
@@ -91,6 +96,7 @@ class StudentController extends Controller
     public function show($id)
     {
         $data      = Student::findOrFail($id);
+        $cata      = Classroom::all();
         $histories = ClassHistory::where('student_id',$id)->orderBy('created_at', 'desc')->first();
         $history   = ClassHistory::where('student_id',$id)->get();
         $classroom = Classroom::all();
@@ -115,7 +121,9 @@ class StudentController extends Controller
 
     public function updateProfile(Request $request, $id)
     {
+        $cls      = Student::find($id)->classroom_id;
         $data     = Student::findOrFail($id)->update([
+            'classroom_id' => $cls,
             'name'    => $request->name,
             'nisn'    => $request->nisn,
             'gender'    => $request->gender,
@@ -169,10 +177,13 @@ class StudentController extends Controller
                 'status' => 0,
             ]);
         }else {
+            Student::findOrFail($id)->update([
+                'classroom_id'    => $request->classroom_id
+            ]);
             $data                  = new ClassHistory;
             $data->student_id      = $id;
             $data->school_year_id  = $request->school_year_id;
-            $data->class_id        = $request->class_id;
+            $data->classroom_id    = $request->classroom_id;
             $data->status          = 1;
             $data->save();
         }
