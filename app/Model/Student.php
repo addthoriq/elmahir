@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     protected $guarded     = [];
-    
+
     public function profileStudent()
     {
         return $this->hasOne(ProfileStudent::class);
@@ -15,5 +15,9 @@ class Student extends Model
     public function classHistories()
     {
         return $this->hasMany(ClassHistory::class);
+    }
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class);
     }
 }

@@ -11,8 +11,8 @@
                         @method('PUT')
                         <div class="form-group">
                             <label>Kelas *</label>
-                            <select class="form-control m-b" name="class_id">
-                                <option value="{{$histories->classroom->id}}">-- {{$histories->classroom->name}} --</option>
+                            <select class="form-control m-b" name="classroom_id">
+                                <option value="{{$data->classroom_id}}">-- {{$data->classroom->name}} --</option>
                                 @foreach ($classroom as $class)
                                     <option value="{{$class->id}}">{{$class->name}}</option>
                                 @endforeach

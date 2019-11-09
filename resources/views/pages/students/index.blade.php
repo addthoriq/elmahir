@@ -46,6 +46,7 @@
                             <tr>
                                 <th style="width: 20px;">No</th>
                                 <th>Avatar</th>
+                                <th>Kelas</th>
                                 <th>NISN</th>
                                 <th>Nama</th>
                                 <th>Gender</th>
@@ -74,6 +75,7 @@
                 columns: [
                     { data: 'id', searchable: true, orderable: true},
                     { data: 'avatar', searchable: false, orderable: false},
+                    { data: 'classroom', searchable: true, orderable: true},
                     { data: 'nisn', searchable: true, orderable: true},
                     { data: 'name', searchable: true, orderable: true},
                     { data: 'gender', searchable: true, orderable: true},

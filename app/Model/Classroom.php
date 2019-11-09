@@ -11,7 +11,11 @@ class Classroom extends Model
     ];
     public function classHistories()
     {
-        return $this->hasMany(ClassHistory::class, 'class_id');
+        return $this->hasMany(ClassHistory::class);
+    }
+    public function student()
+    {
+        return $this->hasOne(Student::class);
     }
     public function course()
     {
