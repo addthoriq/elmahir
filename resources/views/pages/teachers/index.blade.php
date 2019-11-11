@@ -44,10 +44,10 @@
                     <thead>
                         <tr>
                             <th style="width: 20px;">#</th>
+                            <th>Avatar</th>
                             <th>NIP</th>
                             <th>Nama</th>
-                            <th>No HP</th>
-                            <th>Gol</th>
+                            <th>Gender</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -74,7 +74,7 @@
                 columns: [
                     { data: 'id', searchable: true, orderable: true},
                     { data: 'avatar', searchable: false, orderable: false},
-                    { data: 'nisn', searchable: true, orderable: true},
+                    { data: 'nip', searchable: true, orderable: true},
                     { data: 'name', searchable: true, orderable: true},
                     { data: 'gender', searchable: true, orderable: false},
                     { data: 'action', searchable: false, orderable: false}
