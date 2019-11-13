@@ -6,7 +6,7 @@
 
                 <h3 class="m-t-none m-b">Ubah profil Guru</h3>
                 <p>Mengubah data Informasi profil Guru</p>
-                <form method="POST" action="{{route('teacher.profile',$data->id)}}" class="edit">
+                <form method="POST" action="{{route('unon.profile',$data->id)}}" class="edit">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -36,23 +36,6 @@
                                     <input type="text" name="date_of_birth" value="{{isset($data->profileTeacher->date_of_birth)?$data->profileTeacher->date_of_birth:''}}" class="form-control" placeholder="03/04/2014">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label>Jenis Kelamin</label>
-                                <div class="i-checks col-sm-6">
-                                    <label>
-                                        <input type="radio" value="L" name="gender" {{($data->gender == 'L')?'checked':''}} >
-                                        <i></i>
-                                        Laki-Laki
-                                    </label>
-                                </div>
-                                <div class="i-checks col-sm-6">
-                                    <label>
-                                        <input type="radio" value="P" name="gender" {{($data->gender == 'P')?'checked':''}} >
-                                        <i></i>
-                                        Perempuan
-                                    </label>
-                                </div>
-                            </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -80,19 +63,19 @@
                                 <input type="number" value="{{isset($data->profileTeacher->phone_number)?$data->profileTeacher->phone_number:''}}" name="phone_number" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label>Status</label>
+                                <label>Jenis Kelamin</label>
                                 <div class="i-checks col-sm-6">
                                     <label>
-                                        <input type="radio" value="1" name="status" {{($data->status)?'checked':''}} >
+                                        <input type="radio" value="L" name="gender" {{($data->gender == 'L')?'checked':''}} >
                                         <i></i>
-                                        Pengajar Aktif
+                                        Laki-Laki
                                     </label>
                                 </div>
                                 <div class="i-checks col-sm-6">
                                     <label>
-                                        <input type="radio" value="0" name="status" {{($data->status)?'':'checked'}} >
+                                        <input type="radio" value="P" name="gender" {{($data->gender == 'P')?'checked':''}} >
                                         <i></i>
-                                        Berhenti
+                                        Perempuan
                                     </label>
                                 </div>
                             </div>

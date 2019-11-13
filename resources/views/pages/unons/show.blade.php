@@ -1,31 +1,35 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Data Siswa')
+@section('title', 'Data Guru')
 
 @section('style')
     <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
+    <style media="screen">
+        .fileinput-preview.fileinput-exists.img-thumbnail img{
+            max-width: 100%;
+        }
+    </style>
 @endsection
 
 @section('content')
     <div class="row wrapper white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Data Siswa</h2>
+            <h2>Data Guru</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('home.index') }}">Beranda</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('student.index') }}">Data Siswa</a>
+                    <a href="{{ route('teacher.index') }}">Data Guru</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('student.index') }}">Data Alumni</a>
-                </li>
+                    <a href="{{ route('unon.index') }}">Data Guru Tidak Aktif</a>
                 </li>
                 <li class="breadcrumb-item active">
-                    <strong>Detail Alumni</strong>
+                    <strong>Detail Guru Tidak Aktif</strong>
                 </li>
             </ol>
         </div>
@@ -36,7 +40,7 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>Profil Siswa</h5>
+                        <h5>Profil Guru Tidak Aktif</h5>
                         <div class="ibox-tools">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i class="fa fa-wrench"></i>
@@ -52,8 +56,9 @@
                         </div>
 
                         {{-- Modal disini --}}
-                        @include('pages.students.editAccount')
-                        @include('pages.students.editProfile')
+                        @include('pages.unons.editAccount')
+                        @include('pages.unons.editProfile')
+                        @include('pages.unons.editAvatar')
 
 
                     </div>
@@ -76,7 +81,7 @@
                             </div>
                             <div class="m-b-sm">
                                 @if(!$data->status)
-                                    <span class='label label-danger'>Alumni</span>
+                                    <span class='label label-danger'>Pengajar Tidak Aktif</span>
                                 @endif
                             </div>
                         </div>
@@ -87,18 +92,14 @@
                                     <td>{{$data->start_year}}</td>
                                 </tr>
                                 <tr>
-                                    <th>Tahun Lulus</th>
-                                    <td>{{$histories->school_year->end_year}}</td>
-                                </tr>
-                                <tr>
-                                    <th>NISN</th>
-                                    <td>{{$data->nisn}}</td>
+                                    <th>NIP</th>
+                                    <td>{{$data->nip}}</td>
                                 </tr>
                                 <tr>
                                     <th>NIK</th>
                                     <td>
-                                        @isset($data->profileStudent->nik)
-                                            {{$data->profileStudent->nik}}
+                                        @isset($data->profileTeacher->nik)
+                                            {{$data->profileTeacher->nik}}
                                         @else
                                             <i>Data Belum ditambahkan</i>
                                         @endif
@@ -121,8 +122,8 @@
                                 <tr>
                                     <th>Agama</th>
                                     <td>
-                                        @isset($data->profileStudent->religion)
-                                            {{$data->profileStudent->religion}}
+                                        @isset($data->profileTeacher->religion)
+                                            {{$data->profileTeacher->religion}}
                                         @else
                                             <i>Data Belum ditambahkan</i>
                                         @endif
@@ -132,8 +133,8 @@
                                 <tr>
                                     <th>Alamat</th>
                                     <td>
-                                        @isset($data->profileStudent->address)
-                                            {{$data->profileStudent->address}}
+                                        @isset($data->profileTeacher->address)
+                                            {{$data->profileTeacher->address}}
                                         @else
                                             <i>Data Belum ditambahkan</i>
                                         @endif
@@ -142,8 +143,8 @@
                                 <tr>
                                     <th>TTL</th>
                                     <td>
-                                        @isset($data->profileStudent->date_of_birth)
-                                            {{$data->profileStudent->place_of_birth}}, {{date('d F Y', strtotime($data->profileStudent->date_of_birth))}}
+                                        @isset($data->profileTeacher->date_of_birth)
+                                            {{$data->profileTeacher->place_of_birth}}, {{date('d F Y', strtotime($data->profileTeacher->date_of_birth))}}
                                         @else
                                             <i>Data Belum ditambahkan</i>
                                         @endif
@@ -152,8 +153,8 @@
                                 <tr>
                                     <th>Nomor Hp</th>
                                     <td>
-                                        @isset($data->profileStudent->phone_number)
-                                            {{$data->profileStudent->phone_number}}
+                                        @isset($data->profileTeacher->phone_number)
+                                            {{$data->profileTeacher->phone_number}}
                                         @else
                                             <i>Data Belum ditambahkan</i>
                                         @endif
@@ -182,13 +183,13 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>Riwayat Kelas</h5>
+                        <h5>Riwayat Mengajar</h5>
                         <div class="ibox-tools">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i class="fa fa-wrench"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
-                                <li><a data-toggle="modal" class="dropdown-item" href="#editClass">Ubah data Kelas Siswa</a></li>
+                                <li><a data-toggle="modal" class="dropdown-item" href="#editClass">Ubah data Kelas Guru</a></li>
                             </ul>
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -196,7 +197,7 @@
                         </div>
 
                         {{-- Modal disini --}}
-                        @include('pages.students.editClass')
+                        {{-- @include('pages.students.editClass') --}}
 
                     </div>
 
@@ -207,9 +208,9 @@
                                     <th>No</th>
                                     <th>Kelas</th>
                                     <th>Tahun Ajaran</th>
-                                    <th>Status</th>
+                                    <th>Mapel</th>
                                 </tr>
-                                @php
+                                {{-- @php
                                     $no     = 1;
                                 @endphp
                                 @foreach ($history as $h)
@@ -219,10 +220,15 @@
                                         <td>{{$h->school_year->start_year}}/{{$h->school_year->end_year}}</td>
                                         <td>{{($h->status)?'Kelas Saat ini':'Telah Selesai'}}</td>
                                     </tr>
-                                @endforeach
+                                @endforeach --}}
                             </tbody>
                         </table>
-                        <a href="{{route('student.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
+                        <form action="{{route('unon.aktif',$data->id)}}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <a href="{{route('teacher.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
+                            <button type="submit" class="btn btn-info pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin mengaktifkan {{$data->name}} ?`)'><i class="fa fa-check"></i> Aktifkan</button>
+                        </form>
                     </div>
                 </div>
             </div>

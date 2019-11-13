@@ -75,8 +75,6 @@
                             <div class="m-b-sm">
                                 @if($data->status)
                                     <span class='label label-success'>Siswa</span>
-                                @else
-                                    <span class='label label-danger'>Alumni</span>
                                 @endif
                             </div>
                         </div>

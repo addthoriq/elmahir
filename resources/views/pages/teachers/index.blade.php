@@ -32,6 +32,7 @@
                 <a href="{{ route('teacher.create') }}" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
                 <a href="" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Import</a>
                 <a href="" class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</a>
+                <a href="{{route('unon.index')}}" class="btn btn-sm btn-info"><i class="fa fa-minus-square"></i> Guru Nonaktif</a>
             </div>
             @if (session('notif'))
                 <div class="alert alert-success alert-dismissable">
@@ -43,11 +44,11 @@
                 <table class="table table-striped table-hover dataTables-example" style="border-spacing:0px;">
                     <thead>
                         <tr>
-                            <th style="width: 20px;">#</th>
+                            <th style="width: 20px;">No</th>
+                            <th>Avatar</th>
                             <th>NIP</th>
                             <th>Nama</th>
-                            <th>No HP</th>
-                            <th>Gol</th>
+                            <th>Jenis Kelamin</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -74,7 +75,7 @@
                 columns: [
                     { data: 'id', searchable: true, orderable: true},
                     { data: 'avatar', searchable: false, orderable: false},
-                    { data: 'nisn', searchable: true, orderable: true},
+                    { data: 'nip', searchable: true, orderable: true},
                     { data: 'name', searchable: true, orderable: true},
                     { data: 'gender', searchable: true, orderable: false},
                     { data: 'action', searchable: false, orderable: false}

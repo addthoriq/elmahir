@@ -13,11 +13,7 @@ class UserController extends Controller
     protected $folder     = 'pages.users';
     protected $rdr        = '/user';
     protected $edit       = '/user/edit';
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $ajax     = route('user.dbtb');
@@ -53,23 +49,12 @@ class UserController extends Controller
         ->make(true);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $roles = Role::all();
         return view($this->folder.'.create', compact('roles'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data     = new User;
@@ -87,12 +72,6 @@ class UserController extends Controller
         return redirect($this->rdr)->with('notif', 'Data User berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $roles     = Role::all();
@@ -100,24 +79,6 @@ class UserController extends Controller
         return view($this->folder.'.show', compact('data', 'roles'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         if (empty($request->password)) {
@@ -136,16 +97,10 @@ class UserController extends Controller
                 'status'   => $request->status,
             ]);
         }
-        return redirect()->route('user.show', [$id])->with('notif', 'Informasi Profil berhasil diubah');
+        $data     = User::findOrFail($id);
+        return redirect()->route('user.show', [$id])->with('notif', 'Informasi '.$data->name.' berhasil diubah');
     }
 
-    /**
-     * Update the avatar resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function updateAva(Request $request, $id)
     {
         $user     = User::findOrFail($id);
@@ -159,20 +114,13 @@ class UserController extends Controller
             $user->avatar = $ava_path;
         }
         $user->save();
-
-        return redirect()->route('user.show', [$id])->with('notif', 'Poto Profil berhasil diubah');
+        return redirect()->route('user.show', [$id])->with('notif', 'Poto Profil '.$user->name.' berhasil diubah');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $data     = User::findOrFail($id);
         $data->delete();
-        return redirect($this->rdr)->with('notif', 'Data User berhasil dihapus');
+        return redirect($this->rdr)->with('notif', $data->name.' berhasil dihapus');
     }
 }
