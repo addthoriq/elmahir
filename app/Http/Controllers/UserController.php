@@ -37,14 +37,22 @@ class UserController extends Controller
             return ($index->status)?"<span class='label label-primary'>Aktif</span>":"<span class='label label-danger'>Tidak Aktif</span>";
         })
         ->addColumn('action', function($index){
-            $tag     = Form::open(["url"=>route('user.destroy', $index->id), "method" => "DELETE"]);
-            $tag    .= "<a href=". route('user.show', $index->id) ." class='btn btn-xs btn-info' ><i class='fa fa-search'></i> Detail</a> ";
-            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)' ><i class='fa fa-trash'></i> Hapus</button>";
-            $tag    .= Form::close();
-            return $tag;
+            if (!$index->status) {
+                $tag     = Form::open(["url"=>route('user.aktif', $index->id), "method" => "PUT"]);
+                $tag    .= "<a href=". route('user.show', $index->id) ." class='btn btn-xs btn-warning' ><i class='fa fa-search'></i> Detail</a> ";
+                $tag    .= "<button type='submit' class='btn btn-xs btn-info' onclick='javascript:return confirm(`Apakah anda yakin ingin mengaktifkan ".$index->name." ?`)' ><i class='fa fa-check'></i> Aktifkan</button>";
+                $tag    .= Form::close();
+                return $tag;
+            }else {
+                $tag     = Form::open(["url"=>route('user.unon', $index->id), "method" => "PUT"]);
+                $tag    .= "<a href=". route('user.show', $index->id) ." class='btn btn-xs btn-warning' ><i class='fa fa-search'></i> Detail</a> ";
+                $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan ".$index->name." ?`)' ><i class='fa fa-minus-square'></i> Nonaktifkan</button>";
+                $tag    .= Form::close();
+                return $tag;
+            }
         })
         ->rawColumns([
-            'id', 'role_id', 'status', 'action'
+            'id', 'role_id', 'status', 'action',
         ])
         ->make(true);
     }
@@ -115,6 +123,24 @@ class UserController extends Controller
         }
         $user->save();
         return redirect()->route('user.show', [$id])->with('notif', 'Poto Profil '.$user->name.' berhasil diubah');
+    }
+
+    public function aktif(Request $request, $id)
+    {
+        User::findOrFail($id)->update([
+            'status'    => 1,
+        ]);
+        $data = User::findOrFail($id);
+        return redirect($this->rdr)->with('notif', $data->name.' berhasil di aktifkan!');
+    }
+
+    public function unon(Request $request, $id)
+    {
+        User::findOrFail($id)->update([
+            'status'    => 0,
+        ]);
+        $data = User::findOrFail($id);
+        return redirect($this->rdr)->with('notif', $data->name.' berhasil di nonaktifkan!');
     }
 
     public function destroy($id)

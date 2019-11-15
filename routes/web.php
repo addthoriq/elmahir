@@ -60,4 +60,6 @@ Route::resource('/section', 'SectionController');
 Route::resource('/task', 'TaskController');
 Route::resource('/user', 'UserController');
 Route::put('/user/{id}/avatar', 'UserController@updateAva')->name('user.ava');
+Route::put('/user/{id}/aktif', 'UserController@aktif')->name('user.aktif');
+Route::put('/user/{id}/unon', 'UserController@unon')->name('user.unon');
 Route::resource('/year', 'YearController');
