@@ -17,8 +17,11 @@
                 <li class="breadcrumb-item">
                     <a href="{{ route('home.index') }}">Beranda</a>
                 </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('classroom.index') }}">Manajemen Kelas</a>
+                </li>
                 <li class="breadcrumb-item active">
-                    <strong>Manajemen Kelas</strong>
+                    <strong>Detail Kelas</strong>
                 </li>
             </ol>
         </div>

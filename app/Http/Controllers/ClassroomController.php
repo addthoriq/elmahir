@@ -27,9 +27,7 @@ class ClassroomController extends Controller
             return isset($index->teacher->name) ? $index->teacher->name : '-';
         })
         ->addColumn('total_student', function($index){
-            return $index->classHistories()->whereHas('school_year', function($q){
-                $q->where('status',1);
-            })->count();
+            return Classhistory::where([['status', 1],['classroom_id', $index->id]])->count();
         })
         ->addColumn('action', function($index){
             $tag     = Form::open(["url"=>route('classroom.destroy', $index->id), "method" => "DELETE"]);

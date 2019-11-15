@@ -259,6 +259,10 @@ class TeacherController extends Controller
         Teacher::findOrFail($id)->update([
             'status'    => 0,
         ]);
+        $user = User::where('teacher_id',$id)->exists();
+        if ($user) {
+            User::where('teacher_id', $id)->delete();
+        }
         $data = Teacher::findOrFail($id);
         return redirect($this->rdr)->with('notif', $data->name.' berhasil di nonaktifkan!');
     }
