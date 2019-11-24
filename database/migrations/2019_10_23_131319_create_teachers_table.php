@@ -22,7 +22,6 @@ class CreateTeachersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('avatar')->nullable();
-            $table->string('nip');
             $table->year('start_year');
             $table->enum('gender', ['L', 'P']);
             $table->boolean('status'); //Aktif == 1 && Berhenti == 0
