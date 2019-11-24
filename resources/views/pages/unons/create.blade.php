@@ -4,6 +4,7 @@
 
 @section('style')
     <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
+    <link href="{{asset('inspinia/css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
     <style media="screen">
@@ -55,7 +56,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Tahun Masuk *</label>
-                                            <input id="start_year" name="start_year" type="number" class="form-control ">
+                                            <input id="start_year" name="start_year" type="text" class="form-control ">
                                         </div>
                                         <div class="form-group">
                                             <label>Jenis Kelamin</label>
@@ -96,7 +97,7 @@
                                               <div class="fileinput-new img-thumbnail" style="height: 160px;">
                                                 <img src="https://via.placeholder.com/150">
                                               </div>
-                                              <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: 200px;"></div>
+                                              <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: 200px; max-height: 150px;"></div>
                                               <div>
                                                 <span class="btn btn-outline-secondary btn-file">
                                                     <span class="fileinput-new">Pilih Gambar</span>
@@ -108,8 +109,8 @@
                                             </div>
                                         </div>
 
-                                        <button class="btn btn-success mt-4" type="submit"><i class="fa fa-save"></i> Simpan</button>
-                                        <button class="btn btn-danger mt-4" type="reset"><i class="fa fa-trash"></i> Buang</button>
+                                        <button class="btn btn-success mt-4"><i class="fa fa-save"></i> Simpan</button>
+                                        <button class="btn btn-danger mt-4"><i class="fa fa-trash"></i> Buang</button>
                                     </div>
                                 </div>
                         </form>
@@ -122,6 +123,8 @@
 @endsection
 
 @section('script')
+    <!-- Steps -->
+    <script src="{{asset('inspinia/js/plugins/steps/jquery.steps.min.js')}}"></script>
     <!-- Jquery Validate -->
     <script src="{{asset('inspinia/js/plugins/validate/jquery.validate.min.js')}}"></script>
     <!-- Jasny -->
@@ -130,6 +133,7 @@
     <script src="{{asset('inspinia/js/plugins/iCheck/icheck.min.js')}}"></script>
     <script>
         $(document).ready(function(){
+            $("#wizard").steps();
             $('.i-checks').iCheck({
                 radioClass: 'iradio_square-green',
             });

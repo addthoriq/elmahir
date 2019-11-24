@@ -30,10 +30,10 @@ class StudentController extends Controller
         return Datatables::of($data)
         ->editColumn('avatar', function($index){
             if ($index->avatar) {
-                return "<img class='rounded-circle' src=".Storage::url($index->avatar)." width='38px' height='38px' />";
+                return "<img class='rounded-circle' src=".Storage::url($index->avatar)." width='40px' height='40px' />";
             }else {
                 $ava     = new Avatar;
-                return "<img class='rounded-circle' src=".$ava->create($index->name)->toBase64() ." width='38px' height='38px' />";
+                return "<img class='rounded-circle' src=".$ava->create($index->name)->toBase64() ." width='40px' height='40px' />";
             }
         })
         ->editColumn('gender',function($index){
@@ -62,7 +62,7 @@ class StudentController extends Controller
 
     public function create()
     {
-        $years     = SchoolYear::all();
+        $years     = SchoolYear::where('status',1)->get();
         $classes     = Classroom::all();
         return view($this->folder.'.create', compact('years', 'classes'));
     }
@@ -152,7 +152,7 @@ class StudentController extends Controller
             $prof->phone_number = $request->phone_number;
             $prof->save();
         }
-        return redirect()->route('student.show',[$id])->with('status', 'Data Informasi Siswa berhasil diubah');
+        return redirect()->route('student.show',[$id])->with('notif', 'Data Informasi Siswa berhasil diubah');
     }
 
     public function updateAva(Request $request, $id)
@@ -198,7 +198,8 @@ class StudentController extends Controller
         ClassHistory::where('student_id', $id)->update([
             'status'    => 0,
         ]);
-        return redirect()->route('student.show', [$id])->with('notif', 'Siswa ini telah menjadi Alumnus');
+        $data = Student::findOrFail($id);
+        return redirect($this->rdr)->with('notif', $data->name.' telah menjadi Alumnus');
     }
 
     public function destroy($id)

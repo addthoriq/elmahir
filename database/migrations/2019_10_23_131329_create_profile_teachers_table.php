@@ -22,6 +22,7 @@ class CreateProfileTeachersTable extends Migration
             $table->string('place_of_birth');
             $table->string('date_of_birth');
             $table->string('phone_number');
+            $table->timestamps();
             $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
         });
     }
