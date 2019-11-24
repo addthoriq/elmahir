@@ -29,6 +29,7 @@ Route::get('/teacher-deactived/dbtb', 'UnonController@dbTables')->name('unon.dbt
 
 Route::get('/home/chartMurid', 'HomeController@chartMurid')->name('home.chartMurid');
 Route::get('/home/chartGuru', 'HomeController@chartGuru')->name('home.chartGuru');
+Route::get('/classroom/{id}/chartMurid', 'ClassroomController@chartMurid')->name('classroom.chartMurid');
 
 //Default
 Route::resource('/home', 'HomeController');

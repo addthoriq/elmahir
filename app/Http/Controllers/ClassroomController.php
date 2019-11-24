@@ -64,6 +64,18 @@ class ClassroomController extends Controller
         return view($this->folder.'.show', compact('data', 'stds'));
     }
 
+    public function chartMurid($id)
+    {
+        $lk   = ClassHistory::whereHas('student',function($q){
+            $q->where('gender','=','L');
+        })->where([['status', 1],['classroom_id', $id]])->count();
+        $pr   = ClassHistory::whereHas('student',function($q){
+            $q->where('gender','=','P');
+        })->where([['status', 1],['classroom_id', $id]])->count();
+        $gender = [$lk, $pr];
+        return response()->json($gender);
+    }
+
     public function update(Request $request, $id)
     {
         Classroom::findOrFail($id)->update([
