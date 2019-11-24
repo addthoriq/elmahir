@@ -44,6 +44,11 @@
                 <table class="table table-striped table-hover dataTables-example" style="border-spacing:0px;">
                     <thead>
                         <tr>
+                            <th style="width: 20px;">#</th>
+                            <th>Avatar</th>
+                            <th>NIP</th>
+                            <th>Nama</th>
+                            <th>Gender</th>
                             <th style="width: 20px;">No</th>
                             <th>Avatar</th>
                             <th>NIP</th>
