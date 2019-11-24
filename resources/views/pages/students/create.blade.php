@@ -4,7 +4,6 @@
 
 @section('style')
     <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
     <style media="screen">
@@ -148,10 +147,6 @@
 @endsection
 
 @section('script')
-    <!-- Steps -->
-    <script src="{{asset('inspinia/js/plugins/steps/jquery.steps.min.js')}}"></script>
-    <!-- Jquery Validate -->
-    <script src="{{asset('inspinia/js/plugins/validate/jquery.validate.min.js')}}"></script>
     <!-- Jasny -->
     <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
     <!-- iCheck -->

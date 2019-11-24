@@ -14,8 +14,7 @@ class TeachersTableSeeder extends Seeder
     public function run()
     {
         $faker 		= Factory::create('id_ID');
-    	for ($i=0; $i < 15; $i++) { 
-    		
+    	for ($i=0; $i < 15; $i++) {
     		$data[$i]	= [
     			'name'			=> $faker->name,
     			'email'			=> $faker->email,

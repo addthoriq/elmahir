@@ -49,11 +49,6 @@
                             <th>NIP</th>
                             <th>Nama</th>
                             <th>Gender</th>
-                            <th style="width: 20px;">No</th>
-                            <th>Avatar</th>
-                            <th>NIP</th>
-                            <th>Nama</th>
-                            <th>Jenis Kelamin</th>
                             <th>Action</th>
                         </tr>
                     </thead>
