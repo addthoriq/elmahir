@@ -79,6 +79,15 @@
                                     <span class='label label-success'>Operator 2</span>
                                 @endif
                             </div>
+                            <div class="m-b-sm">
+                                @if(!$data->status)
+                                <form action="{{route('user.aktif', $data->id)}}" method="post">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="btn btn-xs btn-info" onclick='javascript:return confirm(`Apakah anda yakin ingin mengaktifkan {{$data->name}} ?`)'><i class="fa fa-check"></i> Aktifkan</button>
+                                </form>
+                                @endif
+                            </div>
                         </div>
                         <table class="table">
                             <tbody>

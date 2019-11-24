@@ -7,6 +7,11 @@
     <link href="{{asset('inspinia/css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
+    <style media="screen">
+        .fileinput-preview.fileinput-exists.img-thumbnail img{
+            max-width: 100%;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -45,110 +50,94 @@
 
                         <form id="form" action="{{route('student.store')}}" class="wizard-big" method="post" enctype="multipart/form-data">
                             @csrf
-
-                            <h1>Akun</h1>
-                            <fieldset>
-                                <h2>Informasi Akun</h2>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>NISN *</label>
-                                            <input id="nisn" name="nisn" type="number" class="form-control ">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Nama *</label>
-                                            <input id="name" name="name" type="text" class="form-control ">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Email *</label>
-                                            <input id="email" name="email" type="text" class="form-control ">
-                                        </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h3>Informasi Dasar</h3>
+                                    <div class="form-group">
+                                        <label>NISN *</label>
+                                        <input id="nisn" name="nisn" type="number" class="form-control ">
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="password1">Password *</label>
-                                            <input id="password1" type="password" class="form-control ">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Konfirmasi Password *</label>
-                                            <input id="password" name="password" type="password" class="form-control ">
-                                        </div>
+                                    <div class="form-group">
+                                        <label>Nama *</label>
+                                        <input id="name" name="name" type="text" class="form-control ">
                                     </div>
-                                </div>
-                            </fieldset>
-
-                            <h1>Profil</h1>
-                            <fieldset>
-                                <h2>Informasi Profil</h2>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Tahun Masuk *</label>
-                                            <input id="start_year" name="start_year" type="number" class="form-control ">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Kelas *</label>
-                                            <select class="form-control m-b" name="classroom_id">
-                                                <option>-- Pilih Kelas --</option>
-                                                @foreach ($classes as $class)
-                                                    <option value="{{$class->id}}">{{$class->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Tahun Ajaran *</label>
-                                            <select class="form-control m-b" name="school_year_id">
-                                                <option>-- Pilih Tahun Ajaran --</option>
-                                                @foreach ($years as $year)
-                                                    <option value="{{$year->id}}">{{$year->start_year}}/{{$year->end_year}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                    <div class="form-group">
+                                        <label>Tahun Masuk *</label>
+                                        <input id="start_year" name="start_year" type="number" class="form-control ">
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Jenis Kelamin</label>
-                                            <div class="i-checks col-sm-6">
-                                                <label>
-                                                    <input type="radio" value="L" name="gender">
-                                                    <i></i>
-                                                    Laki-Laki
-                                                </label>
-                                            </div>
-                                            <div class="i-checks col-sm-6">
-                                                <label>
-                                                    <input type="radio" value="P" name="gender">
-                                                    <i></i>
-                                                    Perempuan
-                                                </label>
-                                            </div>
-                                        </div>
-
+                                    <div class="form-group">
+                                        <label>Kelas *</label>
+                                        <select class="form-control m-b" name="classroom_id">
+                                            <option>-- Pilih Kelas --</option>
+                                            @foreach ($classes as $class)
+                                                <option value="{{$class->id}}">{{$class->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                </div>
-                            </fieldset>
-
-                            <h1>Avatar</h1>
-                            <fieldset>
-                                <div class="alert alert-danger print-error-msg" style="display:none">
-                                  <ul></ul>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="custom-file">
-                                            <input id="logo" type="file" name="avatar" class="custom-file-input ava">
-                                            <label for="logo" class="custom-file-label">Pilih Gambar</label>
+                                    <div class="form-group">
+                                        <label>Tahun Ajaran *</label>
+                                        <select class="form-control m-b" name="school_year_id">
+                                            <option>-- Pilih Tahun Ajaran --</option>
+                                            @foreach ($years as $year)
+                                                <option value="{{$year->id}}">{{$year->start_year}}/{{$year->end_year}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Jenis Kelamin</label>
+                                        <div class="i-checks col-sm-6">
+                                            <label>
+                                                <input type="radio" value="L" name="gender">
+                                                <i></i>
+                                                Laki-Laki
+                                            </label>
+                                        </div>
+                                        <div class="i-checks col-sm-6">
+                                            <label>
+                                                <input type="radio" value="P" name="gender">
+                                                <i></i>
+                                                Perempuan
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <h3>Set Up Akun</h3>
+                                    <div class="form-group">
+                                        <label for="email">Email *</label>
+                                        <input id="email" name="email" type="text" class="form-control ">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password1">Password *</label>
+                                        <input id="password1" type="password" class="form-control ">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Konfirmasi Password *</label>
+                                        <input id="password" name="password" type="password" class="form-control ">
+                                    </div>
+                                    <label for="">Avatar</label>
 
-                            </fieldset>
+                                    <div class="custom-file">
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                          <div class="fileinput-new img-thumbnail" style="height: 160px;">
+                                            <img src="https://via.placeholder.com/150">
+                                          </div>
+                                          <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: 200px;"></div>
+                                          <div>
+                                            <span class="btn btn-outline-secondary btn-file">
+                                                <span class="fileinput-new">Pilih Gambar</span>
+                                                <span class="fileinput-exists">Ubah</span>
+                                                <input type="file" name="avatar">
+                                            </span>
+                                            <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Hapus</a>
+                                          </div>
+                                        </div>
+                                    </div>
 
-                            <h1>Selesai</h1>
-                            <fieldset>
-                                <h2>Syarat dan Ketentuan Berlaku</h2>
-                                <input id="acceptTerms" name="acceptTerms" type="checkbox" class=""> <label for="acceptTerms">Saya menyetujui untuk membuat Siswa baru</label>
-                            </fieldset>
+                                    <button class="btn btn-success mt-4" type="submit"><i class="fa fa-save"></i> Simpan</button>
+                                    <button class="btn btn-danger mt-4" type="reset"><i class="fa fa-trash"></i> Buang</button>
+                                </div>
+                            </div>
                         </form>
 
                     </div>
@@ -169,83 +158,6 @@
     <script src="{{asset('inspinia/js/plugins/iCheck/icheck.min.js')}}"></script>
     <script>
         $(document).ready(function(){
-            $("#wizard").steps();
-            $("#form").steps({
-                bodyTag: "fieldset",
-                onStepChanging: function (event, currentIndex, newIndex)
-                {
-                    // Always allow going backward even if the current step contains invalid fields!
-                    if (currentIndex > newIndex)
-                    {
-                        return true;
-                    }
-
-                    // Forbid suppressing "Warning" step if the student is to young
-                    if (newIndex === 3 && Number($("#age").val()) < 18)
-                    {
-                        return false;
-                    }
-
-                    var form = $(this);
-
-                    // Clean up if student went backward before
-                    if (currentIndex < newIndex)
-                    {
-                        // To remove error styles
-                        $(".body:eq(" + newIndex + ") label.error", form).remove();
-                        $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
-                    }
-
-                    // Disable validation on fields that are disabled or hidden.
-                    form.validate().settings.ignore = ":disabled,:hidden";
-
-                    // Start validation; Prevent going forward if false
-                    return form.valid();
-                },
-                onStepChanged: function (event, currentIndex, priorIndex)
-                {
-                    // Suppress (skip) "Warning" step if the student is old enough.
-                    if (currentIndex === 2 && Number($("#age").val()) >= 18)
-                    {
-                        $(this).steps("next");
-                    }
-
-                    // // Suppress (skip) "Warning" step if the student is old enough and wants to the previous step.
-                    // if (currentIndex === 2 && priorIndex === 3)
-                    // {
-                    //     $(this).steps("previous");
-                    // }
-                },
-                onFinishing: function (event, currentIndex)
-                {
-                    var form = $(this);
-
-                    // Disable validation on fields that are disabled.
-                    // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
-                    form.validate().settings.ignore = ":disabled";
-
-                    // Start validation; Prevent form submission if false
-                    return form.valid();
-                },
-                onFinished: function (event, currentIndex)
-                {
-                    var form = $(this);
-
-                    // Submit form input
-                    form.submit();
-                }
-            })
-            .validate({
-                errorPlacement: function (error, element)
-                {
-                    element.before(error);
-                },
-                rules: {
-                    password: {
-                        equalTo: "#password"
-                    }
-                }
-            });
             $('.i-checks').iCheck({
                 radioClass: 'iradio_square-green',
             });

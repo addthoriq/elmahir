@@ -27,9 +27,7 @@ class ClassroomController extends Controller
             return isset($index->teacher->name) ? $index->teacher->name : '-';
         })
         ->addColumn('total_student', function($index){
-            return $index->classHistories()->whereHas('school_year', function($q){
-                $q->where('status',1);
-            })->count();
+            return Classhistory::where([['status', 1],['classroom_id', $index->id]])->count();
         })
         ->addColumn('action', function($index){
             $tag     = Form::open(["url"=>route('classroom.destroy', $index->id), "method" => "DELETE"]);
@@ -64,6 +62,18 @@ class ClassroomController extends Controller
         $data      = Classroom::findOrFail($id);
         $stds      = ClassHistory::where([['status', 1],['classroom_id', $id]])->get();
         return view($this->folder.'.show', compact('data', 'stds'));
+    }
+
+    public function chartMurid($id)
+    {
+        $lk   = ClassHistory::whereHas('student',function($q){
+            $q->where('gender','=','L');
+        })->where([['status', 1],['classroom_id', $id]])->count();
+        $pr   = ClassHistory::whereHas('student',function($q){
+            $q->where('gender','=','P');
+        })->where([['status', 1],['classroom_id', $id]])->count();
+        $gender = [$lk, $pr];
+        return response()->json($gender);
     }
 
     public function update(Request $request, $id)

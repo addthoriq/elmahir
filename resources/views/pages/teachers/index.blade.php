@@ -32,6 +32,7 @@
                 <a href="{{ route('teacher.create') }}" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
                 <a href="" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Import</a>
                 <a href="" class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</a>
+                <a href="{{route('unon.index')}}" class="btn btn-sm btn-info"><i class="fa fa-minus-square"></i> Guru Nonaktif</a>
             </div>
             @if (session('notif'))
                 <div class="alert alert-success alert-dismissable">
@@ -48,6 +49,11 @@
                             <th>NIP</th>
                             <th>Nama</th>
                             <th>Gender</th>
+                            <th style="width: 20px;">No</th>
+                            <th>Avatar</th>
+                            <th>NIP</th>
+                            <th>Nama</th>
+                            <th>Jenis Kelamin</th>
                             <th>Action</th>
                         </tr>
                     </thead>
