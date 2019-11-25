@@ -22,7 +22,7 @@
                     <a href="{{ route('home.index') }}">Beranda</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('student.index') }}">Data Guru</a>
+                    <a href="{{ route('teacher.index') }}">Data Guru</a>
                 </li>
                 </li>
                 <li class="breadcrumb-item active">
@@ -40,57 +40,78 @@
                         <h5>Tambah Data Guru</h5>
                     </div>
                     <div class="ibox-content">
+
                         <form id="form" action="{{route('teacher.store')}}" class="wizard-big" method="post" enctype="multipart/form-data">
                             @csrf
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <h3>Informasi Dasar</h3>
                                         <div class="form-group">
-                                            <label>NIP *</label>
-                                            <input id="nip" name="nip" type="number" class="form-control ">
+                                            <label class="{{$errors->has('nip')?"text-danger":""}}">NIP {{$errors->has('nip')?"*":""}}</label>
+                                            <input id="nip" name="nip" type="number" value="{{old('nip')}}" class="form-control {{$errors->has('nip')?"border border-danger":""}}">
+                                            @if ($errors->has('nip'))
+                                                <span class="text-danger">{{$errors->first('nip')}}</span>
+                                            @endif
                                         </div>
                                         <div class="form-group">
-                                            <label>Nama *</label>
-                                            <input id="name" name="name" type="text" class="form-control ">
+                                            <label class="{{$errors->has('name')?"text-danger":""}}">Nama {{$errors->has('name')?"*":""}}</label>
+                                            <input id="name" value="{{old('name')}}" name="name" type="text" class="form-control {{$errors->has('name')?"border border-danger":""}}">
+                                            @if ($errors->has('name'))
+                                                <span class="text-danger">{{$errors->first('name')}}</span>
+                                            @endif
                                         </div>
                                         <div class="form-group">
-                                            <label>Tahun Masuk *</label>
-                                            <input id="start_year" name="start_year" type="number" class="form-control ">
+                                            <label class="{{$errors->has('start_year')?"text-danger":""}}">Tahun Masuk {{$errors->has('start_year')?"*":""}}</label>
+                                            <input id="start_year" value="{{old('start_year')}}" name="start_year" type="number" class="form-control {{$errors->has('start_year')?"border border-danger":""}}">
+                                            @if ($errors->has('start_year'))
+                                                <span class="text-danger">{{$errors->first('start_year')}}</span>
+                                            @endif
                                         </div>
                                         <div class="form-group">
-                                            <label>Jenis Kelamin</label>
+                                            <label class="{{$errors->has('gender')?"text-danger":""}}">Jenis Kelamin {{$errors->has('gender')?"*":""}}</label>
                                             <div class="i-checks col-sm-6">
-                                                <label>
-                                                    <input type="radio" value="L" name="gender">
+                                                <label class="{{$errors->has('gender')?"text-danger":""}}">
+                                                    <input type="radio" value="L" value="{{old('gender')}}" name="gender">
                                                     <i></i>
                                                     Laki-Laki
                                                 </label>
                                             </div>
                                             <div class="i-checks col-sm-6">
-                                                <label>
-                                                    <input type="radio" value="P" name="gender">
+                                                <label class="{{$errors->has('gender')?"text-danger":""}}">
+                                                    <input type="radio" value="P" value="{{old('gender')}}" name="gender">
                                                     <i></i>
                                                     Perempuan
                                                 </label>
                                             </div>
+                                            @if ($errors->has('gender'))
+                                                <span class="text-danger">{{$errors->first('gender')}}</span>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <h3>Set Up Akun</h3>
+                                        <h3>Pengaturan Akun</h3>
                                         <div class="form-group">
-                                            <label for="email">Email *</label>
-                                            <input id="email" name="email" type="text" class="form-control ">
+                                            <label class="{{$errors->has('email')?"text-danger":""}}" for="email">Email *</label>
+                                            <input id="email" value="{{old('email')}}" name="email" type="text" class="form-control {{$errors->has('email')?"border border-danger":""}}">
+                                            @if ($errors->has('email'))
+                                                <span class="text-danger">{{$errors->first('email')}}</span>
+                                            @endif
                                         </div>
                                         <div class="form-group">
-                                            <label for="password1">Password *</label>
-                                            <input id="password1" type="password" class="form-control ">
+                                            <label class="{{$errors->has('password')?"text-danger":""}}" for="password">Password *</label>
+                                            <input id="password" name="password" type="password" class="form-control {{$errors->has('password')?"border border-danger":""}}" placeholder="minimal 8 karakter">
+                                            @if ($errors->has('password'))
+                                                <span class="text-danger">{{$errors->first('password')}}</span>
+                                            @endif
                                         </div>
                                         <div class="form-group">
-                                            <label>Konfirmasi Password *</label>
-                                            <input id="password" name="password" type="password" class="form-control ">
+                                            <label class="{{$errors->has('confirmation_password')?"text-danger":""}}" for="confirmation_password">Konfirmasi Password *</label>
+                                            <input id="confirmation_password" name="confirmation_password" type="password" class="form-control {{$errors->has('confirmation_password')?"border border-danger":""}}" placeholder="minimal 8 karakter">
+                                            @if ($errors->has('confirmation_password'))
+                                                <span class="text-danger">{{$errors->first('confirmation_password')}}</span>
+                                            @endif
                                         </div>
                                         <label for="">Avatar</label>
-
                                         <div class="custom-file">
                                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                               <div class="fileinput-new img-thumbnail" style="height: 160px;">
@@ -107,8 +128,12 @@
                                               </div>
                                             </div>
                                         </div>
-
-                                        <button class="btn btn-success mt-4" type="submit"><i class="fa fa-save"></i> Simpan</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <button class="btn btn-success mt-4 pull-right" type="submit"><i class="fa fa-save"></i> Simpan</button>
+                                        <a class="btn btn-default mt-4" href="{{route('teacher.index')}}"><i class="fa fa-arrow-left"></i> Kembali</a>
                                         <button class="btn btn-danger mt-4" type="reset"><i class="fa fa-trash"></i> Buang</button>
                                     </div>
                                 </div>

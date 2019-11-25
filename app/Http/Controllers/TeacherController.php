@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\TeacherRequest;
 use App\Model\User;
 use App\Model\Role;
 use App\Model\Teacher;
@@ -60,8 +61,9 @@ class TeacherController extends Controller
         return view('pages.teachers.create');
     }
 
-    public function store(Request $request)
+    public function store(TeacherRequest $request)
     {
+        dd($request->all());
         $data               = new Teacher;
         $data->nip         = $request->nip;
         $data->name         = $request->name;
@@ -90,7 +92,7 @@ class TeacherController extends Controller
         return view($this->folder.'.show', compact('data', 'admin', 'op1', 'op2', 'user', 'usr'));
     }
 
-    public function update(Request $request, $id)
+    public function update(TeacherRequest $request, $id)
     {
         if (empty($request->password)) {
             Teacher::find($id)->update([
