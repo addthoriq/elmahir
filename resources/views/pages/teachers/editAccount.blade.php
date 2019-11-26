@@ -18,8 +18,7 @@
                         <label for="password" id="labelPass">Password</label>
                         <input id="password" type="password" class="form-control">
                         <i class="text-muted">Password minimal 8 karakter</i>
-                        <span id="textPassword" class="text-danger">
-                        </span>
+                        <span id="textPassword" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="confirmation_password" id="konfirPass">Konfirmasi Password</label>

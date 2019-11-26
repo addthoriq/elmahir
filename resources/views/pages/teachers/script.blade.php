@@ -228,17 +228,17 @@
             var address = $("#address").val();
             if (address == "") {
                 $("#labelAddress").addClass('text-danger').text('Alamat *');
-                $("#address").addClass('border boder-danger');
+                $("#address").addClass('border border-danger');
                 $("#noticeAddress").addClass('text-danger').text('Alamat tidak boleh Kosong');
                 document.getElementById("tombol1").disabled = true;
             }else if (address.length < 5) {
                 $("#labelAddress").addClass('text-danger').text('Alamat *');
-                $("#address").addClass('border boder-danger');
+                $("#address").addClass('border border-danger');
                 $("#noticeAddress").addClass('text-danger').text('Alamat terlalu pendek');
                 document.getElementById("tombol1").disabled = true;
             }else {
                 $("#labelAddress").removeClass('text-danger').text('Alamat');
-                $("#address").removeClass('border boder-danger');
+                $("#address").removeClass('border border-danger');
                 $("#noticeAddress").removeClass('text-danger').text("");
                 document.getElementById("tombol1").disabled = false;
             }

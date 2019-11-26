@@ -10,8 +10,8 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label>Kelas *</label>
-                            <select class="form-control m-b" name="classroom_id">
+                            <label id="labelClassroom" for="classroom_id">Kelas</label>
+                            <select id="classroom_id" class="form-control m-b" name="classroom_id">
                                 <option value="{{$data->classroom_id}}">-- {{$data->classroom->name}} --</option>
                                 @foreach ($classroom as $class)
                                     <option value="{{$class->id}}">{{$class->name}}</option>
@@ -19,8 +19,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Tahun Ajaran *</label>
-                            <select class="form-control m-b" name="school_year_id">
+                            <label id="labelYearT" for="yearTeach">Tahun Ajaran</label>
+                            <select id="yearTeach" class="form-control m-b" name="school_year_id">
                                 <option value="{{$histories->school_year->id}}">-- {{$histories->school_year->start_year}}/{{$histories->school_year->end_year}} --</option>
                                 @foreach ($years as $year)
                                     <option value="{{$year->id}}">{{$year->start_year}}/{{$year->end_year}}</option>
@@ -45,7 +45,7 @@
                             </div>
                         </div>
                         <div>
-                            <button type="submit" class="btn btn-sm btn-primary float-right m-t-n-xs"><i class="fa fa-send"></i> Ubah</button>
+                            <button id="tombol1" disabled type="submit" class="btn btn-sm btn-primary float-right m-t-n-xs"><i class="fa fa-send"></i> Ubah</button>
                         </div>
                     </form>
             </div>
