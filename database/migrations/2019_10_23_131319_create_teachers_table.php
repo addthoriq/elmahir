@@ -15,13 +15,13 @@ class CreateTeachersTable extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('nip');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->string('avatar')->nullable();
-            $table->string('nip');
             $table->year('start_year');
             $table->enum('gender', ['L', 'P']);
             $table->boolean('status'); //Aktif == 1 && Berhenti == 0

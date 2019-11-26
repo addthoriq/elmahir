@@ -7,6 +7,8 @@
     <link href="{{asset('inspinia/css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
+    <link href="{{ asset('inspinia/css/plugins/chartist/chartist.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('inspinia/css/plugins/iCheck/custom.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -17,8 +19,11 @@
                 <li class="breadcrumb-item">
                     <a href="{{ route('home.index') }}">Beranda</a>
                 </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('classroom.index') }}">Manajemen Kelas</a>
+                </li>
                 <li class="breadcrumb-item active">
-                    <strong>Manajemen Kelas</strong>
+                    <strong>Detail Kelas</strong>
                 </li>
             </ol>
         </div>
@@ -72,7 +77,7 @@
                                     <td>{{$stds->count()}}</td>
                                 </tr>
                                 <tr>
-                                    <th>Anggota Kelas: </th>
+                                    <th>Anggota Kelas </th>
                                     <td>
                                         <ul>
                                             @if ($stds)
@@ -85,8 +90,17 @@
                                         </ul>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>Persentase</th>
+                                </tr>
                             </tbody>
                         </table>
+                        <div class="statistic-box mt-0">
+                            <canvas id="siswa" height="50"></canvas>
+                            <div class="m-t">
+                                <small>Data diambil dari data manajemen kesiswaan.</small>
+                            </div>
+                        </div>
                         <form action="{{route('classroom.destroy',$data->id)}}" method="post">
                             @csrf
                             @method('DELETE')
@@ -98,4 +112,62 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <!-- iCheck -->
+    <script src="{{ asset('inspinia/js/plugins/iCheck/icheck.min.js') }}"></script>
+    <!-- ChartJS-->
+    <script src="{{asset('inspinia/js/plugins/chartJs/Chart.min.js')}}"></script>
+    <script>
+    var murid     = "{{route('classroom.chartMurid',$data->id)}}";
+    $.get(murid, function(response){
+        var ctx = document.getElementById('siswa').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Laki-laki', 'Perempuan'],
+                datasets: [{
+                    data: response,
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 99, 132, 0.5)',
+                    ],
+                    borderWidth: 1
+                }]
+            }
+        });
+        function addData(chart, label, color, data) {
+            chart.data.datasets.push({
+                backgroundColor: color,
+                data: data
+            });
+            chart.update();
+        }
+    });
+    $.get(guru, function(response){
+        var ctx = document.getElementById('guru').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Laki-laki', 'Perempuan'],
+                datasets: [{
+                    data: response,
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 99, 132, 0.5)',
+                    ],
+                    borderWidth: 1
+                }]
+            }
+        });
+        function addData(chart, label, color, data) {
+            chart.data.datasets.push({
+                backgroundColor: color,
+                data: data
+            });
+            chart.update();
+        }
+    });
+    </script>
 @endsection

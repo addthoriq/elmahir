@@ -13,11 +13,7 @@ class UserController extends Controller
     protected $folder     = 'pages.users';
     protected $rdr        = '/user';
     protected $edit       = '/user/edit';
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $ajax     = route('user.dbtb');
@@ -41,35 +37,32 @@ class UserController extends Controller
             return ($index->status)?"<span class='label label-primary'>Aktif</span>":"<span class='label label-danger'>Tidak Aktif</span>";
         })
         ->addColumn('action', function($index){
-            $tag     = Form::open(["url"=>route('user.destroy', $index->id), "method" => "DELETE"]);
-            $tag    .= "<a href=". route('user.show', $index->id) ." class='btn btn-xs btn-info' ><i class='fa fa-search'></i> Detail</a> ";
-            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)' ><i class='fa fa-trash'></i> Hapus</button>";
-            $tag    .= Form::close();
-            return $tag;
+            if (!$index->status) {
+                $tag     = Form::open(["url"=>route('user.aktif', $index->id), "method" => "PUT"]);
+                $tag    .= "<a href=". route('user.show', $index->id) ." class='btn btn-xs btn-warning' ><i class='fa fa-search'></i> Detail</a> ";
+                $tag    .= "<button type='submit' class='btn btn-xs btn-info' onclick='javascript:return confirm(`Apakah anda yakin ingin mengaktifkan ".$index->name." ?`)' ><i class='fa fa-check'></i> Aktifkan</button>";
+                $tag    .= Form::close();
+                return $tag;
+            }else {
+                $tag     = Form::open(["url"=>route('user.unon', $index->id), "method" => "PUT"]);
+                $tag    .= "<a href=". route('user.show', $index->id) ." class='btn btn-xs btn-warning' ><i class='fa fa-search'></i> Detail</a> ";
+                $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan ".$index->name." ?`)' ><i class='fa fa-minus-square'></i> Nonaktifkan</button>";
+                $tag    .= Form::close();
+                return $tag;
+            }
         })
         ->rawColumns([
-            'id', 'role_id', 'status', 'action'
+            'id', 'role_id', 'status', 'action',
         ])
         ->make(true);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $roles = Role::all();
         return view($this->folder.'.create', compact('roles'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data     = new User;
@@ -87,12 +80,6 @@ class UserController extends Controller
         return redirect($this->rdr)->with('notif', 'Data User berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $roles     = Role::all();
@@ -100,24 +87,6 @@ class UserController extends Controller
         return view($this->folder.'.show', compact('data', 'roles'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         if (empty($request->password)) {
@@ -136,16 +105,10 @@ class UserController extends Controller
                 'status'   => $request->status,
             ]);
         }
-        return redirect()->route('user.show', [$id])->with('notif', 'Informasi Profil berhasil diubah');
+        $data     = User::findOrFail($id);
+        return redirect()->route('user.show', [$id])->with('notif', 'Informasi '.$data->name.' berhasil diubah');
     }
 
-    /**
-     * Update the avatar resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function updateAva(Request $request, $id)
     {
         $user     = User::findOrFail($id);
@@ -159,20 +122,31 @@ class UserController extends Controller
             $user->avatar = $ava_path;
         }
         $user->save();
-
-        return redirect()->route('user.show', [$id])->with('notif', 'Poto Profil berhasil diubah');
+        return redirect()->route('user.show', [$id])->with('notif', 'Poto Profil '.$user->name.' berhasil diubah');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function aktif(Request $request, $id)
+    {
+        User::findOrFail($id)->update([
+            'status'    => 1,
+        ]);
+        $data = User::findOrFail($id);
+        return redirect($this->rdr)->with('notif', $data->name.' berhasil di aktifkan!');
+    }
+
+    public function unon(Request $request, $id)
+    {
+        User::findOrFail($id)->update([
+            'status'    => 0,
+        ]);
+        $data = User::findOrFail($id);
+        return redirect($this->rdr)->with('notif', $data->name.' berhasil di nonaktifkan!');
+    }
+
     public function destroy($id)
     {
         $data     = User::findOrFail($id);
         $data->delete();
-        return redirect($this->rdr)->with('notif', 'Data User berhasil dihapus');
+        return redirect($this->rdr)->with('notif', $data->name.' berhasil dihapus');
     }
 }

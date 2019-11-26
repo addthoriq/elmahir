@@ -16,7 +16,7 @@
         <li class="{{ Request::is('home') || Request::is('home/*')? 'active' : '' }}">
             <a href="{{ route('home.index') }}"><i class="fa fa-home"></i> <span class="nav-label">Beranda</span></a>
         </li>
-        <li class="{{ Request::is('teacher') || Request::is('teacher/*')? 'active' : '' }}">
+        <li class="{{ Request::is('teacher', 'teacher-deactived') || Request::is('teacher/*', 'teacher-deactived/*')? 'active' : '' }}">
             <a href="{{ route('teacher.index') }}"><i class="fa fa-graduation-cap"></i> <span class="nav-label">Data Guru</span></a>
         </li>
         <li class="{{ Request::is('student','alumni') || Request::is('student/*','alumni/*')? 'active' : '' }}">

@@ -7,22 +7,27 @@
     <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
+    <style media="screen">
+        .fileinput-preview.fileinput-exists.img-thumbnail img{
+            max-width: 100%;
+        }
+    </style>
 @endsection
 
 @section('content')
     <div class="row wrapper white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Data Siswa</h2>
+            <h2>Data Guru</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('home.index') }}">Beranda</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('teacher.index') }}">Data Siswa</a>
+                    <a href="{{ route('teacher.index') }}">Data Guru</a>
                 </li>
                 </li>
                 <li class="breadcrumb-item active">
-                    <strong>Detail Siswa</strong>
+                    <strong>Detail Guru</strong>
                 </li>
             </ol>
         </div>
@@ -33,7 +38,7 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>Profil Siswa</h5>
+                        <h5>Profil Guru</h5>
                         <div class="ibox-tools">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i class="fa fa-wrench"></i>
@@ -49,8 +54,9 @@
                         </div>
 
                         {{-- Modal disini --}}
-                        {{-- @include('pages.teachers.editAccount') --}}
+                        @include('pages.teachers.editAccount')
                         @include('pages.teachers.editProfile')
+                        @include('pages.teachers.editAvatar')
 
 
                     </div>
@@ -72,10 +78,21 @@
                                 @endif
                             </div>
                             <div class="m-b-sm">
-                                @if($data->status)
-                                    <span class='label label-success'>Pengajar Aktif</span>
+                                @if ($user)
+                                    @if($data->status)
+                                        <span class='label label-success'>Pengajar Aktif</span>
+                                    @endif
+                                    @if ($usr->status)
+                                        @if ($usr->role_id == 1)
+                                            <span class='label label-warning'>Admin</span>
+                                        @elseif ($usr->role_id == 2)
+                                            <span class='label label-primary'>Operator 1</span>
+                                        @else
+                                            <span class='label label-success'>Operator 2</span>
+                                        @endif
+                                    @endif
                                 @else
-                                    <span class='label label-danger'>Keluar</span>
+                                    <span class='label label-success'>Pengajar Aktif</span>
                                 @endif
                             </div>
                         </div>
@@ -86,8 +103,8 @@
                                     <td>{{$data->start_year}}</td>
                                 </tr>
                                 <tr>
-                                    <th>NISN</th>
-                                    <td>{{$data->nisn}}</td>
+                                    <th>NIP</th>
+                                    <td>{{$data->nip}}</td>
                                 </tr>
                                 <tr>
                                     <th>NIK</th>
@@ -166,8 +183,45 @@
                                         {{date('d F Y', strtotime($data->updated_at))}}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>Jadikan sebagai</th>
+                                    <td>
+                                        @if (!$user)
+                                            <a data-toggle="modal" href="#editAdmin" class="btn btn-sm btn-warning">Admin</a>
+                                            <a data-toggle="modal" href="#editOp" class="btn btn-sm btn-primary">Operator 1</a>
+                                            <a data-toggle="modal" href="#editOpe" class="btn btn-sm btn-success">Operator 2</a>
+                                        @else
+                                            @if ($usr->status)
+                                                <form action="{{route('teacher.role',$data->id)}}" method="post">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    @if ($usr->role_id == 1)
+                                                        <a data-toggle="modal" href="#editOp" class="btn btn-sm btn-primary">Operator 1</a>
+                                                        <a data-toggle="modal" href="#editOpe" class="btn btn-sm btn-success">Operator 2</a>
+                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="javascript:return confirm(`Apakah anda yakin ingin menonaktifkan {{$data->name}} dari User?`)" >Nonaktifkan</button>
+                                                    @elseif ($usr->role_id == 2)
+                                                        <a data-toggle="modal" href="#editAdmin" class="btn btn-sm btn-warning">Admin</a>
+                                                        <a data-toggle="modal" href="#editOpe" class="btn btn-sm btn-success">Operator 2</a>
+                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="javascript:return confirm(`Apakah anda yakin ingin menonaktifkan {{$data->name}} dari User?`)" >Nonaktifkan</button>
+                                                    @else
+                                                        <a data-toggle="modal" href="#editAdmin" class="btn btn-sm btn-warning">Admin</a>
+                                                        <a data-toggle="modal" href="#editOp" class="btn btn-sm btn-primary">Operator 1</a>
+                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="javascript:return confirm(`Apakah anda yakin ingin menonaktifkan {{$data->name}} dari User?`)" >Nonaktifkan</button>
+                                                    @endif
+                                                </form>
+                                            @else
+                                                <a data-toggle="modal" href="#editAdmin" class="btn btn-sm btn-warning">Admin</a>
+                                                <a data-toggle="modal" href="#editOp" class="btn btn-sm btn-primary">Operator 1</a>
+                                                <a data-toggle="modal" href="#editOpe" class="btn btn-sm btn-success">Operator 2</a>
+                                            @endif
+                                        @endif
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
+                        @include('pages.teachers.editAdmin')
+                        @include('pages.teachers.editOp')
+                        @include('pages.teachers.editOpe')
                     </div>
                 </div>
             </div>
@@ -183,7 +237,7 @@
                                 <i class="fa fa-wrench"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
-                                <li><a data-toggle="modal" class="dropdown-item" href="#editClass">Ubah data Kelas Siswa</a></li>
+                                <li><a data-toggle="modal" class="dropdown-item" href="#editClass">Ubah data Kelas Guru</a></li>
                             </ul>
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -217,11 +271,11 @@
                                 @endforeach --}}
                             </tbody>
                         </table>
-                        <form action="{{route('teacher.destroy',$data->id)}}" method="post">
+                        <form action="{{route('teacher.nonaktif',$data->id)}}" method="post">
                             @csrf
-                            @method('DELETE')
+                            @method('PUT')
                             <a href="{{route('teacher.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
-                            <button type="submit" class="btn btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)'><i class="fa fa-trash"></i> Hapus</button>
+                            <button type="submit" class="btn btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan {{$data->name}} dari Guru aktif?`)'><i class="fa fa-minus-square"></i> Nonaktifkan</button>
                         </form>
                     </div>
                 </div>

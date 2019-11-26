@@ -1,20 +1,20 @@
 @extends('layouts.app')
 
-@section('title', 'Data Alumni')
+@section('title', 'Data Guru')
 
 @section('content')
 <div class="row wrapper white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Data Alumni</h2>
+        <h2>Data Guru</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="{{ route('home.index') }}">Beranda</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="{{ route('student.index') }}">Data Siswa</a>
+                <a href="{{ route('teacher.index') }}">Data Guru</a>
             </li>
             <li class="breadcrumb-item active">
-                <strong>Data Alumni</strong>
+                <strong>Data Guru Tidak Aktif</strong>
             </li>
         </ol>
     </div>
@@ -28,36 +28,43 @@
         <div class="col-lg-12">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>Daftar Nama Alumni</h5>
+                <h5>Daftar Nama Guru yang Tidak Aktif</h5>
             </div>
             <div class="ibox-content">
-                <div class="mb-3 mt-0">
-                    <a href="{{ route('student.index') }}" class="btn btn-sm btn-success"><i class="fa fa-arrow-circle-o-left"></i> Kembali</a>
-                    <a href="#" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Export</a>
-                    <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</a>
+            <div class="mb-3 mt-0">
+                <a href="{{ route('teacher.index') }}" class="btn btn-sm btn-success"><i class="fa fa-arrow-circle-o-left"></i> Kembali</a>
+                <a href="" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Import</a>
+                <a href="" class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</a>
+            </div>
+            @if (session('notif'))
+                <div class="alert alert-success alert-dismissable">
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                    {{session('notif')}}
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover dataTables-example" style="border-spacing:0px;">
-                        <thead>
-                            <tr>
-                                <th style="width: 20px;">No</th>
-                                <th>Avatar</th>
-                                <th>NISN</th>
-                                <th>Nama</th>
-                                <th>Gender</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
+            @endif
+            <div class="table-responsive">
+                <table class="table table-striped table-hover dataTables-example" style="border-spacing:0px;">
+                    <thead>
+                        <tr>
+                            <th style="width: 20px;">No</th>
+                            <th>Avatar</th>
+                            <th>NIP</th>
+                            <th>Nama</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
             </div>
         </div>
     </div>
     </div>
 </div>
 @endsection
+
 @section('script')
     <script type="text/javascript">
         var table;
@@ -70,7 +77,7 @@
                 columns: [
                     { data: 'id', searchable: true, orderable: true},
                     { data: 'avatar', searchable: false, orderable: false},
-                    { data: 'nisn', searchable: true, orderable: true},
+                    { data: 'nip', searchable: true, orderable: true},
                     { data: 'name', searchable: true, orderable: true},
                     { data: 'gender', searchable: true, orderable: false},
                     { data: 'action', searchable: false, orderable: false}
