@@ -62,7 +62,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="{{$errors->has('start_year')?"text-danger":""}}">Tahun Masuk {{$errors->has('start_year')?"*":""}}</label>
-                                            <input id="start_year" value="{{old('start_year')}}" name="start_year" type="number" class="form-control {{$errors->has('start_year')?"border border-danger":""}}">
+                                            <input id="start_year" value="{{old('start_year')}}" maxlength="4" name="start_year" type="number" class="form-control {{$errors->has('start_year')?"border border-danger":""}}">
                                             @if ($errors->has('start_year'))
                                                 <span class="text-danger">{{$errors->first('start_year')}}</span>
                                             @endif
@@ -91,21 +91,21 @@
                                     <div class="col-lg-6">
                                         <h3>Pengaturan Akun</h3>
                                         <div class="form-group">
-                                            <label class="{{$errors->has('email')?"text-danger":""}}" for="email">Email *</label>
+                                            <label class="{{$errors->has('email')?"text-danger":""}}" for="email">Email {{$errors->has('email')?"*":""}}</label>
                                             <input id="email" value="{{old('email')}}" name="email" type="text" class="form-control {{$errors->has('email')?"border border-danger":""}}">
                                             @if ($errors->has('email'))
                                                 <span class="text-danger">{{$errors->first('email')}}</span>
                                             @endif
                                         </div>
                                         <div class="form-group">
-                                            <label class="{{$errors->has('password')?"text-danger":""}}" for="password">Password *</label>
+                                            <label class="{{$errors->has('password')?"text-danger":""}}" for="password">Password {{$errors->has('password')?"*":""}}</label>
                                             <input id="password" name="password" type="password" class="form-control {{$errors->has('password')?"border border-danger":""}}" placeholder="minimal 8 karakter">
                                             @if ($errors->has('password'))
                                                 <span class="text-danger">{{$errors->first('password')}}</span>
                                             @endif
                                         </div>
                                         <div class="form-group">
-                                            <label class="{{$errors->has('confirmation_password')?"text-danger":""}}" for="confirmation_password">Konfirmasi Password *</label>
+                                            <label class="{{$errors->has('confirmation_password')?"text-danger":""}}" for="confirmation_password">Konfirmasi Password {{$errors->has('confirmation_password')?"*":""}}</label>
                                             <input id="confirmation_password" name="confirmation_password" type="password" class="form-control {{$errors->has('confirmation_password')?"border border-danger":""}}" placeholder="minimal 8 karakter">
                                             @if ($errors->has('confirmation_password'))
                                                 <span class="text-danger">{{$errors->first('confirmation_password')}}</span>
@@ -115,7 +115,7 @@
                                         <div class="custom-file">
                                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                               <div class="fileinput-new img-thumbnail" style="height: 160px;">
-                                                <img src="https://via.placeholder.com/150">
+                                                <img src="{{asset('img/150.png')}}">
                                               </div>
                                               <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: 200px;"></div>
                                               <div>
