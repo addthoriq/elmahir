@@ -26,6 +26,20 @@ Route::get('/teacher/dbtb', 'TeacherController@dbTables')->name('teacher.dbtb');
 Route::get('/course/dbtb', 'CourseController@dbTables')->name('course.dbtb');
 Route::get('/alumni/dbtb', 'AlumnusController@dbTables')->name('alumni.dbtb');
 
+//Materi Bab
+Route::get('/section/dbtb', 'SectionController@dbTables')->name('section.dbtb');
+Route::get('/mapel/dbtb', 'ChapterController@mapel')->name('mapel.dbtb');
+Route::get('/chapter/{id}/homeChapter', 'ChapterController@homeChapter')->name('chapter.homeChapter');
+Route::get('/chapter/{id}/dbtb', 'ChapterController@chapter')->name('chapter.dbtb');
+
+//Materi
+Route::get('/section/{id}/add', 'SectionController@add')->name('section.add');
+// Route::get('/section/{id}/file', 'SectionController@file')->name('section.file');
+
+//File
+Route::put('section/{id}/updateFile', 'SectionController@updateFile')->name('section.updateFile');
+Route::delete('section/{id}/deleteFile', 'SectionController@deleteFile')->name('section.deleteFile');
+
 Route::get('/home/chartMurid', 'HomeController@chartMurid')->name('home.chartMurid');
 Route::get('/home/chartGuru', 'HomeController@chartGuru')->name('home.chartGuru');
 
@@ -44,5 +58,6 @@ Route::resource('/classroom', 'ClassroomController');
 Route::resource('/section', 'SectionController');
 Route::resource('/task', 'TaskController');
 Route::resource('/user', 'UserController');
+Route::resource('/chapter', 'ChapterController');
 Route::put('/user/{id}/avatar', 'UserController@updateAva')->name('user.ava');
 Route::resource('/year', 'YearController');

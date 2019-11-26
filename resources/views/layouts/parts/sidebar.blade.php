@@ -38,8 +38,8 @@
         <li class="text-secondary py-2 px-3" style="background-color: #2F4050">
             <span class="nav-label">Kompetensi Siswa</span>
         </li>
-        <li class="{{ Request::is('section') || Request::is('section/*')? 'active' : '' }}">
-            <a href="{{ route('section.index') }}"><i class="fa fa-book"></i> <span class="nav-label">Materi</span></a>
+        <li class="{{ Request::is('chapter') || Request::is('chapter/*')? 'active' : '' }}">
+            <a href="{{ route('chapter.index') }}"><i class="fa fa-book"></i> <span class="nav-label">Materi</span></a>
         </li>
         <li class="{{ Request::is('task') || Request::is('task/*')? 'active' : '' }}">
             <a href="{{ route('task.index') }}"><i class="fa fa-tasks"></i> <span class="nav-label">Tugas</span></a>
