@@ -124,7 +124,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <h3>Set Up Akun</h3>
+                                    <h3>Pengaturan Akun</h3>
                                     <div class="form-group">
                                         <label class="{{$errors->has('email')?"text-danger":""}}" for="email" id="labelEmail">Email {{$errors->has('email')?"*":""}}</label>
                                         <input id="email" name="email" value="{{old('email')}}" type="text" class="form-control {{$errors->has('email')?"border border-danger":""}}">

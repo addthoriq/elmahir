@@ -85,7 +85,7 @@
             $(".text-muted").remove();
             $("#konfirPass").removeClass('text-danger').text('Konfirmasi Password');
             $("#confirmation_password").removeClass('border border-danger');
-            $("#textCPassword").removeClass('text-danger').text("Password Terverifikasi");
+            $("#textCPassword").removeClass('text-danger').text("");
             document.getElementById("tombol").disabled = false;
           }
         })

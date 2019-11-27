@@ -4,8 +4,13 @@
 
 @section('style')
     <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
+    <style media="screen">
+        .fileinput-preview.fileinput-exists.img-thumbnail img{
+            max-width: 100%;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -38,89 +43,104 @@
                         <h5>Tambah Data User</h5>
                     </div>
                     <div class="ibox-content">
-                        <h2>
-                            Data User
-                        </h2>
+                        <h2>Pengaturan Akun</h2>
                         <p>
                             Data User ini berfungsi sebagai pengurus dan pengelola e-learning ini
                         </p>
 
                         <form id="form" action="{{route('user.store')}}" class="wizard-big" method="post" enctype="multipart/form-data">
                             @csrf
-
-                            <h1>Akun</h1>
-                            <fieldset>
-                                <h2>Informasi Akun</h2>
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <div class="form-group">
-                                            <label for="email">Email *</label>
-                                            <input id="email" name="email" type="text" class="form-control required">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password">Password *</label>
-                                            <input id="password" type="password" class="form-control required">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Confirm Password *</label>
-                                            <input id="password" name="password" type="password" class="form-control required">
-                                        </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label id="labelName" for="name" class="{{$errors->has('name')?"text-danger":""}}">Nama {{$errors->has('name')?"*":""}}</label>
+                                        <input id="name" value="{{old('name')}}" name="name" type="text" class="form-control {{$errors->has('name')?"border border-danger":""}}">
+                                        <span id="noticeName"></span>
+                                        @if ($errors->has('name'))
+                                            <span class="text-danger">{{$errors->first('name')}}</span>
+                                        @endif
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="text-center">
-                                            <div style="margin-top: 20px">
-                                                <i class="fa fa-sign-in" style="font-size: 180px;color: #e5e5e5 "></i>
-                                            </div>
+                                    <div class="form-group">
+                                        <label id="labelEmail" for="email" class="{{$errors->has('email')?"text-danger":""}}" for="email">Email {{$errors->has('email')?"*":""}}</label>
+                                        <input id="email" value="{{old('email')}}" name="email" type="text" class="form-control {{$errors->has('email')?"border border-danger":""}}">
+                                        <span id="email"></span>
+                                        @if ($errors->has('email'))
+                                            <span class="text-danger">{{$errors->first('email')}}</span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="{{$errors->has('role_id')?"text-danger":""}}">Jadikan sebagai {{$errors->has('role_id')?"*":""}}</label>
+                                        <div class="i-checks col-sm-12">
+                                            <label class="{{$errors->has('role_id')?"text-danger":""}}">
+                                                <input type="radio" value="1" value="{{old('role_id')}}" name="role_id">
+                                                <i></i>
+                                                Admin
+                                            </label>
+                                        </div>
+                                        <div class="i-checks col-sm-12">
+                                            <label class="{{$errors->has('role_id')?"text-danger":""}}">
+                                                <input type="radio" value="2" value="{{old('role_id')}}" name="role_id">
+                                                <i></i>
+                                                Operator 1 (Kesiswaan)
+                                            </label>
+                                        </div>
+                                        <div class="i-checks col-sm-12">
+                                            <label class="{{$errors->has('role_id')?"text-danger":""}}">
+                                                <input type="radio" value="3" value="{{old('role_id')}}" name="role_id">
+                                                <i></i>
+                                                Operator 2 (Kurikulum)
+                                            </label>
+                                        </div>
+                                        @if ($errors->has('role_id'))
+                                            <span class="text-danger">{{$errors->first('role_id')}}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label id="labelPassword" for="password" class="{{$errors->has('password')?"text-danger":""}}" for="password">Password {{$errors->has('password')?"*":""}}</label>
+                                        <input id="password" name="password" type="password" class="form-control {{$errors->has('password')?"border border-danger":""}}">
+                                        <i class="text-muted">Password minimal 8 karakter</i>
+                                        <span id="noticePassword"></span>
+                                        @if ($errors->has('password'))
+                                            <span class="text-danger">{{$errors->first('password')}}</span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label id="labelCPassword" for="confirmation_password" class="{{$errors->has('confirmation_password')?"text-danger":""}}" for="confirmation_password">Konfirmasi Password {{$errors->has('confirmation_password')?"*":""}}</label>
+                                        <input id="confirmation_password" name="confirmation_password" type="password" class="form-control {{$errors->has('confirmation_password')?"border border-danger":""}}">
+                                        <i class="text-muted">Password minimal 8 karakter</i>
+                                        <span id="noticeCPassword"></span>
+                                        @if ($errors->has('confirmation_password'))
+                                            <span class="text-danger">{{$errors->first('confirmation_password')}}</span>
+                                        @endif
+                                    </div>
+                                    <label for="">Avatar</label>
+                                    <div class="custom-file">
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                          <div class="fileinput-new img-thumbnail" style="height: 160px;">
+                                            <img src="{{asset('img/150.png')}}">
+                                          </div>
+                                          <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: 200px;"></div>
+                                          <div>
+                                            <span class="btn btn-outline-secondary btn-file">
+                                                <span class="fileinput-new">Pilih Gambar</span>
+                                                <span class="fileinput-exists">Ubah</span>
+                                                <input type="file" name="avatar">
+                                            </span>
+                                            <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Hapus</a>
+                                          </div>
                                         </div>
                                     </div>
                                 </div>
-                            </fieldset>
-
-                            <h1>Profil</h1>
-                            <fieldset>
-                                <h2>Informasi Profil</h2>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Nama *</label>
-                                            <input id="name" name="name" type="text" class="form-control required">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Sebagai *</label>
-                                            <select class="form-control m-b" name="role_id">
-                                                <option>-- Pilih Sebagai --</option>
-                                                @foreach ($roles as $role)
-                                                    <option value="{{$role->id}}">{{$role->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <button id="tombol" disabled class="btn btn-success mt-4 pull-right" type="submit"><i class="fa fa-save"></i> Simpan</button>
+                                    <a class="btn btn-default mt-4" href="{{route('user.index')}}"><i class="fa fa-arrow-left"></i> Kembali</a>
+                                    <button class="btn btn-danger mt-4" type="reset"><i class="fa fa-trash"></i> Buang</button>
                                 </div>
-                            </fieldset>
-
-                            <h1>Avatar</h1>
-                            <fieldset>
-                                <div class="alert alert-danger print-error-msg" style="display:none">
-                                  <ul></ul>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="custom-file">
-                                            <input id="logo" type="file" name="avatar" class="custom-file-input ava">
-                                            <label for="logo" class="custom-file-label">Pilih Gambar</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </fieldset>
-
-                            <h1>Selesai</h1>
-                            <fieldset>
-                                <h2>Syarat dan Ketentuan Berlaku</h2>
-                                <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms">Saya menyetujui untuk membuat User baru</label>
-                            </fieldset>
+                            </div>
                         </form>
 
                     </div>
@@ -131,96 +151,117 @@
 @endsection
 
 @section('script')
-    <!-- Steps -->
-    <script src="{{asset('inspinia/js/plugins/steps/jquery.steps.min.js')}}"></script>
     <!-- Jquery Validate -->
     <script src="{{asset('inspinia/js/plugins/validate/jquery.validate.min.js')}}"></script>
     <!-- Jasny -->
     <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
+    <!-- iCheck -->
+    <script src="{{asset('inspinia/js/plugins/iCheck/icheck.min.js')}}"></script>
     <script>
         $(document).ready(function(){
-            $("#wizard").steps();
-            $("#form").steps({
-                bodyTag: "fieldset",
-                onStepChanging: function (event, currentIndex, newIndex)
-                {
-                    // Always allow going backward even if the current step contains invalid fields!
-                    if (currentIndex > newIndex)
-                    {
-                        return true;
-                    }
-
-                    // Forbid suppressing "Warning" step if the user is to young
-                    if (newIndex === 3 && Number($("#age").val()) < 18)
-                    {
-                        return false;
-                    }
-
-                    var form = $(this);
-
-                    // Clean up if user went backward before
-                    if (currentIndex < newIndex)
-                    {
-                        // To remove error styles
-                        $(".body:eq(" + newIndex + ") label.error", form).remove();
-                        $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
-                    }
-
-                    // Disable validation on fields that are disabled or hidden.
-                    form.validate().settings.ignore = ":disabled,:hidden";
-
-                    // Start validation; Prevent going forward if false
-                    return form.valid();
-                },
-                onStepChanged: function (event, currentIndex, priorIndex)
-                {
-                    // Suppress (skip) "Warning" step if the user is old enough.
-                    if (currentIndex === 2 && Number($("#age").val()) >= 18)
-                    {
-                        $(this).steps("next");
-                    }
-
-                    // // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
-                    // if (currentIndex === 2 && priorIndex === 3)
-                    // {
-                    //     $(this).steps("previous");
-                    // }
-                },
-                onFinishing: function (event, currentIndex)
-                {
-                    var form = $(this);
-
-                    // Disable validation on fields that are disabled.
-                    // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
-                    form.validate().settings.ignore = ":disabled";
-
-                    // Start validation; Prevent form submission if false
-                    return form.valid();
-                },
-                onFinished: function (event, currentIndex)
-                {
-                    var form = $(this);
-
-                    // Submit form input
-                    form.submit();
-                }
-            })
-            .validate({
-                errorPlacement: function (error, element)
-                {
-                    element.before(error);
-                },
-                rules: {
-                    password: {
-                        equalTo: "#password"
-                    }
-                }
+            $('.i-checks').iCheck({
+                radioClass: 'iradio_square-green',
             });
-
             $('.custom-file-input').on('change', function() {
                 let fileName = $(this).val().split('\\').pop();
                 $(this).next('.custom-file-label').addClass("selected").html(fileName);
             });
+            $('#name').blur(function(){
+                var name     = $('#name').val();
+                if (name == "") {
+                    $('#labelName').addClass('text-danger').text('Nama *');
+                    $('#name').addClass('border border-danger');
+                    $('#noticeName').addClass('text-danger').text('Nama tidak boleh kosong');
+                    document.getElementById('tombol').disabled = true;
+                }else if (name.length < 4 || name.length > 100) {
+                    $('#labelName').addClass('text-danger').text('Nama *');
+                    $('#name').addClass('border border-danger');
+                    $('#noticeName').addClass('text-danger').text('Nama minimal 4 dan maksimal 100 karakter');
+                    document.getElementById('tombol').disabled = true;
+                }else {
+                    $('#labelName').removeClass('text-danger').text('Nama');
+                    $('#name').removeClass('border border-danger');
+                    $('#noticeName').removeClass('text-danger').text('');
+                    document.getElementById('tombol').disabled = false;
+                }
+            })
+            $("#email").blur(function(){
+              var email   = $("#email").val();
+              if (email == "") {
+                  var pesan   = "Email tidak boleh kosong";
+                  $("#labelEmail").addClass('text-danger').text('Email');
+                  $("#email").addClass('border border-danger');
+                  $("#noticeEmail").addClass('text-danger').text(pesan);
+                  document.getElementById("tombol").disabled = true;
+              }
+              else if (email.search('@')>=0) {
+                var pesan2   = "Email Terverifikasi";
+                $("#labelEmail").remmoveClass('text-danger').text('Email');
+                $("#email").remmoveClass('border border-danger');
+                $("#noticeEmail").text(pesan2);
+                document.getElementById("tombol").disabled = true;
+              }else {
+                var pesan3   = "Email harus sesuai standar";
+                $("#labelEmail").addClass('text-danger').text('Email *');
+                $("#email").addClass('border border-danger');
+                $("#noticeEmail").text(pesan3);
+                document.getElementById("tombol").disabled = false;
+              }
+            })
+            $("#password").blur(function(){
+              var passNew   = $("#password").val();
+              var noticeCPassword  = $("#confirmation_password").val();
+              if (passNew == "" && noticeCPassword == "") {
+                  $(".text-muted").remove();
+                  $("#noticePassword").addClass('text-danger').text("Password tidak boleh kosong");
+                  $("#labelPassword").addClass('text-danger').text('Password *');
+                  $("#password").addClass('border border-danger');
+                  document.getElementById("tombol").disabled = true;
+              }else if (passNew.length < 8) {
+                $(".text-muted").remove();
+                $("#labelPassword").addClass('text-danger').text('Password *');
+                $("#password").addClass('border border-danger');
+                $("#noticePassword").addClass('text-danger').text("Password kurang 8 Karakter");
+                document.getElementById("tombol").disabled = true;
+              }else {
+                $(".text-muted").remove();
+                $("#labelPassword").removeClass('text-danger').text('Password');
+                $("#password").removeClass('border border-danger');
+                $("#noticePassword").removeClass('text-danger').text("");
+                document.getElementById("tombol").disabled = false;
+              }
+            })
+            $("#confirmation_password").blur(function(){
+              var passNew     = $("#password").val();
+              var noticeCPassword  = $("#confirmation_password").val();
+              if (passNew == "" && noticeCPassword == "") {
+                  $("#noticeCPassword").addClass('text-danger').text('Password tidak boleh kosong');
+                  $("#labelCPassword").addClass('text-danger').text('Konfirmasi Password *');
+                  $("#confirmation_password").addClass('border border-danger');
+                  $(".text-muted").text("Password minimal 8 karakter");
+                  document.getElementById("tombol").disabled = true;
+              }else if (noticeCPassword !== passNew) {
+                $(".text-muted").remove();
+                $("#password").addClass('border border-danger');
+                $("#labelPassword").addClass('text-danger').text('Password *');
+                $("#labelCPassword").addClass('text-danger').text('Konfirmasi Password *');
+                $("#confirmation_password").addClass('border border-danger');
+                $("#noticeCPassword").addClass('text-danger').text("Password tidak sama");
+                document.getElementById("tombol").disabled = true;
+              }else if (noticeCPassword.length < 8) {
+                $(".text-muted").remove();
+                $("#labelCPassword").addClass('text-danger').text('Konfirmasi Password *');
+                $("#confirmation_password").addClass('border border-danger');
+                $("#noticeCPassword").addClass('text-danger').text("Lengkapi Password anda");
+                document.getElementById("tombol").disabled = true;
+              }else {
+                $(".text-muted").remove();
+                $("#labelCPassword").removeClass('text-danger').text('Konfirmasi Password');
+                $("#confirmation_password").removeClass('border border-danger');
+                $("#noticeCPassword").removeClass('text-danger').text("Password benar");
+                document.getElementById("tombol").disabled = false;
+              }
+            })
 
        });
     </script>
