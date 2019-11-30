@@ -19,4 +19,8 @@ class Course extends Model
     {
         return $this->belongsTo(Classroom::class, 'class_id');
     }
+	public function teacherHistories()
+    {
+        return $this->hasMany(TeachersHistory::class);
+    }
 }

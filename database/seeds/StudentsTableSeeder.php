@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Faker\Factory;
+use App\Model\Classroom;
 
 class StudentsTableSeeder extends Seeder
 {
@@ -12,140 +14,33 @@ class StudentsTableSeeder extends Seeder
      */
     public function run()
     {
-        $data     = [
-            [
-                'classroom_id'    => 1,
-                'nisn'            => '999921321434',
-                'name'            => 'Sukijan',
-                'email'           => 'sukijan@siswa.com',
-                'password'        => bcrypt(123),
-                'start_year'      => '2019',
-                'gender'          => 'L',
-                'status'          => 1
-            ],
-            [
-                'classroom_id'    => 1,
-                'nisn'            => '999922211',
-                'name'            => 'Sumadi',
-                'email'           => 'sumadi@siswa.com',
-                'password'        => bcrypt(123),
-                'start_year'      => '2019',
-                'gender'          => 'L',
-                'status'          => 1
-            ],
-            [
-                'classroom_id'    => 1,
-                'nisn'            => '99993123244',
-                'name'            => 'Purnomo',
-                'email'           => 'purnomo@siswa.com',
-                'password'        => bcrypt(123),
-                'start_year'      => '2019',
-                'gender'          => 'L',
-                'status'          => 1
-            ],
-            [
-                'classroom_id'    => 1,
-                'nisn'            => '99992166432',
-                'name'            => 'Bambank',
-                'email'           => 'bambank@siswa.com',
-                'password'        => bcrypt(123),
-                'start_year'      => '2019',
-                'gender'          => 'L',
-                'status'          => 1
-            ],
-            [
-                'classroom_id'    => 2,
-                'nisn'            => '99923411234',
-                'name'            => 'Zaenab',
-                'email'           => 'zaenab.a@siswa.com',
-                'password'        => bcrypt(123),
-                'start_year'      => '2019',
-                'gender'          => 'P',
-                'status'          => 1
-            ],
-            [
-                'classroom_id'    => 2,
-                'nisn'            => '999966773213',
-                'name'            => 'Zulaikha',
-                'email'           => 'zulaikha.s@siswa.com',
-                'password'        => bcrypt(123),
-                'start_year'      => '2019',
-                'gender'          => 'P',
-                'status'          => 1
-            ],
-            [
-                'classroom_id'    => 2,
-                'nisn'            => '99996757655',
-                'name'            => 'Suminah',
-                'email'           => 'suminah.s@siswa.com',
-                'password'        => bcrypt(123),
-                'start_year'      => '2019',
-                'gender'          => 'P',
-                'status'          => 1
-            ],
-            [
-                'classroom_id'    => 2,
-                'nisn'            => '99992154354635',
-                'name'            => 'Sarinah Aulia',
-                'email'           => 'sarinah.aulia@siswa.com',
-                'password'        => bcrypt(123),
-                'start_year'      => '2019',
-                'gender'          => 'P',
-                'status'          => 1
-            ],
-        ];
+        $classes     = Classroom::all();
+        $faker 		= Factory::create('id_ID');
+    	for ($i=0; $i < 20; $i++) {
+            $data[$i]	= [
+                'classroom_id'  => $faker->randomDigitNot(0),
+                'nisn'			=> $faker->numberBetween($min = 190000000000000000, $max = 210000000000000000),
+    			'name'			=> $faker->name,
+    			'email'			=> $faker->email,
+    			'password'		=> bcrypt(123),
+    			'start_year'	=> 2019,
+    			'gender'		=> $faker->randomElement(['L','P']),
+    			'status'		=> 1,
+    			'created_at'	=> now(),
+    			'updated_at'	=> now(),
+    		];
+    	}
         DB::table('students')->truncate();
         DB::table('students')->insert($data);
-        $bata     = [
-            [
-                'student_id'        => 1,
-                'school_year_id'    => 1,
-                'classroom_id'      => 1,
-                'status'            => 1,
-            ],
-            [
-                'student_id'        => 2,
-                'school_year_id'    => 1,
-                'classroom_id'      => 1,
-                'status'            => 1,
-            ],
-            [
-                'student_id'        => 3,
-                'school_year_id'    => 1,
-                'classroom_id'      => 1,
-                'status'            => 1,
-            ],
-            [
-                'student_id'        => 4,
-                'school_year_id'    => 1,
-                'classroom_id'      => 1,
-                'status'            => 1,
-            ],
-            [
-                'student_id'        => 5,
-                'school_year_id'    => 1,
-                'classroom_id'      => 2,
-                'status'            => 1,
-            ],
-            [
-                'student_id'        => 6,
-                'school_year_id'    => 1,
-                'classroom_id'      => 2,
-                'status'            => 1,
-            ],
-            [
-                'student_id'        => 7,
-                'school_year_id'    => 1,
-                'classroom_id'      => 2,
-                'status'            => 1,
-            ],
-            [
-                'student_id'        => 8,
-                'school_year_id'    => 1,
-                'classroom_id'      => 2,
-                'status'            => 1,
-            ],
-        ];
+
+        for ($i=0; $i < 20 ; $i++) {
+            $bata[$i]	= [
+                'student_id'  => $i,
+                'school_year_id' => 1,
+                'classroom_id'  => $faker->randomDigitNot(0),
+                'status' => 1,
+            ];
+    	}
         DB::table('class_histories')->truncate();
         DB::table('class_histories')->insert($bata);
     }

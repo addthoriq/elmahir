@@ -7,6 +7,8 @@ use App\Http\Requests\TeacherRequest;
 use App\Model\User;
 use App\Model\Role;
 use App\Model\Teacher;
+use App\Model\SchoolYear;
+use App\Model\TeacherHistory;
 use App\Model\ProfileTeacher;
 use Yajra\Datatables\Datatables;
 use Form;
@@ -78,6 +80,13 @@ class TeacherController extends Controller
         }
         $data->status       = 1;
         $data->save();
+        $mapel              = new TeacherHistory;
+        $mapel->teacher_id  = $data->id;
+        $mapel->classroom_id = $request->classroom_id;
+        $mapel->school_year_id = $request->school_year_id;
+        $mapel->course_id   = $request->course_id;
+        $mapel->status = 1;
+        $mapel->save();
         return redirect($this->rdr)->with('notif', 'Data Guru berhasil ditambahkan');
     }
 
@@ -89,7 +98,10 @@ class TeacherController extends Controller
         $user      = User::where('teacher_id', $id)->exists();
         $usr       = User::where('teacher_id', $id)->first();
         $data      = Teacher::findOrFail($id);
-        return view($this->folder.'.show', compact('data', 'admin', 'op1', 'op2', 'user', 'usr'));
+        $years     = SchoolYear::all();
+        $histories = TeacherHistory::where('teacher_id', $id)->orderBy('created_at', 'desc')->first();
+        $history   = TeacherHistory::where('teacher_id', $id)->get();
+        return view($this->folder.'.show', compact('data', 'admin', 'op1', 'op2', 'user', 'usr', 'histories', 'history', 'years'));
     }
 
     public function update(TeacherRequest $request, $id)
@@ -254,6 +266,27 @@ class TeacherController extends Controller
         }
         $data->save();
         return redirect()->route('teacher.show', [$id])->with('notif', 'Poto Profil '.$data->name.' berhasil diubah');
+    }
+
+    public function updateTeacherHis(Request $request, $id)
+    {
+        if ($request->status == 0) {
+            TeacherHistory::where('teacher_id', $id)->update([
+                'status'    => 0
+            ]);
+        }else {
+            TeacherHistory::findOrFail($id)->update([
+                'classroom_id'    => $request->classroom_id
+            ]);
+            $data                 = new TeacherHistory;
+            $data->teacher_id     = $id;
+            $data->school_year_id = $request->school_year_id;
+            $data->classroom      = $request->classroom_id;
+            $data->course_id      = $request->course_id;
+            $data->status         = 1;
+            $data->save();
+        }
+        return redirect()->route('teacher.show', [$id])->with('notif', 'Data Mata Pelajaran berhasil diubah');
     }
 
     public function nonaktif(Request $request, $id)

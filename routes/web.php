@@ -41,6 +41,7 @@ Route::put('/teacher/{id}/admin', 'TeacherController@admin')->name('teacher.admi
 Route::put('/teacher/{id}/op1', 'TeacherController@op')->name('teacher.op');
 Route::put('/teacher/{id}/op2', 'TeacherController@ope')->name('teacher.ope');
 Route::put('/teacher/{id}/nonrole', 'TeacherController@nonRole')->name('teacher.role');
+Route::put('/teacher/{id}/courseHistory', 'TeacherController@updateTeacherHis')->name('teacher.updateTeacherHis');
 Route::get('/teacher-deactived', 'UnonController@index')->name('unon.index');
 Route::put('/teacher-deactived/{id}/aktif', 'UnonController@aktif')->name('unon.aktif');
 Route::get('/teacher-deactived/{id}', 'UnonController@show')->name('unon.show');

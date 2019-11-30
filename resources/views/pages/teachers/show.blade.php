@@ -245,7 +245,7 @@
                         </div>
 
                         {{-- Modal disini --}}
-                        {{-- @include('pages.students.editClass') --}}
+                        @include('pages.teachers.editCourse')
 
                     </div>
 
@@ -254,21 +254,29 @@
                             <tbody>
                                 <tr>
                                     <th>No</th>
-                                    <th>Kelas</th>
                                     <th>Tahun Ajaran</th>
+                                    <th>Kelas</th>
                                     <th>Mapel</th>
+                                    <th>Status</th>
                                 </tr>
-                                {{-- @php
+                                @php
                                     $no     = 1;
                                 @endphp
                                 @foreach ($history as $h)
                                     <tr>
                                         <td>{{$no++}}</td>
-                                        <td>{{$h->classroom->name}}</td>
                                         <td>{{$h->school_year->start_year}}/{{$h->school_year->end_year}}</td>
-                                        <td>{{($h->status)?'Kelas Saat ini':'Telah Selesai'}}</td>
+                                        <td>{{$h->classroom->name}}</td>
+                                        <td>{{$h->course->name}}</td>
+                                        <td>
+                                            @if ($h->status)
+                                                <span class='label label-success'>Kelas Sekarang</span>
+                                            @else
+                                                <span class='label label-danger'>Telah Selesai</span>
+                                            @endif
+                                        </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                         <form action="{{route('teacher.nonaktif',$data->id)}}" method="post">
