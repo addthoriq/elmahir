@@ -4,12 +4,15 @@
 
 @section('style')
     <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
-
     <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
-
+    <link href="{{asset('css/typehead.css')}}" rel="stylesheet">
+    <style>
+        .typeahead{
+            z-index: 5000;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -50,7 +53,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="teacher_id">Guru Pengajar</label>
-                                        <input type="text" name="teacher_id" autocomplete="off" class="typeahead_2 form-control" />
+                                        <input type="text" name="teacher_id" autocomplete="off" data-provide="typeahead" class="typeahead form-control" />
                                     </div>
                                     <div class="form-group">
                                         <label for="classroom_id">Untuk Kelas</label>
@@ -109,12 +112,13 @@
 
 @section('script')
     <script src="{{asset('inspinia/js/plugins/typehead/bootstrap3-typeahead.min.js')}}"></script>
-
     <script>
     var teacher = "{{route('course.teacher')}}";
         $(document).ready(function(){
             $.get(teacher, function(response){
-                $('.typeahead_2').typeahead({
+                $('.typeahead').typeahead({
+                    minLength: 3,
+                    delay: 800,
                     source: response
                 });
             })
