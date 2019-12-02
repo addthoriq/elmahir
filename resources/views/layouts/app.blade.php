@@ -31,13 +31,13 @@
             <div class="row">
             </div>
             @yield('content')
-        
+
             @include('layouts.parts.footer')
         </div>
 
     </div>
 
-@include('layouts.links.script') 
-@yield('script')   
+@include('layouts.links.script')
+@yield('script')
 </body>
 </html>

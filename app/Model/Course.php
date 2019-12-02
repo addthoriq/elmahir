@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
 	protected $fillable = [
-        'teacher_id', 'name', 'assistant', 'class_id', 'semester'
+        'teacher_id', 'name', 'assistant', 'classroom_id', 'semester'
     ];
 
     public function teacher()
@@ -17,7 +17,7 @@ class Course extends Model
 
     public function classroom()
     {
-        return $this->belongsTo(Classroom::class, 'class_id');
+        return $this->belongsTo(Classroom::class);
     }
 	public function teacherHistories()
     {

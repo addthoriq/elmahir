@@ -27,9 +27,11 @@ Route::get('/course/dbtb', 'CourseController@dbTables')->name('course.dbtb');
 Route::get('/alumni/dbtb', 'AlumnusController@dbTables')->name('alumni.dbtb');
 Route::get('/teacher-deactived/dbtb', 'UnonController@dbTables')->name('unon.dbtb');
 
+//Json
 Route::get('/home/chartMurid', 'HomeController@chartMurid')->name('home.chartMurid');
 Route::get('/home/chartGuru', 'HomeController@chartGuru')->name('home.chartGuru');
 Route::get('/classroom/{id}/chartMurid', 'ClassroomController@chartMurid')->name('classroom.chartMurid');
+Route::get('/course/teacherInput', 'CourseController@teacherInput')->name('course.teacher');
 
 //Default
 Route::resource('/home', 'HomeController');

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Classroom;
 use App\Model\Teacher;
+use App\Model\SchoolYear;
+use App\Model\TeacherHistory;
 use App\Model\Course;
 use Yajra\Datatables\Datatables;
 use Form;
@@ -42,12 +44,18 @@ class CourseController extends Controller
         ])
         ->make(true);
     }
-    
+
+    public function teacherInput()
+    {
+        $ts   = Teacher::where('status','=',1)->get();
+        return response()->json($ts);
+    }
+
     public function create()
     {
+        $years      = SchoolYear::all();
         $classes    = Classroom::all();
-        $teachers   = Teacher::all();
-        return view('pages.courses.create', compact('classes', 'teachers'));
+        return view('pages.courses.create', compact('classes', 'years'));
     }
 
     /**
@@ -58,13 +66,21 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
+        $t                  = Teacher::where('name', '=', $request->teacher_id)->first();
         $data               = new Course;
         $data->name         = $request->name;
-        $data->class_id     = $request->class_id;
-        $data->teacher_id   = $request->teacher_id;
+        $data->classroom_id     = $request->classroom_id;
+        $data->teacher_id   = $t->id;
         $data->assistant    = $request->assistant;
         $data->semester     = $request->semester;
         $data->save();
+        $kelas     = new TeacherHistory;
+        $kelas->teacher_id = $t->id;
+        $kelas->school_year_id = $request->school_year_id;
+        $kelas->classroom_id = $request->classroom_id;
+        $kelas->course_id    = $data->id;
+        $kelas->status     = 1;
+        $kelas->save();
         return redirect($this->rdr)->with('notif', 'Data Siswa berhasil ditambahkan');
     }
 
