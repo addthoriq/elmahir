@@ -22,9 +22,7 @@
         </nav>
 
         {{-- Sidebar Section --}}
-        <nav class="navbar-default navbar-static-side" role="navigation">
-            @include('layouts.parts.sidebar')
-        </nav>
+        @include('layouts.parts.sidebar')
 
         {{-- Content Section --}}
         <div id="page-wrapper" class="gray-bg dashbard-1">
