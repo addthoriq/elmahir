@@ -45,7 +45,6 @@
                             </div>
                         </div>
                         <div>
-                            <button id="tombol1" disabled type="submit" class="btn btn-sm btn-primary float-right m-t-n-xs"><i class="fa fa-send"></i> Ubah</button>
                         </div>
                     </form>
             </div>

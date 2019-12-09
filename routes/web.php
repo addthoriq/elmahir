@@ -23,7 +23,8 @@ Route::get('/classroom/dbtb', 'ClassroomController@dbTables')->name('classroom.d
 Route::get('/year/dbtb', 'YearController@dbTables')->name('year.dbtb');
 Route::get('/student/dbtb', 'StudentController@dbTables')->name('student.dbtb');
 Route::get('/teacher/dbtb', 'TeacherController@dbTables')->name('teacher.dbtb');
-Route::get('/course/dbtb', 'CourseController@dbTables')->name('course.dbtb');
+Route::get('/course/dbtb', 'CCController@dbTables')->name('course.dbtb');
+Route::get('/course/detail/dbtb', 'CourseController@dbTables')->name('detail.dbtb');
 Route::get('/alumni/dbtb', 'AlumnusController@dbTables')->name('alumni.dbtb');
 Route::get('/teacher-deactived/dbtb', 'UnonController@dbTables')->name('unon.dbtb');
 
@@ -43,14 +44,16 @@ Route::put('/teacher/{id}/admin', 'TeacherController@admin')->name('teacher.admi
 Route::put('/teacher/{id}/op1', 'TeacherController@op')->name('teacher.op');
 Route::put('/teacher/{id}/op2', 'TeacherController@ope')->name('teacher.ope');
 Route::put('/teacher/{id}/nonrole', 'TeacherController@nonRole')->name('teacher.role');
-Route::put('/teacher/{id}/courseHistory', 'TeacherController@updateTeacherHis')->name('teacher.updateTeacherHis');
+Route::put('/teacher/{id}/nonCourseHistory', 'TeacherController@nonCourse')->name('teacher.nonCourse');
+Route::put('/teacher/{id}/onCourseHistory', 'TeacherController@onCourse')->name('teacher.onCourse');
 Route::get('/teacher-deactived', 'UnonController@index')->name('unon.index');
 Route::put('/teacher-deactived/{id}/aktif', 'UnonController@aktif')->name('unon.aktif');
 Route::get('/teacher-deactived/{id}', 'UnonController@show')->name('unon.show');
 Route::put('/teacher-deactived/{id}', 'UnonController@update')->name('unon.update');
 Route::put('/teacher-deactived/{id}/profile', 'UnonController@updateProfile')->name('unon.profile');
 Route::put('/teacher-deactived/{id}/avatar', 'UnonController@updateAva')->name('unon.ava');
-Route::resource('/course', 'CourseController');
+Route::resource('/course/detail', 'CourseController');
+Route::resource('/course', 'CCController');
 Route::resource('/student', 'StudentController');
 Route::put('/student/{id}/profile', 'StudentController@updateProfile')->name('student.profile');
 Route::put('/student/{id}/avatar', 'StudentController@updateAva')->name('student.ava');

@@ -32,17 +32,13 @@
                 <a href="{{ route('course.create') }}" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
                 <a href="" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Import</a>
                 <a href="" class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</a>
-                <a href="{{ route('detail.index') }}" class="btn btn-sm btn-primary"><i class="fa fa-home">Detail</i></a>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-hover dataTables-example" style="border-spacing:0px;">
                     <thead>
                         <tr>
                             <th style="width: 20px;">#</th>
-                            <th>Kelas</th>
-                            <th>Mata Pelajaran</th>
-                            <th>Pengajar</th>
-                            <th>Asisten</th>
+                            <th>Nama Mapel</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -68,10 +64,7 @@
                 order: [[0,'asc']],
                 columns: [
                     { data: 'id', searchable: true, orderable: true},
-                    { data: 'classroom_id', searchable: true, orderable: true},
-                    { data: 'course_id', searchable: true, orderable: true},
-                    { data: 'teacher_id', searchable: true, orderable: true},
-                    { data: 'assistant', searchable: true, orderable: false},
+                    { data: 'name', searchable: true, orderable: true},
                     { data: 'action', searchable: false, orderable: false}
                 ],
                 columnDefs: [{

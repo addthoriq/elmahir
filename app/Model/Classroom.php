@@ -13,13 +13,17 @@ class Classroom extends Model
     {
         return $this->hasMany(ClassHistory::class);
     }
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
     public function student()
     {
         return $this->hasOne(Student::class);
     }
-    public function course()
+    public function classroomCourse()
     {
-        return $this->hasMany(Course::class, 'class_id');
+        return $this->hasMany(ClassroomCourse::class);
     }
     public function teacher()
     {

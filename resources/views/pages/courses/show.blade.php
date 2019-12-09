@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Mata Pelajaran')
+@section('title', 'Ubah Mata Pelajaran')
 
 @section('style')
     <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
@@ -28,7 +28,7 @@
                 </li>
                 </li>
                 <li class="breadcrumb-item active">
-                    <strong>Tambah Mapel</strong>
+                    <strong>Ubah Mapel</strong>
                 </li>
             </ol>
         </div>
@@ -39,21 +39,17 @@
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-title">
-                        <h5>Tambah Mata Pelajaran</h5>
+                        <h5>Ubah Mata Pelajaran</h5>
                     </div>
                     <div class="ibox-content">
-                        <form id="form" action="{{route('course.store')}}" class="wizard-big" method="post" enctype="multipart/form-data">
+                        <form id="form" action="{{route('course.update',$data->id)}}" class="wizard-big" method="post" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label id="labelName" for="name">Nama Mata Pelajaran</label>
-                                        <select id="year" class="form-control m-b" name="course_id">
-                                            <option selected>-- Mapel --</option>
-                                            @foreach ($courses as $course)
-                                                <option value="{{$course->id}}">{{$course->name}}</option>
-                                            @endforeach
-                                        </select>
+                                        <label id="labelName" for="name">Nama Mapel</label>
+                                        <input id="name" name="name" type="text" value="{{$data->name}}" autocomplete="off" class="form-control">
                                         <span id="noticeName"></span>
                                         @if ($errors->has('name'))
                                             <span class="text-danger">{{$errors->first('name')}}</span>
@@ -61,16 +57,27 @@
                                     </div>
                                     <div class="form-group">
                                         <label id="labelTeacher" for="teacher_id">Guru Pengajar</label>
-                                        <input id="teacher_id" type="text" name="teacher_id" autocomplete="off" data-provide="typeahead" class="typeahead form-control" />
+                                        <input id="teacher_id" type="text" name="teacher_id" value="{{$data->teacher->name}}" autocomplete="off" data-provide="typeahead" class="typeahead form-control" />
                                         <span id="noticeTeacher"></span>
                                         @if ($errors->has('teacher'))
                                             <span class="text-danger">{{$errors->first('teacher')}}</span>
                                         @endif
                                     </div>
                                     <div class="form-group">
+                                        <label id="labelClassroom" for="classroom_id">Untuk Kelas</label>
+                                        <select class="form-control" name="classroom_id[]" id="classroom_id">
+                                            <option value="{{$data->classroom_id}}">-- {{$data->classroom->name}} --</option>
+                                            @foreach ($classes as $class)
+                                                <option value="{{$class->id}}">{{$class->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
                                         <label id="labelYearT" class="{{$errors->has('school_year_id')?"text-danger":""}}">Tahun Ajaran {{$errors->has('school_year_id')?"*":""}}</label>
                                         <select id="year" class="form-control m-b" name="school_year_id">
-                                            <option selected>-- Pilih Tahun Ajaran --</option>
+                                            <option selected value="{{$history->school_year->id}}">-- {{$history->school_year->start_year}}/{{$history->school_year->end_year}} --</option>
                                             @foreach ($years as $year)
                                                 <option value="{{$year->id}}">{{$year->start_year}}/{{$year->end_year}}</option>
                                             @endforeach
@@ -80,34 +87,19 @@
                                             <span class="text-danger">{{$errors->first('school_year_id')}}</span>
                                         @endif
                                     </div>
-                                </div>
-                                <div class="col-lg-6" id="app">
-                                    <div v-for="n in classrooms" :key="index">
-                                        <div class="form-group">
-                                            <label id="labelClassroom" for="classroom_id">Untuk Kelas</label>
-                                            <select class="form-control" name="classroom_id[]" id="classroom_id">
-                                                <option>-- Pilih kelas --</option>
-                                                @foreach ($classes as $class)
-                                                    <option value="{{$class->id}}">{{$class->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label id="labelAsistant" for="assistant">Asisten <i>(boleh kosong)</i></label>
-                                            <input id="assistant" name="assistant[]" type="text" class="form-control">
-                                            <span id="noticeAsistant"></span>
-                                            @if ($errors->has('asistant'))
-                                                <span class="text-danger">{{$errors->first('asistant')}}</span>
-                                            @endif
-                                        </div>
+                                    <div class="form-group">
+                                        <label id="labelAsistant" for="assistant">Asisten <i>(boleh kosong)</i></label>
+                                        <input id="assistant" name="assistant" type="text" value="{{($data->assistant)?$data->assistant:''}}" class="form-control">
+                                        <span id="noticeAsistant"></span>
+                                        @if ($errors->has('asistant'))
+                                            <span class="text-danger">{{$errors->first('asistant')}}</span>
+                                        @endif
                                     </div>
-                                    <button type="button" @click="delKelas()">Hapus</button>
-                                    <button type="button" @click="addKelas()">Tambah</button>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <button id="tombol" disabled class="btn btn-success pull-right" type="submit">
+                                    <button id="tombol" class="btn btn-success pull-right" disabled type="submit">
                                         <i class="fa fa-save"></i> Simpan
                                     </button>
                                     <a class="btn btn-default" href="{{route('course.index')}}">
@@ -127,39 +119,16 @@
 @endsection
 
 @section('script')
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script>
-        new Vue({
-            el: '#app',
-            data: {
-                classrooms: 1,
-            },
-            methods:{
-                addKelas(){
-                    this.classrooms++;
-                },
-                delKelas(){
-                    if (this.classrooms > 1) {
-                        this.classrooms--;
-                    }
-                }
-            }
-        })
-    </script>
     <script src="{{asset('inspinia/js/plugins/typehead/bootstrap3-typeahead.min.js')}}"></script>
     <script>
     var teacher = "{{route('course.teacher')}}";
         $(document).ready(function(){
             $.get(teacher, function(response){
-                if (response == "") {
-                    document.getElementById('teacher_id').readOnly = true;
-                }else {
-                    $('.typeahead').typeahead({
-                        minLength: 3,
-                        delay: 800,
-                        source: response
-                    });
-                }
+                $('.typeahead').typeahead({
+                    minLength: 3,
+                    delay: 800,
+                    source: response
+                });
             })
             $("#name").blur(function(){
                 var name = $("#name").val();

@@ -268,25 +268,20 @@ class TeacherController extends Controller
         return redirect()->route('teacher.show', [$id])->with('notif', 'Poto Profil '.$data->name.' berhasil diubah');
     }
 
-    public function updateTeacherHis(Request $request, $id)
+    public function nonCourse(Request $request, $id)
     {
-        if ($request->status == 0) {
-            TeacherHistory::where('teacher_id', $id)->update([
-                'status'    => 0
-            ]);
-        }else {
-            TeacherHistory::findOrFail($id)->update([
-                'classroom_id'    => $request->classroom_id
-            ]);
-            $data                 = new TeacherHistory;
-            $data->teacher_id     = $id;
-            $data->school_year_id = $request->school_year_id;
-            $data->classroom      = $request->classroom_id;
-            $data->course_id      = $request->course_id;
-            $data->status         = 1;
-            $data->save();
-        }
-        return redirect()->route('teacher.show', [$id])->with('notif', 'Data Mata Pelajaran berhasil diubah');
+        TeacherHistory::where('teacher_id', $id)->update([
+            'status'    => 0
+        ]);
+        return redirect()->route('teacher.show', [$id])->with('notif', 'Riwayat Mata Pelajaran berhasil di akhiri');
+    }
+
+    public function onCourse(Request $request, $id)
+    {
+        TeacherHistory::where('teacher_id', $id)->update([
+            'status'    => 1
+        ]);
+        return redirect()->route('teacher.show', [$id])->with('notif', 'Riwayat Mata Pelajaran berhasil di aktifkan');
     }
 
     public function nonaktif(Request $request, $id)

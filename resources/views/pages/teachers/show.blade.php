@@ -233,9 +233,6 @@
                     <div class="ibox-title">
                         <h5>Riwayat Mengajar</h5>
                         <div class="ibox-tools">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
                             <ul class="dropdown-menu dropdown-user">
                                 <li><a data-toggle="modal" class="dropdown-item" href="#editClass">Ubah data Kelas Guru</a></li>
                             </ul>
@@ -243,10 +240,6 @@
                                 <i class="fa fa-chevron-up"></i>
                             </a>
                         </div>
-
-                        {{-- Modal disini --}}
-                        @include('pages.teachers.editCourse')
-
                     </div>
 
                     <div class="ibox-content">
@@ -258,6 +251,7 @@
                                     <th>Kelas</th>
                                     <th>Mapel</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                                 @php
                                     $no     = 1;
@@ -275,6 +269,23 @@
                                                 <span class='label label-danger'>Telah Selesai</span>
                                             @endif
                                         </td>
+                                        @if ($h->status)
+                                            <form action="{{route('teacher.nonCourse',$data->id)}}" method="post">
+                                                <td>
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button id="tombol1" type="submit" class="btn btn-sm btn-danger m-t-n-xs"><i class="fa fa-window-close"></i> Akhiri mapel</button>
+                                                </td>
+                                            </form>
+                                        @else
+                                            <form action="{{route('teacher.onCourse',$data->id)}}" method="post">
+                                                <td>
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button id="tombol1" type="submit" class="btn btn-sm btn-primary m-t-n-xs"><i class="fa fa-check"></i> Akhiri mapel</button>
+                                                </td>
+                                            </form>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
