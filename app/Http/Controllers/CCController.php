@@ -20,7 +20,7 @@ class CCController extends Controller
     public function index()
     {
         $ajax     = route('course.dbtb');
-        return view('pages.courses.index', compact('ajax'));
+        return view('pages.courses.detail', compact('ajax'));
     }
 
     public function dbTables(Request $request)
@@ -49,37 +49,32 @@ class CCController extends Controller
         ->make(true);
     }
 
-    public function teacherInput()
-    {
-        $ts   = Teacher::where('status','=',1)->get();
-        return response()->json($ts);
-    }
-
     public function create()
     {
         $years      = SchoolYear::all();
         $classes    = Classroom::all();
         $courses    = Course::all();
-        return view('pages.courses.create', compact('classes', 'years', 'courses'));
+        return view('pages.courses.detail-create', compact('years', 'classes', 'courses'));
     }
 
     public function store(Request $request)
     {
         $t                  = Teacher::where('name', '=', $request->teacher_id)->first();
-        foreach ($request->classroom_id as $key => $css) {
+        foreach ($request->classroom_id as $cs) {
+            $count              = count($request->classroom_id);
             $kelas                 = new TeacherHistory;
             $kelas->teacher_id     = $t->id;
             $kelas->school_year_id = $request->school_year_id;
-            $kelas->classroom_id   = $css;
-            $kelas->course_id      = $request->course_id;
+            $kelas->classroom_id   = $cs;
+            $kelas->course_id      = $data->id;
             $kelas->status         = 1;
             $kelas->save();
-            $ck                    = new ClassroomCourse;
-            $ck->classroom_id      = $css;
-            $ck->course_id         = $request->course_id;
-            $ck->teacher_id        = $t->id;
-            $ck->assistant         = $request->assistant[$key];
-            $ck->status            = 1;
+            $ck                = new ClassroomCourse;
+            $ck->teacher_id  = $cs;
+            $ck->classroom_id  = $cs;
+            $ck->course_id     = $data->id;
+            $ck->assistant  = $request->assistant;
+            $ck->status        = 1;
             $ck->save();
         }
         return redirect($this->rdr)->with('notif', 'Data Siswa berhasil ditambahkan');

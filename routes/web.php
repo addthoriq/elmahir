@@ -24,7 +24,7 @@ Route::get('/year/dbtb', 'YearController@dbTables')->name('year.dbtb');
 Route::get('/student/dbtb', 'StudentController@dbTables')->name('student.dbtb');
 Route::get('/teacher/dbtb', 'TeacherController@dbTables')->name('teacher.dbtb');
 Route::get('/course/dbtb', 'CCController@dbTables')->name('course.dbtb');
-Route::get('/course/detail/dbtb', 'CourseController@dbTables')->name('detail.dbtb');
+Route::get('/course-detail/dbtb', 'CourseController@dbTables')->name('detail.dbtb');
 Route::get('/alumni/dbtb', 'AlumnusController@dbTables')->name('alumni.dbtb');
 Route::get('/teacher-deactived/dbtb', 'UnonController@dbTables')->name('unon.dbtb');
 
@@ -52,7 +52,7 @@ Route::get('/teacher-deactived/{id}', 'UnonController@show')->name('unon.show');
 Route::put('/teacher-deactived/{id}', 'UnonController@update')->name('unon.update');
 Route::put('/teacher-deactived/{id}/profile', 'UnonController@updateProfile')->name('unon.profile');
 Route::put('/teacher-deactived/{id}/avatar', 'UnonController@updateAva')->name('unon.ava');
-Route::resource('/course/detail', 'CourseController');
+Route::resource('/course-detail', 'CourseController');
 Route::resource('/course', 'CCController');
 Route::resource('/student', 'StudentController');
 Route::put('/student/{id}/profile', 'StudentController@updateProfile')->name('student.profile');
