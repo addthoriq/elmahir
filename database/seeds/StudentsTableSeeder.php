@@ -14,9 +14,8 @@ class StudentsTableSeeder extends Seeder
      */
     public function run()
     {
-        $classes     = Classroom::all();
         $faker 		= Factory::create('id_ID');
-    	for ($i=0; $i < 20; $i++) {
+    	for ($i=0; $i < 41; $i++) {
             $data[$i]	= [
                 'classroom_id'  => $faker->randomDigitNot(0),
                 'nisn'			=> $faker->numberBetween($min = 190000000000000000, $max = 210000000000000000),
@@ -33,7 +32,7 @@ class StudentsTableSeeder extends Seeder
         DB::table('students')->truncate();
         DB::table('students')->insert($data);
 
-        for ($i=0; $i < 20 ; $i++) {
+        for ($i=1; $i < 41 ; $i++) {
             $bata[$i]	= [
                 'student_id'  => $i,
                 'school_year_id' => 1,

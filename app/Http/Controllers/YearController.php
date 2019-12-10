@@ -39,7 +39,6 @@ class YearController extends Controller
         ])
         ->make(true);
     }
-
     public function store(Request $request)
     {
         $data     = new SchoolYear;

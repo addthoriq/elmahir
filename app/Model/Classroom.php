@@ -13,20 +13,16 @@ class Classroom extends Model
     {
         return $this->hasMany(ClassHistory::class);
     }
-    public function course()
-    {
-        return $this->belongsTo(Course::class);
-    }
     public function student()
     {
         return $this->hasOne(Student::class);
     }
-    public function classroomCourse()
-    {
-        return $this->hasMany(ClassroomCourse::class);
-    }
     public function teacher()
     {
         return $this->belongsTo(Teacher::class);
+    }
+    public function teacherHistories()
+    {
+        return $this->hasMany(TeachersHistory::class);
     }
 }

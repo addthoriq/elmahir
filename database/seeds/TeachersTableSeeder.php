@@ -14,7 +14,7 @@ class TeachersTableSeeder extends Seeder
     public function run()
     {
         $faker 		= Factory::create('id_ID');
-    	for ($i=0; $i < 15; $i++) {
+    	for ($i=1; $i < 21; $i++) {
     		$data[$i]	= [
                 'nip'			=> $faker->numberBetween($min = 190000000000000000, $max = 210000000000000000),
     			'name'			=> $faker->name,
@@ -30,13 +30,14 @@ class TeachersTableSeeder extends Seeder
         DB::table('teachers')->truncate();
         DB::table('teachers')->insert($data);
 
-        for ($i=0; $i < 20 ; $i++) {
+        for ($i=1; $i < 21 ; $i++) {
             $bata[$i]	= [
-                'teacher_id'  => $i,
+                'teacher_id'     => $i,
                 'school_year_id' => 1,
-                'classroom_id'  => $faker->randomDigitNot(0),
-                'course_id'         => 1,
-                'status' => 1,
+                'classroom_id'   => $faker->randomDigitNot(0),
+                'course_id'      => $faker->randomDigitNot(0),
+                'assistant'      => $faker->name,
+                'status'         => 1,
             ];
     	}
         DB::table('teacher_histories')->truncate();

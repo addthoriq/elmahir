@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Classroom;
-use App\Model\ClassroomCourse;
-use App\Model\Teacher;
 use App\Model\SchoolYear;
 use App\Model\TeacherHistory;
 use App\Model\Course;
@@ -25,7 +23,7 @@ class CCController extends Controller
 
     public function dbTables(Request $request)
     {
-        $data     = ClassroomCourse::all();
+        $data     = TeacherHistory::where('status',1)->get();
         return Datatables::of($data)
         ->editColumn('teacher_id', function ($index) {
             return isset($index->teacher->name) ? $index->teacher->name : '-';
@@ -67,15 +65,9 @@ class CCController extends Controller
             $kelas->school_year_id = $request->school_year_id;
             $kelas->classroom_id   = $cs;
             $kelas->course_id      = $data->id;
+            $kelas->assistant  = $request->assistant;
             $kelas->status         = 1;
             $kelas->save();
-            $ck                = new ClassroomCourse;
-            $ck->teacher_id  = $cs;
-            $ck->classroom_id  = $cs;
-            $ck->course_id     = $data->id;
-            $ck->assistant  = $request->assistant;
-            $ck->status        = 1;
-            $ck->save();
         }
         return redirect($this->rdr)->with('notif', 'Data Siswa berhasil ditambahkan');
     }
@@ -117,10 +109,5 @@ class CCController extends Controller
             ]);
         }
         return redirect()->route('course.show', [$id])->with('notif', 'Data Mata Pelajaran berhasil diubah');
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

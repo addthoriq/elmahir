@@ -36,7 +36,7 @@ Route::get('/course/teacherInput', 'CourseController@teacherInput')->name('cours
 
 //Default
 Route::resource('/home', 'HomeController');
-Route::resource('/teacher', 'TeacherController');
+Route::resource('/teacher', 'TeacherController')->except(['destroy']);
 Route::put('/teacher/{id}/profile', 'TeacherController@updateProfile')->name('teacher.profile');
 Route::put('/teacher/{id}/avatar', 'TeacherController@updateAva')->name('teacher.ava');
 Route::put('/teacher/{id}/nonaktif', 'TeacherController@nonaktif')->name('teacher.nonaktif');
@@ -54,14 +54,13 @@ Route::put('/teacher-deactived/{id}/profile', 'UnonController@updateProfile')->n
 Route::put('/teacher-deactived/{id}/avatar', 'UnonController@updateAva')->name('unon.ava');
 Route::resource('/course-detail', 'CourseController');
 Route::resource('/course', 'CCController');
-Route::resource('/student', 'StudentController');
+Route::resource('/student', 'StudentController')->except(['destroy']);
 Route::put('/student/{id}/profile', 'StudentController@updateProfile')->name('student.profile');
 Route::put('/student/{id}/avatar', 'StudentController@updateAva')->name('student.ava');
 Route::put('/student/{id}/classhistory', 'StudentController@updateClassHis')->name('student.updateClassHis');
 Route::put('/student/{id}/alumni', 'StudentController@alumni')->name('student.alumni');
 Route::get('/alumni', 'AlumnusController@index')->name('alumni.index');
 Route::get('/alumni/{id}', 'AlumnusController@show')->name('alumni.show');
-// Route::put('/alumni/{id}/edit', 'AlumnusController@update')->name('alumni.update');
 Route::resource('/classroom', 'ClassroomController');
 Route::resource('/section', 'SectionController');
 Route::resource('/task', 'TaskController');
@@ -69,4 +68,4 @@ Route::resource('/user', 'UserController');
 Route::put('/user/{id}/avatar', 'UserController@updateAva')->name('user.ava');
 Route::put('/user/{id}/aktif', 'UserController@aktif')->name('user.aktif');
 Route::put('/user/{id}/unon', 'UserController@unon')->name('user.unon');
-Route::resource('/year', 'YearController');
+Route::resource('/year', 'YearController')->except(['create']);

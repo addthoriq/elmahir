@@ -86,9 +86,6 @@
                     <li class="{{ Request::is('classroom/create')?'active':''}}">
                         <a href="{{ route('classroom.create') }}"> Tambah Kelas</a>
                     </li>
-                    <li class="{{ Request::is('year/create')?'active':''}}">
-                        <a href="{{ route('year.create') }}"> Tambah Tahun Ajaran</a>
-                    </li>
                     <li class="{{ Request::is('classroom')?'active':''}}">
                         <a href="{{ route('classroom.index') }}"> Daftar Kelas</a>
                     </li>
