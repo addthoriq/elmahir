@@ -45,6 +45,9 @@
                     <li class="{{ Request::is('student')? 'active' : '' }}">
                         <a href="{{ route('student.index') }}">Beranda</a>
                     </li>
+                    <li class="{{ Request::is('alumni')? 'active' : '' }}">
+                        <a href="{{ route('alumni.index') }}">Daftar Alumni</a>
+                    </li>
                 </ul>
             </li>
 
@@ -53,10 +56,46 @@
                 <span class="nav-label">Manajemen Kelas & Mapel</span>
             </li>
             <li class="{{ Request::is('course', 'course-detail') || Request::is('course/*', 'course-detail/*')? 'active' : '' }}">
-                <a href="{{ route('course.index') }}"><i class="fa fa-window-restore"></i> <span class="nav-label">Mata Pelajaran</span></a>
+                <a href="#">
+                    <i class="fa fa-window-restore"></i>
+                    <span class="nav-label">Mata Pelajaran</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li class="{{ Request::is('course-detail/create')? 'active' : '' }}">
+                        <a href="{{route('course-detail.create')}}">Tambah Mapel</a>
+                    </li>
+                    <li class="{{ Request::is('course/create')? 'active' : '' }}">
+                        <a href="{{route('course.create')}}">Tambah Mapel & Pengajar</a>
+                    </li>
+                    <li class="{{ Request::is('course')? 'active' : '' }}">
+                        <a href="{{ route('course.index') }}">Beranda Mapel</a>
+                    </li>
+                    <li class="{{ Request::is('course-detail')? 'active' : '' }}">
+                        <a href="{{ route('course-detail.index') }}">Daftar Mapel</a>
+                    </li>
+                </ul>
             </li>
             <li class="{{ Request::is('classroom','year') || Request::is('classroom/*','year/*') ? 'active' : '' }}">
-                <a href="{{ route('classroom.index') }}"><i class="fa fa-pie-chart"></i> <span class="nav-label">Manajemen Kelas</span></a>
+                <a href="#">
+                    <i class="fa fa-pie-chart"></i>
+                    <span class="nav-label">Manajemen Kelas</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li class="{{ Request::is('classroom/create')?'active':''}}">
+                        <a href="{{ route('classroom.create') }}"> Tambah Kelas</a>
+                    </li>
+                    <li class="{{ Request::is('year/create')?'active':''}}">
+                        <a href="{{ route('year.create') }}"> Tambah Tahun Ajaran</a>
+                    </li>
+                    <li class="{{ Request::is('classroom')?'active':''}}">
+                        <a href="{{ route('classroom.index') }}"> Daftar Kelas</a>
+                    </li>
+                    <li class="{{ Request::is('year')?'active':''}}">
+                        <a href="{{ route('year.index') }}"> Daftar Tahun Ajaran</a>
+                    </li>
+                </ul>
             </li>
 
             {{-- Kompetensi Siswa --}}

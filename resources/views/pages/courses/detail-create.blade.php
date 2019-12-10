@@ -101,8 +101,11 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <button type="button" @click="delKelas()">Hapus</button>
-                                    <button type="button" @click="addKelas()">Tambah</button>
+                                    <div class="pull-right">
+                                        <button type="button" @click="delKelas()" class="btn btn-sm btn-warning"><i class="fa fa-minus"></i></button>
+                                        <button type="button" @click="addKelas()" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i></button>
+                                        <br><br>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">

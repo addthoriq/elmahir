@@ -1,20 +1,5 @@
 @extends('layouts.app')
-
 @section('title', 'Tambah Mata Pelajaran')
-
-@section('style')
-    <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
-    <link href="{{asset('css/typehead.css')}}" rel="stylesheet">
-    <style>
-        .typeahead{
-            z-index: 5000;
-        }
-    </style>
-@endsection
-
 @section('content')
     <div class="row wrapper white-bg page-heading">
         <div class="col-lg-10">
@@ -52,7 +37,7 @@
                                 </div>
                             </div>
                             <div class="row" id="app">
-                                <div class="col-lg-8" v-for="n in classrooms" :key="index">
+                                <div class="col-lg-10" v-for="n in classrooms" :key="index">
                                     <div class="form-group">
                                         <input id="name" type="text" required name="name[]" class="form-control" autocomplete="off">
                                         @if ($errors->has('name'))
@@ -60,7 +45,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-2">
                                     <button class="btn btn-sm btn-warning" type="button" @click="delKelas()"><i class="fa fa-minus"></i></button>
                                     <button class="btn btn-sm btn-primary" type="button" @click="addKelas()"><i class="fa fa-plus"></i></button>
                                 </div>
@@ -85,7 +70,6 @@
         </div>
     </div>
 @endsection
-
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
