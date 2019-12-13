@@ -13,9 +13,13 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label>Judul Bab *</label>
+                        <label>Judul Materi *</label>
                         <input id="title" name="title" type="text" class="form-control" value="{{ $section->title }}">
-                        <input type="hidden" name="fileId" value="{{ $files->id }}">
+                        @if (Request::is('section/*/home'))
+                            <input type="hidden" name="sectionId" value="{{ $section->id }}">
+                        @else
+                            <input type="hidden" name="fileId" value="{{ $files->id }}">
+                        @endif
                     </div>
                     <div class="form-group">
                         <label>Deskripsi *</label>

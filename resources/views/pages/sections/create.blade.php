@@ -45,9 +45,9 @@
                                     <div class="col-lg-7">
                                         <h3>Deskripsi singkat</h3>
                                         <div class="form-group">
-                                            <label>Bab</label>
-                                            <input id="chapterName" name="chapterName" type="text" class="form-control" value="{{ $chapter->title }}" disabled>
-                                            <input id="chapter_id" name="chapter_id" type="hidden" class="form-control" value="{{ $chapter->id }}">
+                                            <label>Mapel</label>
+                                            <input id="courseName" name="courseName" type="text" class="form-control" value="{{ $course->name }}" disabled>
+                                            <input id="course_id" name="course_id" type="hidden" class="form-control" value="{{ $course->id }}">
                                         </div>
                                         <div class="form-group">
                                             <label>Judul Materi *</label>

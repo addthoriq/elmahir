@@ -15,9 +15,9 @@ class Section extends Model
         return $this->hasMany(fileSection::class);
     }
 
-    public function chapter()
+    public function course()
     {
-        return $this->belongsTo(Chapter::class);
+        return $this->belongsTo(Course::class);
     }
 
 }

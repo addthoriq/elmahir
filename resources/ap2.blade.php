@@ -15,25 +15,27 @@
 
 <body>
     <div id="wrapper">
+
+        {{-- Header Section --}}
+        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0;">
+            @include('layouts.parts.navbar')
+        </nav>
+
+        {{-- Sidebar Section --}}
         <nav class="navbar-default navbar-static-side" role="navigation">
             @include('layouts.parts.sidebar')
         </nav>
 
+        {{-- Content Section --}}
         <div id="page-wrapper" class="gray-bg dashbard-1">
-
-            <div class="row border-bottom">
-                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-                    @include('layouts.parts.navbar')
-                </nav>
-            </div>
-
             @yield('content')
-
-            @include('layouts.parts.footer')            
+        
+            @include('layouts.parts.footer')
         </div>
+
     </div>
 
-    @include('layouts.links.script') 
-    @yield('script') 
+@include('layouts.links.script') 
+@yield('script')   
 </body>
 </html>

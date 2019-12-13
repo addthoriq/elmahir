@@ -28,22 +28,12 @@ class ChapterController extends Controller
         ->editColumn('teacher_id', function ($index) {
             return isset($index->teacher->name) ? $index->teacher->name : '-';
         })
-
-        ->addColumn('chapter', function($index) {
-            $isi    = Chapter::where('course_id', $index->id)->get();
-            $count  = count($isi);
-            if ($count < 1) {
-                return "<span class='label label-warning'>Keosong</span>";
-            } else {
-                return "<span class='label label-primary'>".$count." Bab</span>";
-            }
-        })
         ->addColumn('action', function($index){
-            $tag = "<a href='".route('chapter.homeChapter', $index->id)."' class='btn btn-xs btn-default'><i class='fa fa-folder'></i> Lihat Bab</a>";
+            $tag = "<a href='".route('chapter.homeChapter', $index->id)."' class='btn btn-xs btn-default'><i class='fa fa-folder'></i> Lihat Materi</a>";
             return $tag;
         })
         ->rawColumns([
-            'id', 'chapter', 'action'
+            'id', 'action'
         ])
         ->make(true);
     }

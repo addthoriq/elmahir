@@ -20,8 +20,13 @@ class Course extends Model
         return $this->belongsTo(Classroom::class, 'class_id');
     }
 
-    public function chapter()
+    public function section()
     {
-        return $this->hasMany(Chapter::class);
+        return $this->hasMany(Section::class);
+    }
+
+    public function task()
+    {
+        return $this->hasMany(Task::class);
     }
 }

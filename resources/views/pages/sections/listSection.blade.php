@@ -5,7 +5,7 @@
 @section('content')
 <div class="row wrapper white-bg page-heading" id="modal-pop">
     <div class="col-lg-10">
-        <h2>Daftar Materi</h2>
+        <h2>Daftar Materi {{ $course->name }}</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="{{ route('home.index') }}">Beranda</a>
@@ -28,15 +28,23 @@
                 <h5>Daftar Materi</h5>
             </div>
             <div class="ibox-content">
-
+            <div class="mb-3 mt-0">
+                <a href="{{route('section.add', $course->id)}}" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
+            </div>
+            @if (session('status'))
+                <div class="alert alert-success alert-dismissable">
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                    {{session('status')}}
+                </div>
+            @endif
             <div class="table-responsive">
                 <table class="table table-striped table-hover dataTables-course" style="border-spacing:0px;">
                     <thead>
                         <tr>
                             <th style="width: 20px;">#</th>
-                            <th>Nama Mapel</th>
-                            <th>Kelas</th>
-                            <th>Pengajar</th>
+                            <th>Judul Materi</th>
+                            <th>Konten</th>
+                            <th>Post at</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -62,9 +70,9 @@
                 order: [[0,'asc']],
                 columns: [
                     { data: 'id', searchable: true, orderable: true},
-                    { data: 'name', searchable: true, orderable: true},
-                    { data: 'class_id', searchable: true, orderable: true},
-                    { data: 'teacher_id', searchable: true, orderable: true},
+                    { data: 'title', searchable: true, orderable: true},
+                    { data: 'file', searchable: true, orderable: true},
+                    { data: 'created_at', searchable: true, orderable: true},
                     { data: 'action', searchable: true, orderable: true}
                 ],
                 columnDefs: [{

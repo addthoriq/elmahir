@@ -5,7 +5,7 @@
 @section('content')
 <div class="row wrapper white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Daftar Tugas</h2>
+        <h2>Daftar Tugas Siswa</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="{{ route('home.index') }}">Beranda</a>
@@ -25,9 +25,6 @@
                     <h5>Daftar Tugas</h5>
                 </div>
                 <div class="ibox-content">
-                    <div class="mb-3 mt-0">
-                        <a href="{{ route('task.create') }}" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
-                    </div>
                     @if (session('notif'))
                         <div class="alert alert-success alert-dismissable">
                             <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
@@ -39,9 +36,9 @@
                             <thead>
                                 <tr>
                                     <th style="width: 20px;">#</th>
-                                    <th>Judul</th>
-                                    <th>Mapel</th>
+                                    <th>Nama</th>
                                     <th>Kelas</th>
+                                    <th>Nilai</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -67,9 +64,9 @@
                 order: [[0,'asc']],
                 columns: [
                     { data: 'id', searchable: true, orderable: true},
-                    { data: 'title', searchable: true, orderable: true},
-                    { data: 'course_id', searchable: true, orderable: true},
-                    { data: 'class', searchable: true, orderable: true},
+                    { data: 'student_id', searchable: true, orderable: true},
+                    { data: 'classroom', searchable: true, orderable: true},
+                    { data: 'score', searchable: true, orderable: true},
                     { data: 'action', searchable: true, orderable: true}
                 ],
                 columnDefs: [{
