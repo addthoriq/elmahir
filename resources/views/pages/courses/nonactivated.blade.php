@@ -10,8 +10,11 @@
             <li class="breadcrumb-item">
                 <a href="{{ route('home.index') }}">Beranda</a>
             </li>
+            <li class="breadcrumb-item">
+                <a href="{{ route('course.index') }}">Data Mata Pelajaran</a>
+            </li>
             <li class="breadcrumb-item active">
-                <strong>Data Mata Pelajaran</strong>
+                <strong>Data Nonaktif</strong>
             </li>
         </ol>
     </div>
@@ -29,11 +32,9 @@
             </div>
             <div class="ibox-content">
                 <div class="mb-3 mt-0">
-                <a href="{{ route('course.create') }}" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
-                <a href="" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Import</a>
+                <a href="{{ route('course.index') }}" class="btn btn-sm btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
+                <a href="" class="btn btn-sm btn-info"><i class="fa fa-file-excel-o"></i> Import</a>
                 <a href="" class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</a>
-                <a href="{{ route('course-detail.index') }}" class="btn btn-sm btn-info"><i class="fa fa-home"> Detail</i></a>
-                <a href="{{ route('course.nonactived') }}" class="btn btn-sm btn-dark pull-right"><i class="fa fa-window-close"></i> Data Nonaktif</a>
             </div>
             @if (session('notif'))
                 <div class="alert alert-success alert-dismissable">
@@ -50,7 +51,6 @@
                             <th>Mata Pelajaran</th>
                             <th>Pengajar</th>
                             <th>Asisten</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -79,7 +79,6 @@
                     { data: 'course_id', searchable: true, orderable: true},
                     { data: 'teacher_id', searchable: true, orderable: true},
                     { data: 'assistant', searchable: true, orderable: false},
-                    { data: 'action', searchable: false, orderable: false}
                 ],
                 columnDefs: [{
                   "targets": 0,

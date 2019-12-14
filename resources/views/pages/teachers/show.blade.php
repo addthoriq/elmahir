@@ -251,7 +251,6 @@
                                     <th>Kelas</th>
                                     <th>Mapel</th>
                                     <th>Status</th>
-                                    <th>Action</th>
                                 </tr>
                                 @php
                                     $no     = 1;
@@ -275,14 +274,6 @@
                                                     @csrf
                                                     @method('PUT')
                                                     <button id="tombol1" type="submit" class="btn btn-sm btn-danger m-t-n-xs"><i class="fa fa-window-close"></i> Akhiri mapel</button>
-                                                </td>
-                                            </form>
-                                        @else
-                                            <form action="{{route('teacher.onCourse',$data->id)}}" method="post">
-                                                <td>
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button id="tombol1" type="submit" class="btn btn-sm btn-primary m-t-n-xs"><i class="fa fa-check"></i> Akhiri mapel</button>
                                                 </td>
                                             </form>
                                         @endif

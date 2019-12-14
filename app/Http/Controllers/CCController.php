@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Classroom;
 use App\Model\SchoolYear;
 use App\Model\TeacherHistory;
+use App\Model\Teacher;
 use App\Model\Course;
 use Yajra\Datatables\Datatables;
 use Form;
@@ -19,6 +20,12 @@ class CCController extends Controller
     {
         $ajax     = route('course.dbtb');
         return view('pages.courses.detail', compact('ajax'));
+    }
+
+    public function nonActived()
+    {
+        $ajax     = route('course.nondbtb');
+        return view('pages.courses.nonactivated', compact('ajax'));
     }
 
     public function dbTables(Request $request)
@@ -35,14 +42,32 @@ class CCController extends Controller
             return isset($index->course->name) ? $index->course->name : '-';
         })
         ->addColumn('action', function($index){
-            $tag     = Form::open(["url"=>route('course.destroy', $index->id), "method" => "DELETE"]);
-            $tag    .= "<a href=". route('course.show', $index->id) ." class='btn btn-xs btn-info' ><i class='fa fa-edit'></i> Edit</a> ";
-            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)' ><i class='fa fa-trash'></i> Hapus</button>";
+            $tag     = Form::open(["url"=>route('course.deactived', $index->id), "method" => "PUT"]);
+            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan ".$index->teacher->name." dari Mata Pelajaran ini?`)' ><i class='fa fa-minus-square'></i> Nonaktifkan</button>";
             $tag    .= Form::close();
             return $tag;
         })
         ->rawColumns([
             'id', 'action'
+        ])
+        ->make(true);
+    }
+
+    public function dbNon(Request $request)
+    {
+        $data     = TeacherHistory::where('status',0)->get();
+        return Datatables::of($data)
+        ->editColumn('teacher_id', function ($index) {
+            return isset($index->teacher->name) ? $index->teacher->name : '-';
+        })
+        ->editColumn('classroom_id', function ($index) {
+            return isset($index->classroom->name) ? $index->classroom->name : '-';
+        })
+        ->editColumn('course_id', function ($index) {
+            return isset($index->course->name) ? $index->course->name : '-';
+        })
+        ->rawColumns([
+            'id'
         ])
         ->make(true);
     }
@@ -69,45 +94,14 @@ class CCController extends Controller
             $kelas->status         = 1;
             $kelas->save();
         }
-        return redirect($this->rdr)->with('notif', 'Data Siswa berhasil ditambahkan');
+        return redirect($this->rdr)->with('notif', 'Data Mata Pelajaran berhasil ditambahkan');
     }
 
-    public function show($id)
+    public function deActived(Request $request, $id)
     {
-        $data       = Course::findOrFail($id);
-        $years      = SchoolYear::all();
-        $classes    = Classroom::all();
-        $history    = TeacherHistory::where('teacher_id', $id)->orderBy('created_at', 'desc')->first();
-        return view($this->folder.'.show', compact('data', 'years', 'classes', 'history'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $t                  = Teacher::where('name', '=', $request->teacher_id)->first();
-        if ($t->name == $request->teacher_id) {
-            TeacherHistory::where('teacher_id','=',$t->id)->update([
-                'teacher_id'        => $t->id,
-                'school_year_id'    => $request->school_year_id,
-                'classroom_id'      => $request->classroom_id,
-                'course_id'         => $request->course_id,
-                'status' => 0,
-            ]);
-            TeacherHistory::create([
-                'teacher_id'        => $t->id,
-                'school_year_id'    => $request->school_year_id,
-                'classroom_id'      => $request->classroom_id,
-                'course_id'         => $request->course_id,
-                'status'            => 1
-            ]);
-        }else {
-            TeacherHistory::create([
-                'teacher_id'        => $t->id,
-                'school_year_id'    => $request->school_year_id,
-                'classroom_id'      => $request->classroom_id,
-                'course_id'         => $request->course_id,
-                'status'            => 1
-            ]);
-        }
-        return redirect()->route('course.show', [$id])->with('notif', 'Data Mata Pelajaran berhasil diubah');
+        TeacherHistory::where('teacher_id', $id)->update([
+            'status'    => 0
+        ]);
+        return redirect($this->rdr)->with('notif', 'Data Mata Pelajaran berhasil di nonaktifkan');
     }
 }
