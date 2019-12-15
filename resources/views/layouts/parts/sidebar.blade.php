@@ -55,7 +55,7 @@
             <li class="text-secondary py-2 px-3" style="background-color: #2F4050">
                 <span class="nav-label">Manajemen Kelas & Mapel</span>
             </li>
-            <li class="{{ Request::is('course', 'course-detail') || Request::is('course/*', 'course-detail/*')? 'active' : '' }}">
+            <li class="{{ Request::is('course', 'course-detail', 'course-nonactived') || Request::is('course/*', 'course-detail/*', 'course-nonactived/*')? 'active' : '' }}">
                 <a href="#">
                     <i class="fa fa-window-restore"></i>
                     <span class="nav-label">Mata Pelajaran</span>

@@ -60,7 +60,6 @@
                         @include('pages.unons.editProfile')
                         @include('pages.unons.editAvatar')
 
-
                     </div>
 
                     <div class="ibox-content">
@@ -185,20 +184,10 @@
                     <div class="ibox-title">
                         <h5>Riwayat Mengajar</h5>
                         <div class="ibox-tools">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a data-toggle="modal" class="dropdown-item" href="#editClass">Ubah data Kelas Guru</a></li>
-                            </ul>
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
                             </a>
                         </div>
-
-                        {{-- Modal disini --}}
-                        {{-- @include('pages.students.editClass') --}}
-
                     </div>
 
                     <div class="ibox-content">
@@ -210,17 +199,17 @@
                                     <th>Tahun Ajaran</th>
                                     <th>Mapel</th>
                                 </tr>
-                                {{-- @php
+                                @php
                                     $no     = 1;
                                 @endphp
-                                @foreach ($history as $h)
+                                @foreach ($histories as $h)
                                     <tr>
                                         <td>{{$no++}}</td>
-                                        <td>{{$h->classroom->name}}</td>
                                         <td>{{$h->school_year->start_year}}/{{$h->school_year->end_year}}</td>
-                                        <td>{{($h->status)?'Kelas Saat ini':'Telah Selesai'}}</td>
+                                        <td>{{$h->classroom->name}}</td>
+                                        <td>{{$h->course->name}}</td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                         <form action="{{route('unon.aktif',$data->id)}}" method="post">

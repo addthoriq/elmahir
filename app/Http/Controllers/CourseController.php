@@ -28,10 +28,10 @@ class CourseController extends Controller
         $data     = Course::all();
         return Datatables::of($data)
         ->addColumn('action', function($index){
-            $tag     = Form::open(["url"=>route('course.destroy', $index->id), "method" => "DELETE"]);
-            $tag    .= "<a href=". route('course-detail.show', $index->id) ." class='btn btn-xs btn-info' ><i class='fa fa-edit'></i> Edit</a> ";
-            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)' ><i class='fa fa-trash'></i> Hapus</button>";
-            $tag    .= Form::close();
+            $tag    = "<a href=". route('course-detail.show', $index->id) ." class='btn btn-xs btn-info' ><i class='fa fa-edit'></i> Edit</a> ";
+            // $tag     = Form::open(["url"=>route('course.destroy', $index->id), "method" => "DELETE"]);
+            // $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)' ><i class='fa fa-trash'></i> Hapus</button>";
+            // $tag    .= Form::close();
             return $tag;
         })
         ->rawColumns([

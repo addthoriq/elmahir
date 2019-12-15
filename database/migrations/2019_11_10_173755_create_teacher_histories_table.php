@@ -22,7 +22,7 @@ class CreateTeacherHistoriesTable extends Migration
             $table->string('assistant')->nullable(); //Asisten atau pengganti Guru
             $table->boolean('status'); // Ngajar Saat ini == 1 && Ngajar lalu == 0
             $table->timestamps();
-            $table->foreign('teacher_id')->references('id')->on('teachers');
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
         });
     }
 
