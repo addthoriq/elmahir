@@ -39,89 +39,53 @@
                         <h5>Tambah Materi</h5>
                     </div>
                     <div class="ibox-content">
-                        <form id="form" action="{{route('student.store')}}" class="wizard-big" method="post" enctype="multipart/form-data">
+                        <form id="form" action="{{route('section.store')}}" class="wizard-big" method="POST" enctype="multipart/form-data">
                             @csrf
-                                <div class="row">
+                                <div class="row boxs">
                                     <div class="col-lg-7">
                                         <h3>Deskripsi singkat</h3>
                                         <div class="form-group">
-                                            <label>Bab *</label>
-                                            <input id="nisn" name="nisn" type="number" class="form-control ">
+                                            <label>Bab</label>
+                                            <input id="chapterName" name="chapterName" type="text" class="form-control" value="{{ $chapter->title }}" disabled>
+                                            <input id="chapter_id" name="chapter_id" type="hidden" class="form-control" value="{{ $chapter->id }}">
                                         </div>
                                         <div class="form-group">
-                                            <label>Judul *</label>
-                                            <input id="name" name="name" type="text" class="form-control ">
+                                            <label>Judul Materi *</label>
+                                            <input id="title" name="title" type="text" class="form-control ">
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Deskripsi *</label>
-                                            <input id="email" name="email" type="text" class="form-control ">
+                                            <input id="description" name="description" type="text" class="form-control ">
                                         </div>
-                                        <h3 class="mt-4">Isi Materi</h3>
+                                        <label class="mt-4">Isi Materi <small><i>(optional)</i></small></label>
                                         <div class="form-group">
                                             <div class="summernote">
                                             </div>
                                         </div>
-                                        <label for="email">File  *</label>
-                                        <div action="#" class="dropzone" id="dropzoneForm">
-                                            <div class="fallback">
-                                                <input name="file" type="file" multiple />
-                                            </div>
-                                        </div>
-                                        <p>Anda bisa mengupload beberapa file sekaligus</p>
                                     </div>
                                     <div class="col-lg-5">
-                                        <h3>Periode Materi</h3>
-                                        <p>Memberikan durasi materi dapat diakses siswa</p>
-
-                                        <div class="form-group" id="data_1">
-                                            <label class="font-normal">Tanggal Mulai</label>
-                                            <div class="input-group date">
-                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control">
+                                        <h3>Multiple File Upload</h3>
+                                        <p>Meng-upload beberapa files sekaligus.</p>
+                                        <label for="email">File  *</label>
+                                        <div class="erase">
+                                            <div class="row bg-muted p-2">
+                                                <div class="col-md-10">
+                                                    <div class="fileinput fileinput-new m-0" data-provides="fileinput">
+                                                        <span class="btn btn-default btn-file"><span class="fileinput-new">Pilih File...</span>
+                                                        <span class="fileinput-exists">Ubah</span><input type="file" name="file[]"/></span>
+                                                        <span class="fileinput-filename"></span>
+                                                        <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
+                                                    </div> 
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="form-group" id="data_2">
-                                            <label class="font-normal">Tanggal Selesai</label>
-                                            <div class="input-group date">
-                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                        
-                                        <h3 class="mt-4">Detail Materi</h3>
-                                        <div class="form-group">
-                                            <label>Mata Pelajaran *</label>
-                                            <select class="form-control m-b" name="class_id">
-                                                <option>-- Pilih Mapel --</option>
-                                                {{-- @foreach ($classes as $class)
-                                                    <option value="{{$class->id}}">{{$class->name}}</option>
-                                                @endforeach --}}
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Untuk Kelas *</label>
-                                            <select class="form-control m-b" name="class_id">
-                                                <option>-- Pilih Kelas --</option>
-                                                {{-- @foreach ($classes as $class)
-                                                    <option value="{{$class->id}}">{{$class->name}}</option>
-                                                @endforeach --}}
-                                            </select>
-                                        </div>
 
-                                        <div class="btn-group">
-                                            <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Publish</button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Simpan</a></li>
-                                                <li><a class="dropdown-item" href="#" class="font-bold">Publish</a></li>
-                                                <li><a class="dropdown-item" href="#">Jadwalkan</a></li>
-                                            </ul>
+                                        <div class="mt-2">
+                                            <button type="button" class="btn btn-success btn-sm" id="add">
+                                                <i class="fa fa-plus"></i> Tambah
+                                            </button>
+                                            <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-send"></i> Publish</button>
                                         </div>
-                                        <button class="btn btn-danger">
-                                            <i class="fa fa-trash"></i> Buang
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12" >
-        
                                     </div>
                                 </div>
                         </form>
@@ -151,11 +115,6 @@
     <!-- Data picker -->
     <script src="{{ asset('inspinia/js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
     <script>
-        Dropzone.options.dropzoneForm = {
-            paramName: "file", // The name that will be used to transfer the file
-            maxFilesize: 2, // MB
-            dictDefaultMessage: "<strong>Letakkan file disini atau klik disini. </strong>"
-        };
         $(document).ready(function(){
             $('.summernote').summernote();
 
@@ -175,7 +134,15 @@
                 calendarWeeks: true,
                 autoclose: true,
                 format: "dd/mm/yyyy"
-            }); 
+            });
+
+            $("#add").click(function(){
+                  $(".erase").after("<div class='row clone bg-muted p-2'><div class='col-md-10'><div class='fileinput fileinput-new m-0' data-provides='fileinput'><span class='btn btn-default btn-file'><span class='fileinput-new'>Pilih File...</span><span class='fileinput-exists'>Ubah</span><input type='file' name='file[]'/></span><span class='fileinput-filename'></span></div> </div><div class='col-md-2'><button type='button' class='btn btn-lg btn-danger'><i class='fa fa-close'></i></button></div></div>");
+                });
+
+            $(".boxs").on("click",".btn-danger",function(){ 
+                $(this).parents(".clone").remove();
+            });
        });
     </script>
 @endsection

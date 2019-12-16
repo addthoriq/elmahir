@@ -19,4 +19,9 @@ class Course extends Model
     {
         return $this->belongsTo(Classroom::class, 'class_id');
     }
+
+    public function chapter()
+    {
+        return $this->hasMany(Chapter::class);
+    }
 }
