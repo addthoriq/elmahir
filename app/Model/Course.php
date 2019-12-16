@@ -17,4 +17,9 @@ class Course extends Model
     {
         return $this->hasMany(TeachersHistory::class);
     }
+
+    public function chapter()
+    {
+        return $this->hasMany(Chapter::class);
+    }
 }

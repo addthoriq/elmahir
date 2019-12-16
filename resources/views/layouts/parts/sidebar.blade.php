@@ -94,7 +94,6 @@
                     </li>
                 </ul>
             </li>
-
             {{-- Kompetensi Siswa --}}
             <li class="text-secondary py-2 px-3" style="background-color: #2F4050">
                 <span class="nav-label">Kompetensi Siswa</span>
@@ -105,6 +104,7 @@
             <li class="{{ Request::is('task') || Request::is('task/*')? 'active' : '' }}">
                 <a href="{{ route('task.index') }}"><i class="fa fa-tasks"></i> <span class="nav-label">Tugas</span></a>
             </li>
+
 
             {{-- Sistem Seting --}}
             <li class="text-secondary py-2 px-3" style="background-color: #2F4050">
