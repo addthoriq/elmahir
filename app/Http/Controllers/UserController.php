@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequests;
 use App\Model\User;
 use App\Model\Role;
 use Yajra\Datatables\Datatables;
@@ -63,7 +64,7 @@ class UserController extends Controller
         return view($this->folder.'.create', compact('roles'));
     }
 
-    public function store(Request $request)
+    public function store(UserRequests $request)
     {
         $data     = new User;
         $data->role_id = $request->role_id;

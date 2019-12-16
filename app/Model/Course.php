@@ -7,17 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
 	protected $fillable = [
-        'teacher_id', 'name', 'assistant', 'class_id', 'semester'
+        'name',
     ];
-
     public function teacher()
     {
         return $this->belongsTo(Teacher::class);
     }
-
-    public function classroom()
+	public function teacherHistories()
     {
-        return $this->belongsTo(Classroom::class, 'class_id');
+        return $this->hasMany(TeachersHistory::class);
     }
 
     public function section()

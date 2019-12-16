@@ -19,6 +19,14 @@
             @include('layouts.parts.sidebar')
         </nav>
 
+        {{-- Header Section --}}
+        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0;">
+            @include('layouts.parts.navbar')
+        </nav>
+
+        {{-- Sidebar Section --}}
+        @include('layouts.parts.sidebar')
+
         <div id="page-wrapper" class="gray-bg dashbard-1">
 
             <div class="row border-bottom">
@@ -29,7 +37,7 @@
 
             @yield('content')
 
-            @include('layouts.parts.footer')            
+            @include('layouts.parts.footer')
         </div>
     </div>
 

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Classroom;
+use App\Model\ClassroomCourse;
 use App\Model\Teacher;
+use App\Model\SchoolYear;
+use App\Model\TeacherHistory;
 use App\Model\Course;
 use Yajra\Datatables\Datatables;
 use Form;
@@ -12,11 +15,11 @@ use Form;
 class CourseController extends Controller
 {
     protected $folder     = 'pages.courses';
-    protected $rdr        = '/course';
+    protected $rdr        = '/course-detail';
 
     public function index()
     {
-        $ajax     = route('course.dbtb');
+        $ajax     = route('detail.dbtb');
         return view('pages.courses.index', compact('ajax'));
     }
 
@@ -24,17 +27,11 @@ class CourseController extends Controller
     {
         $data     = Course::all();
         return Datatables::of($data)
-        ->editColumn('teacher_id', function ($index) {
-            return isset($index->teacher->name) ? $index->teacher->name : '-';
-        })
-        ->editColumn('class_id', function ($index) {
-            return isset($index->classroom->name) ? $index->classroom->name : '-';
-        })
         ->addColumn('action', function($index){
-            $tag     = Form::open(["url"=>route('course.destroy', $index->id), "method" => "DELETE"]);
-            $tag    .= "<a href=". route('course.show', $index->id) ." class='btn btn-xs btn-info' ><i class='fa fa-search'></i> Detail</a> ";
-            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)' ><i class='fa fa-trash'></i> Hapus</button>";
-            $tag    .= Form::close();
+            $tag    = "<a href=". route('course-detail.show', $index->id) ." class='btn btn-xs btn-info' ><i class='fa fa-edit'></i> Edit</a> ";
+            // $tag     = Form::open(["url"=>route('course.destroy', $index->id), "method" => "DELETE"]);
+            // $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)' ><i class='fa fa-trash'></i> Hapus</button>";
+            // $tag    .= Form::close();
             return $tag;
         })
         ->rawColumns([
@@ -42,74 +39,38 @@ class CourseController extends Controller
         ])
         ->make(true);
     }
-    
+
     public function create()
     {
-        $classes    = Classroom::all();
-        $teachers   = Teacher::all();
-        return view('pages.courses.create', compact('classes', 'teachers'));
+        return view('pages.courses.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $data               = new Course;
-        $data->name         = $request->name;
-        $data->class_id     = $request->class_id;
-        $data->teacher_id   = $request->teacher_id;
-        $data->assistant    = $request->assistant;
-        $data->semester     = $request->semester;
-        $data->save();
-        return redirect($this->rdr)->with('notif', 'Data Siswa berhasil ditambahkan');
+        $request->validate(['name'=>['required']]);
+        foreach ($request->name as $nm) {
+            $mpl           = new Course;
+            $mpl->name     = $nm;
+            $mpl->save();
+        }
+        return redirect($this->rdr)->with('notif', 'Daftar Mata Pelajaran berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        $data       = Course::findOrFail($id);
+        return view($this->folder.'.show', compact('data'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        if ($request->name == Course::findOrFail($id)->name) {
+            return redirect()->route('course-detail.show', [$id])->with('notif', 'Tidak ada perubahan pada Daftar Mata Pelajaran');
+        }else {
+            Course::findOrFail($id)->update([
+                'name'     => $request->name
+            ]);
+            return redirect()->route('course-detail.index')->with('notif', 'Daftar Mata Pelajaran berhasil diubah');
+        }
     }
 }

@@ -10,8 +10,9 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label>Nama</label>
-                        <input type="text" value="{{$data->name}}" name="name" class="form-control">
+                        <label id="labelName" for="name">Nama</label>
+                        <input id="name" type="text" value="{{$data->name}}" name="name" class="form-control">
+                        <span id="noticeName"></span>
                     </div>
                     <div class="form-group">
                         <label>Sebagai </label>
@@ -23,12 +24,21 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" value="{{$data->email}}" name="email" class="form-control">
+                        <label id="labelEmail" for="email">Email</label>
+                        <input id="email" type="email" value="{{$data->email}}" name="email" class="form-control">
+                        <span id="textEmail"></span>
                     </div>
                     <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" name="password" class="form-control" placeholder="ubah Password">
+                        <label id="labelPass">Password</label>
+                        <input id="password" type="password" class="form-control">
+                        <i class="text-muted">Password minimal 8 karakter</i>
+                        <span id="textPassword"></span>
+                    </div>
+                    <div class="form-group">
+                        <label id="konfirPass">Konfirmasi Password</label>
+                        <input id="confirmation_password" type="password" name="password" class="form-control">
+                        <i class="text-muted">Password minimal 8 karakter</i>
+                        <span id="textCPassword"></span>
                     </div>
                     <div class="form-group">
                         <label>Status</label>
@@ -48,7 +58,7 @@
                         </div>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-sm btn-primary float-right m-t-n-xs"><i class="fa fa-send"></i> Ubah</button>
+                        <button type="submit" id="tombol" disabled class="btn btn-sm btn-primary float-right m-t-n-xs"><i class="fa fa-send"></i> Ubah</button>
                     </div>
                 </form>
 

@@ -233,9 +233,6 @@
                     <div class="ibox-title">
                         <h5>Riwayat Mengajar</h5>
                         <div class="ibox-tools">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
                             <ul class="dropdown-menu dropdown-user">
                                 <li><a data-toggle="modal" class="dropdown-item" href="#editClass">Ubah data Kelas Guru</a></li>
                             </ul>
@@ -243,10 +240,6 @@
                                 <i class="fa fa-chevron-up"></i>
                             </a>
                         </div>
-
-                        {{-- Modal disini --}}
-                        {{-- @include('pages.students.editClass') --}}
-
                     </div>
 
                     <div class="ibox-content">
@@ -254,21 +247,38 @@
                             <tbody>
                                 <tr>
                                     <th>No</th>
-                                    <th>Kelas</th>
                                     <th>Tahun Ajaran</th>
+                                    <th>Kelas</th>
                                     <th>Mapel</th>
+                                    <th>Status</th>
                                 </tr>
-                                {{-- @php
+                                @php
                                     $no     = 1;
                                 @endphp
                                 @foreach ($history as $h)
                                     <tr>
                                         <td>{{$no++}}</td>
-                                        <td>{{$h->classroom->name}}</td>
                                         <td>{{$h->school_year->start_year}}/{{$h->school_year->end_year}}</td>
-                                        <td>{{($h->status)?'Kelas Saat ini':'Telah Selesai'}}</td>
+                                        <td>{{$h->classroom->name}}</td>
+                                        <td>{{$h->course->name}}</td>
+                                        <td>
+                                            @if ($h->status)
+                                                <span class='label label-success'>Kelas Sekarang</span>
+                                            @else
+                                                <span class='label label-danger'>Telah Selesai</span>
+                                            @endif
+                                        </td>
+                                        @if ($h->status)
+                                            <form action="{{route('teacher.nonCourse',$data->id)}}" method="post">
+                                                <td>
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button id="tombol1" type="submit" class="btn btn-sm btn-danger m-t-n-xs"><i class="fa fa-window-close"></i> Akhiri mapel</button>
+                                                </td>
+                                            </form>
+                                        @endif
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                         <form action="{{route('teacher.nonaktif',$data->id)}}" method="post">
@@ -286,28 +296,5 @@
 @endsection
 
 @section('script')
-    <!-- Jasny -->
-    <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
-    <!-- iCheck -->
-    <script src="{{asset('inspinia/js/plugins/iCheck/icheck.min.js')}}"></script>
-    <!-- Data picker -->
-    <script src="{{asset('inspinia/js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
-    <script>
-        $(document).ready(function(){
-            $('.i-checks').iCheck({
-                radioClass: 'iradio_square-green',
-            });
-            $('.custom-file-input').on('change', function() {
-                let fileName = $(this).val().split('\\').pop();
-                $(this).next('.custom-file-label').addClass("selected").html(fileName);
-            });
-            var mem = $('#data_1 .input-group.date').datepicker({
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                calendarWeeks: true,
-                autoclose: true
-            });
-       });
-    </script>
+    @include('pages.teachers.script')
 @endsection
