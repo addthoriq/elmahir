@@ -7,6 +7,10 @@
 <!-- Gritter -->
 <link href="{{ asset('inspinia/js/plugins/gritter/jquery.gritter.css') }}" rel="stylesheet">
 
-<link href="{{ asset('inspinia/css/animate.css') }}" rel="stylesheet">
-<link href="{{ asset('inspinia/css/style.css') }}" rel="stylesheet">
 <link href="{{ asset('inspinia/css/plugins/dataTables/datatables.min.css') }}" rel="stylesheet">
+
+<link href="{{asset('inspinia/css/plugins/codemirror/codemirror.css')}}" rel="stylesheet">
+<link href="{{ asset('inspinia/css/plugins/summernote/summernote-bs4.css') }}" rel="stylesheet">
+
+<link href="{{asset('inspinia/css/animate.css')}}" rel="stylesheet">
+<link href="{{asset('inspinia/css/style.css')}}" rel="stylesheet">

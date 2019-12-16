@@ -47,7 +47,7 @@
         <div class="row">
             <div class="col-md-9 pr-0">
                 <div class="ibox-content no-padding border-left-right d-flex justify-content-center bg-dark scrollspy-example">
-                    @if (Request::is('chapter/*'))
+                    @if (Request::is('section/*'))
                         <img alt="image" class="img-fluid" src="{{ Storage::url('img/education.jpg') }}" style="height: 400px;">
                     @else
                         @if ($files->name_file)

@@ -27,23 +27,44 @@ Route::get('/course-deactived/non-dbtb', 'CCController@dbNon')->name('course.non
 Route::get('/course/dbtb', 'CCController@dbTables')->name('course.dbtb');
 Route::get('/course-detail/dbtb', 'CourseController@dbTables')->name('detail.dbtb');
 Route::get('/alumni/dbtb', 'AlumnusController@dbTables')->name('alumni.dbtb');
+Route::get('/task/dbtb', 'TaskController@dbTables')->name('task.dbtb');
 Route::get('/teacher-deactived/dbtb', 'UnonController@dbTables')->name('unon.dbtb');
 
+Route::get('/sectioncourse/dbcourse', 'SectionCourseController@dbCourse')->name('sectioncourse.dbcourse');
+Route::get('/sectioncourse/{id}/dbsection', 'SectionCourseController@dbSection')->name('sectioncourse.dbsection');
+Route::get('/answertask/{id}/dbtb', 'AnswerTaskController@dbTables')->name('answertask.dbtb');
+
 //Json
-=======
 //Materi Bab
 Route::get('/section/dbtb', 'SectionController@dbTables')->name('section.dbtb');
 Route::get('/mapel/dbtb', 'ChapterController@mapel')->name('mapel.dbtb');
 Route::get('/chapter/{id}/homeChapter', 'ChapterController@homeChapter')->name('chapter.homeChapter');
 Route::get('/chapter/{id}/dbtb', 'ChapterController@chapter')->name('chapter.dbtb');
 
-//Materi
-Route::get('/section/{id}/add', 'SectionController@add')->name('section.add');
-// Route::get('/section/{id}/file', 'SectionController@file')->name('section.file');
 
-//File
+//Materi
+Route::get('/sectioncourse/courselist', 'SectionCourseController@courseList')->name('sectioncourse.courselist');
+Route::get('/sectioncourse/{id}/sectionlist', 'SectionCourseController@sectionList')->name('sectioncourse.sectionlist');
+Route::get('/section/{id}/add', 'SectionController@add')->name('section.add');
+
+//Materi
+Route::get('/section/{id}/home', 'SectionController@home')->name('section.home');
 Route::put('section/{id}/updateFile', 'SectionController@updateFile')->name('section.updateFile');
 Route::delete('section/{id}/deleteFile', 'SectionController@deleteFile')->name('section.deleteFile');
+Route::post('section/{id}/addFile', 'SectionController@addFile')->name('section.addFile');
+Route::get('/section/{id}/file', 'SectionController@file')->name('section.file');
+Route::get('/section/{id}/fileDownload', 'SectionController@fileDownload')->name('section.fileDownload');
+
+//Task
+Route::patch('/task/{id}', 'TaskController@restore')->name('task.restore');
+Route::get('/task/{id}/fileDownload', 'TaskController@fileDownload')->name('task.fileDownload');
+Route::post('/task/{id}/addFile', 'TaskController@addFile')->name('task.addFile');
+
+//Answer Task
+Route::get('/answertask/{id}/home', 'AnswerTaskController@home')->name('answertask.home');
+Route::post('/answertask/{id}/storeScore', 'AnswerTaskController@storeScore')->name('answertask.storeScore');
+Route::put('/answertask/{id}/updateScore', 'AnswerTaskController@updateScore')->name('answertask.updateScore');
+
 Route::get('/home/chartMurid', 'HomeController@chartMurid')->name('home.chartMurid');
 Route::get('/home/chartGuru', 'HomeController@chartGuru')->name('home.chartGuru');
 Route::get('/classroom/{id}/chartMurid', 'ClassroomController@chartMurid')->name('classroom.chartMurid');
@@ -80,9 +101,10 @@ Route::get('/alumni', 'AlumnusController@index')->name('alumni.index');
 Route::get('/alumni/{id}', 'AlumnusController@show')->name('alumni.show');
 Route::resource('/classroom', 'ClassroomController');
 Route::resource('/section', 'SectionController');
-Route::resource('/task', 'TaskController');
-Route::resource('/user', 'UserController');
 Route::resource('/chapter', 'ChapterController');
+Route::resource('/task', 'TaskController');
+Route::resource('/answertask', 'AnswerTaskController');
+Route::resource('/user', 'UserController');
 Route::put('/user/{id}/avatar', 'UserController@updateAva')->name('user.ava');
 Route::put('/user/{id}/aktif', 'UserController@aktif')->name('user.aktif');
 Route::put('/user/{id}/unon', 'UserController@unon')->name('user.unon');

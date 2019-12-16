@@ -1,24 +1,25 @@
 @extends('layouts.app')
 
-@section('title', 'Materi')
+@section('title', 'Tugas')
 
 @section('style')
-<link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
 <style>
+    .hover:hover {
+        background-color: #efefef;
+    }
     .detail:hover {
         background-color: #e5e5e5;
     }
-    .onlamp {
-        background-color: #e5e5e5;        
-    }
 </style>
-
+<link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
+<link href="{{ asset('inspinia/css/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">
+<link href="{{asset('inspinia/css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')
 <div class="row wrapper white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Data Materi</h2>
+        <h2>Daftar Materi</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="{{ route('home.index') }}">Beranda</a>
@@ -35,41 +36,38 @@
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox bg-white">
-        <div class="ibox-title">
+        <div class="ibox-title d-flex justify-content-between flex-row align-items-center">
             <h5>
-                {{ $section->course->name }} - {{ $section->title }}
+				{{ $task->title }}
             </h5>
         </div>
         <div class="row">
-
             <div class="col-md-9 pr-0">
-                <div class="ibox-content no-padding border-left-right d-flex justify-content-center bg-dark scrollspy-example">
-                    @if (Request::is('section/*/home'))
-                        <img alt="image" class="img-fluid" src="{{ Storage::url('img/education.jpg') }}" style="height: 400px;">
-                    @else
-                        @if ($files->name_file)
-                            @if ($files->type_file == 'image/png')
-                                <img alt="image" class="img-fluid" src="{{ Storage::url($files->name_file) }}" style="height: 400px;">
-                            @else
-                                <embed src="{{ Storage::url($files->name_file) }}" type="application/pdf" width="100%" height="400px" />
-                            @endif
-                        @else
-                            <iframe width="80%" height="400" src="{{ $files->link }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        @endif
-                    @endif
-                </div>
                 <div class="ibox-content profile-content">
-                    <h4><strong>{{ $section->title }}</strong></h4>
-                    <p>{{ $section->description }}</p>
-                    <div class="user-button">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#materiModal"><i class="fa fa-edit"></i> Edit Materi</button>
-                            </div>
+                    <div class="d-flex flex-row justify-content-between align-items-center">
+                        <div class="text-muted">
+                            Diposting tanggal {{ $task->created_at->format('d M Y') }}
                         </div>
+                        @php
+                            $myDateTime = DateTime::createFromFormat('Y-m-d', $task->end_periode);
+                            $dayShow = $myDateTime->format('d M Y');
+                        @endphp
+                            <div class="btn-group align-items-center">
+                                Tenggat
+                                <button class="btn btn-primary btn-sm ml-2"><i class="fa fa-calendar"></i> {{ $dayShow }}</button>
+                                <a href="{{ route('answertask.home', $task->id) }}" class="btn btn-success btn-sm"><i class="fa fa-folder-open"></i> Tugas Siswa</a>
+                            </div>
+                    </div>
+                    <p class="mt-4">{{ $task->description }}</p>
+                    <div class="btn-group mt-3">
+                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#taskModal"><i class="fa fa-edit"></i> Edit Tugas</button>
                     </div>
                 </div>
-                <!-- Baris Komentar -->
+
+                <!-- Modal -->
+                @include('pages.tasks.editModalTask')
+                @include('pages.tasks.addModalFileTask')
+
                 {{-- <div class="ibox-content">
                     <div class="d-flex flex-row mb-4">
                         <input type="text" class="form-control mr-2" placeholder="Komentar anda...">
@@ -159,75 +157,76 @@
                         <button class="btn btn-outline btn-primary btn-block">Lihat lainnya</button>
                     </div>
                 </div> --}}
+
             </div>
 
-            <!-- Modal Create Chapter -->
-            @include('pages.sections.editModalSection')
-            @include('pages.sections.addModalFileSection')
-            
             <div class="col-md-3 pl-0">
                 <div class="ibox-content px-0 py-0">
                     <div class="feed-activity-list">
-                        <h3 class="ml-4 mt-3 mb-1">File Materi</h3>
+                        <h3 class="ml-4 mt-3 mb-1">File Tugas</h3>
                         @if (session('notif'))
                             <div class="alert alert-success alert-dismissable mx-4 my-3">
                                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
                                 {{session('notif')}}
                             </div>
                         @endif
-                        <?php $no = 1; ?>
-                        <ul class="nav metismenu">
-                            <li class="bg-default">
-                                <a href="#" class="tree-toggle py-2" style="color: #676A6C">{{ $section->title }}<br>
-                                <small> file . publish : {{ $section->created_at ? $section->created_at->format('d M Y') : 'undefined' }}</small>
-                                </a>
-                                <ul class="tree pl-0">
-                                @foreach ($fileSections as $file)
-                                    <li class="nav-link p-0 detail pl-4 pr-3 py-2 {{ Request::url() == route('section.show', $file->id) ? 'onlamp' : '' }}">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <a href="{{ route('section.show', $file->id) }}" style="color: #676A6C">{{ $file->title }}<br>
-                                            <small>
-                                                <i class="fa fa-file-pdf-o" size="10"></i>
-                                                publish : {{ date_format($file->created_at,"d M Y") }}
-                                            </small>
-                                            </a>
-                                            <form action="{{ route('section.deleteFile', $file->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <div class="btn-group">
-                                                    <a href="{{ route('section.fileDownload', $file->id) }}" class="btn btn-success btn-xs"><i class="fa fa-download"></i></a>
-                                                    <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('are you sure?')"><i class="fa fa-trash"></i></button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </li>
-                                @endforeach
-                                </ul>
+                        <ul class="list-unstyled file-list px-3 mt-3">
+                            @foreach ($fileTask as $file)
+                            <li class="d-flex justify-content-between align-items-center">
+                                <a href=""><i class="fa fa-file"></i> {{ $file->title }}</a>
+                                <div class="btn-group">
+                                    <a href="{{ route('task.fileDownload', $file->id) }}" class="btn btn-success btn-xs text-white"><i class="fa fa-download"></i></a>
+                                    <a href="" class="btn btn-danger btn-xs text-white"><i class="fa fa-trash"></i></a>
+                                </div>
                             </li>
-                        </ul>
-                        <button href="" class="btn btn-primary m-3" data-toggle="modal" data-target="#fileModal"><i class="fa fa-plus"></i> Tambah Materi</button>
+                            @endforeach
+                        </ul> 
+                    <button href="" class="btn btn-primary mx-3 mt-1 mb-3" data-toggle="modal" data-target="#fileModal"><i class="fa fa-plus"></i> Tambah File</button>
                     </div>
+
                 </div>
             </div>
-
         </div>
-
     </div>
+
 </div>
 @endsection
 
 @section('script')
 <!-- Jasny -->
 <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
+<script src="{{ asset('inspinia/js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('inspinia/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
 <script type="text/javascript">
-     $(document).ready(function(){
-         $("#add").click(function(){
-               $(".erase").after("<div class='row clone bg-muted p-2'><div class='col-md-10'><div class='fileinput fileinput-new m-0' data-provides='fileinput'><span class='btn btn-default btn-file'><span class='fileinput-new'>Pilih File...</span><span class='fileinput-exists'>Ubah</span><input type='file' name='file[]'/></span><span class='fileinput-filename'></span></div> </div><div class='col-md-2'><button type='button' class='btn btn-lg btn-danger'><i class='fa fa-close'></i></button></div></div>");
-             });
+    $(document).ready(function () {
+        var date1 = $('#data_1 .input-group.date').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true,
+            format: "yyyy-mm-dd"
+            // format: "dd-mm-yyyy"
+        });
 
-         $(".boxs").on("click",".btn-danger",function(){ 
-             $(this).parents(".clone").remove();
-         });
+        var date2 = $('#data_2 .input-group.date').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true,
+            format: "yyyy-mm-dd"
+            // format: "dd-mm-yyyy"
+        });
+
+        $("#add").click(function(){
+              $(".erase").after("<div class='row clone bg-muted p-2'><div class='col-md-10'><div class='fileinput fileinput-new m-0' data-provides='fileinput'><span class='btn btn-default btn-file'><span class='fileinput-new'>Pilih File...</span><span class='fileinput-exists'>Ubah</span><input type='file' name='file[]'/></span><span class='fileinput-filename'></span></div> </div><div class='col-md-2'><button type='button' class='btn btn-lg btn-danger'><i class='fa fa-close'></i></button></div></div>");
+            });
+
+        $(".boxs").on("click",".btn-danger",function(){ 
+            $(this).parents(".clone").remove();
+        });
+
     });
 </script>
 @endsection

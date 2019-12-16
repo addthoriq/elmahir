@@ -5,13 +5,13 @@
 @section('content')
 <div class="row wrapper white-bg page-heading" id="modal-pop">
     <div class="col-lg-10">
-        <h2>Daftar Materi</h2>
+        <h2>Daftar Mapel</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="{{ route('home.index') }}">Beranda</a>
             </li>
             <li class="breadcrumb-item active">
-                <strong>Data Materi</strong>
+                <strong>Data Mapel</strong>
             </li>
         </ol>
     </div>
@@ -25,7 +25,7 @@
         <div class="col-lg-12">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>Daftar Materi</h5>
+                <h5>Daftar Mapel</h5>
             </div>
             <div class="ibox-content">
 
@@ -37,6 +37,7 @@
                             <th>Nama Mapel</th>
                             <th>Kelas</th>
                             <th>Pengajar</th>
+                            <th>Materi</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -65,6 +66,7 @@
                     { data: 'name', searchable: true, orderable: true},
                     { data: 'class_id', searchable: true, orderable: true},
                     { data: 'teacher_id', searchable: true, orderable: true},
+                    { data: 'section', searchable: true, orderable: true},
                     { data: 'action', searchable: true, orderable: true}
                 ],
                 columnDefs: [{
