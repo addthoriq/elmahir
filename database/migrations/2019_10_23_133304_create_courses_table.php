@@ -15,15 +15,8 @@ class CreateCoursesTable extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('teacher_id');
-            $table->unsignedInteger('class_id');
             $table->string('name');
-            $table->string('assistant'); //Asisten atau pengganti Guru
-            $table->string('semester');
             $table->timestamps();
-
-            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
-            $table->foreign('class_id')->references('id')->on('classrooms')->onDelete('cascade');
         });
     }
 

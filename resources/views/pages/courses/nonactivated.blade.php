@@ -5,16 +5,16 @@
 @section('content')
 <div class="row wrapper white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Daftar Mata Pelajaran</h2>
+        <h2>Data Mata Pelajaran</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="{{ route('home.index') }}">Beranda</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="{{ route('course.index') }}">Mata Pelajaran</a>
+                <a href="{{ route('course.index') }}">Data Mata Pelajaran</a>
             </li>
             <li class="breadcrumb-item active">
-                <strong>Daftar Mata Pelajaran</strong>
+                <strong>Data Nonaktif</strong>
             </li>
         </ol>
     </div>
@@ -32,30 +32,31 @@
             </div>
             <div class="ibox-content">
                 <div class="mb-3 mt-0">
-                    <a href="{{ route('course.index') }}" class="btn btn-sm btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
-                    <a href="{{ route('course-detail.create') }}" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
-                    <a href="" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Import</a>
-                    <a href="" class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</a>
+                <a href="{{ route('course.index') }}" class="btn btn-sm btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
+                <a href="" class="btn btn-sm btn-info"><i class="fa fa-file-excel-o"></i> Import</a>
+                <a href="" class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</a>
+            </div>
+            @if (session('notif'))
+                <div class="alert alert-success alert-dismissable">
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                    {{session('notif')}}
                 </div>
-                @if (session('notif'))
-                    <div class="alert alert-success alert-dismissable">
-                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                        {{session('notif')}}
-                    </div>
-                @endif
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover dataTables-example" style="border-spacing:0px;">
-                        <thead>
-                            <tr>
-                                <th style="width: 20px;">#</th>
-                                <th>Nama Mapel</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
+            @endif
+            <div class="table-responsive">
+                <table class="table table-striped table-hover dataTables-example" style="border-spacing:0px;">
+                    <thead>
+                        <tr>
+                            <th style="width: 20px;">#</th>
+                            <th>Kelas</th>
+                            <th>Mata Pelajaran</th>
+                            <th>Pengajar</th>
+                            <th>Asisten</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
             </div>
         </div>
     </div>
@@ -74,8 +75,10 @@
                 order: [[0,'asc']],
                 columns: [
                     { data: 'id', searchable: true, orderable: true},
-                    { data: 'name', searchable: true, orderable: true},
-                    { data: 'action', searchable: false, orderable: false}
+                    { data: 'classroom_id', searchable: true, orderable: true},
+                    { data: 'course_id', searchable: true, orderable: true},
+                    { data: 'teacher_id', searchable: true, orderable: true},
+                    { data: 'assistant', searchable: true, orderable: false},
                 ],
                 columnDefs: [{
                   "targets": 0,

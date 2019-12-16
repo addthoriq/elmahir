@@ -17,12 +17,12 @@ class Classroom extends Model
     {
         return $this->hasOne(Student::class);
     }
-    public function course()
-    {
-        return $this->hasMany(Course::class, 'class_id');
-    }
     public function teacher()
     {
         return $this->belongsTo(Teacher::class);
+    }
+    public function teacherHistories()
+    {
+        return $this->hasMany(TeachersHistory::class);
     }
 }

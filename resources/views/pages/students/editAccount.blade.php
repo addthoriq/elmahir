@@ -10,19 +10,26 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label>Email</label>
-                        <input type="text" value="{{$data->email}}" name="email" class="form-control">
+                        <label for="email" id="labelEmail">Email</label>
+                        <input id="email" type="text" value="{{$data->email}}" name="email" class="form-control">
+                        <span id="textEmail" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" class="form-control">
+                        <label for="password" id="labelPass">Password</label>
+                        <input id="password" type="password" class="form-control">
+                        <i class="text-muted">Password minimal 8 karakter</i>
+                        <span id="textPassword" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label>Konfirmasi Password</label>
-                        <input type="password" name="password" class="form-control">
+                        <label for="confirmation_password" id="konfirPass">Konfirmasi Password</label>
+                        <input id="confirmation_password" type="password" name="password" class="form-control">
+                        <i class="text-muted">Password minimal 8 karakter</i>
+                        <span id="textCPassword"></span>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-sm btn-primary float-right m-t-n-xs"><i class="fa fa-send"></i> Ubah</button>
+                        <button id="tombol" disabled type="submit" class="btn btn-sm btn-primary float-right m-t-n-xs">
+                            <i class="fa fa-send"></i> Ubah
+                        </button>
                     </div>
                 </form>
             </div>

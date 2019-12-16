@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StudentRequest;
 use App\Model\Student;
 use App\Model\ProfileStudent;
 use App\Model\SchoolYear;
@@ -67,7 +68,7 @@ class StudentController extends Controller
         return view($this->folder.'.create', compact('years', 'classes'));
     }
 
-    public function store(Request $request)
+    public function store(StudentRequest $request)
     {
         $data     = new Student;
         $data->classroom_id = $request->classroom_id;

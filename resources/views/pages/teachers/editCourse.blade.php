@@ -6,10 +6,10 @@
 
                 <h3 class="m-t-none m-b">Ubah Akun Login Siswa</h3>
                 <p>Mengubah data Akun Login Siswa</p>
-                <form method="POST" action="{{route('student.updateClassHis',$data->id)}}" class="edit">
+                <form method="POST" action="{{route('teacher.updateTeacherHis',$data->id)}}" class="edit">
                         @csrf
                         @method('PUT')
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label id="labelClassroom" for="classroom_id">Kelas</label>
                             <select id="classroom_id" class="form-control m-b" name="classroom_id">
                                 <option value="{{$data->classroom_id}}">-- {{$data->classroom->name}} --</option>
@@ -17,7 +17,7 @@
                                     <option value="{{$class->id}}">{{$class->name}}</option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
                         <div class="form-group">
                             <label id="labelYearT" for="yearTeach">Tahun Ajaran</label>
                             <select id="yearTeach" class="form-control m-b" name="school_year_id">
@@ -33,7 +33,7 @@
                                 <label>
                                     <input type="radio" value="1" name="status" {{($histories->status)?'checked':''}} >
                                     <i></i>
-                                    Kelas Saat Ini
+                                    Masih mengajar
                                 </label>
                             </div>
                             <div class="i-checks col-sm-6">
@@ -45,7 +45,6 @@
                             </div>
                         </div>
                         <div>
-                            <button id="tombol1" disabled type="submit" class="btn btn-sm btn-primary float-right m-t-n-xs"><i class="fa fa-send"></i> Ubah</button>
                         </div>
                     </form>
             </div>

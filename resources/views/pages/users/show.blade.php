@@ -6,6 +6,11 @@
     <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
+    <style media="screen">
+        .fileinput-preview.fileinput-exists.img-thumbnail img{
+            max-width: 100%;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -124,12 +129,21 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <form action="{{route('user.destroy',$data->id)}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <a href="{{route('user.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
-                            <button type="submit" class="btn btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)'><i class="fa fa-trash"></i> Hapus</button>
-                        </form>
+                        @if (!$data->status)
+                            <form action="{{route('user.destroy',$data->id)}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <a href="{{route('user.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
+                                <button type="submit" class="btn btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)'><i class="fa fa-trash"></i> Hapus</button>
+                            </form>
+                        @else
+                            <form action="{{route('user.destroy',$data->id)}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <a href="{{route('user.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
+                                <button type="submit" class="btn btn-danger pull-right" disabled onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)'><i class="fa fa-trash"></i> Hapus</button>
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -138,19 +152,5 @@
 @endsection
 
 @section('script')
-    <!-- Jasny -->
-    <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
-    <!-- iCheck -->
-    <script src="{{asset('inspinia/js/plugins/iCheck/icheck.min.js')}}"></script>
-    <script>
-        $(document).ready(function(){
-            $('.i-checks').iCheck({
-                radioClass: 'iradio_square-green',
-            });
-            $('.custom-file-input').on('change', function() {
-                let fileName = $(this).val().split('\\').pop();
-                $(this).next('.custom-file-label').addClass("selected").html(fileName);
-            });
-       });
-    </script>
+    @include('pages.users.script')
 @endsection

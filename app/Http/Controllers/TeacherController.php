@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\TeacherRequest;
 use App\Model\User;
 use App\Model\Role;
 use App\Model\Teacher;
+use App\Model\SchoolYear;
+use App\Model\TeacherHistory;
 use App\Model\ProfileTeacher;
 use Yajra\Datatables\Datatables;
 use Form;
@@ -60,8 +63,9 @@ class TeacherController extends Controller
         return view('pages.teachers.create');
     }
 
-    public function store(Request $request)
+    public function store(TeacherRequest $request)
     {
+        dd($request->all());
         $data               = new Teacher;
         $data->nip         = $request->nip;
         $data->name         = $request->name;
@@ -76,6 +80,13 @@ class TeacherController extends Controller
         }
         $data->status       = 1;
         $data->save();
+        $mapel              = new TeacherHistory;
+        $mapel->teacher_id  = $data->id;
+        $mapel->classroom_id = $request->classroom_id;
+        $mapel->school_year_id = $request->school_year_id;
+        $mapel->course_id   = $request->course_id;
+        $mapel->status = 1;
+        $mapel->save();
         return redirect($this->rdr)->with('notif', 'Data Guru berhasil ditambahkan');
     }
 
@@ -87,10 +98,13 @@ class TeacherController extends Controller
         $user      = User::where('teacher_id', $id)->exists();
         $usr       = User::where('teacher_id', $id)->first();
         $data      = Teacher::findOrFail($id);
-        return view($this->folder.'.show', compact('data', 'admin', 'op1', 'op2', 'user', 'usr'));
+        $years     = SchoolYear::all();
+        $histories = TeacherHistory::where('teacher_id', $id)->orderBy('created_at', 'desc')->first();
+        $history   = TeacherHistory::where('teacher_id', $id)->get();
+        return view($this->folder.'.show', compact('data', 'admin', 'op1', 'op2', 'user', 'usr', 'histories', 'history', 'years'));
     }
 
-    public function update(Request $request, $id)
+    public function update(TeacherRequest $request, $id)
     {
         if (empty($request->password)) {
             Teacher::find($id)->update([
@@ -254,6 +268,22 @@ class TeacherController extends Controller
         return redirect()->route('teacher.show', [$id])->with('notif', 'Poto Profil '.$data->name.' berhasil diubah');
     }
 
+    public function nonCourse(Request $request, $id)
+    {
+        TeacherHistory::where('teacher_id', $id)->update([
+            'status'    => 0
+        ]);
+        return redirect()->route('teacher.show', [$id])->with('notif', 'Riwayat Mata Pelajaran berhasil di akhiri');
+    }
+
+    public function onCourse(Request $request, $id)
+    {
+        TeacherHistory::where('teacher_id', $id)->update([
+            'status'    => 1
+        ]);
+        return redirect()->route('teacher.show', [$id])->with('notif', 'Riwayat Mata Pelajaran berhasil di aktifkan');
+    }
+
     public function nonaktif(Request $request, $id)
     {
         Teacher::findOrFail($id)->update([
@@ -263,6 +293,9 @@ class TeacherController extends Controller
         if ($user) {
             User::where('teacher_id', $id)->delete();
         }
+        TeacherHistory::where('teacher_id', $id)->update([
+            'status'    => 0
+        ]);
         $data = Teacher::findOrFail($id);
         return redirect($this->rdr)->with('notif', $data->name.' berhasil di nonaktifkan!');
     }

@@ -22,22 +22,20 @@
         </nav>
 
         {{-- Sidebar Section --}}
-        <nav class="navbar-default navbar-static-side" role="navigation">
-            @include('layouts.parts.sidebar')
-        </nav>
+        @include('layouts.parts.sidebar')
 
         {{-- Content Section --}}
         <div id="page-wrapper" class="gray-bg dashbard-1">
             <div class="row">
             </div>
             @yield('content')
-        
+
             @include('layouts.parts.footer')
         </div>
 
     </div>
 
-@include('layouts.links.script') 
-@yield('script')   
+@include('layouts.links.script')
+@yield('script')
 </body>
 </html>
