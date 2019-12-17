@@ -14,90 +14,77 @@
 Route::get('/', function () {
 	return view('welcome');
 });
-
 // Auth::routes();
-
 //Yajra
-Route::get('/user/dbtb', 'UserController@dbTables')->name('user.dbtb');
-Route::get('/classroom/dbtb', 'ClassroomController@dbTables')->name('classroom.dbtb');
-Route::get('/year/dbtb', 'YearController@dbTables')->name('year.dbtb');
-Route::get('/student/dbtb', 'StudentController@dbTables')->name('student.dbtb');
-Route::get('/teacher/dbtb', 'TeacherController@dbTables')->name('teacher.dbtb');
-Route::get('/course-deactived/non-dbtb', 'CourseController@dbNon')->name('course.nondbtb');
-Route::get('/course/dbtb', 'CourseController@dbTables')->name('course.dbtb');
-Route::get('/course-detail/dbtb', 'ListCourseController@dbTables')->name('detail.dbtb');
-Route::get('/alumni/dbtb', 'AlumnusController@dbTables')->name('alumni.dbtb');
-Route::get('/task/dbtb', 'TaskController@dbTables')->name('task.dbtb');
-Route::get('/teacher-deactived/dbtb', 'UnonController@dbTables')->name('unon.dbtb');
-
-Route::get('/sectioncourse/dbcourse', 'SectionCourseController@dbCourse')->name('sectioncourse.dbcourse');
-Route::get('/sectioncourse/{id}/dbsection', 'SectionCourseController@dbSection')->name('sectioncourse.dbsection');
-Route::get('/answertask/{id}/dbtb', 'AnswerTaskController@dbTables')->name('answertask.dbtb');
-
-//Materi
-Route::get('/sectioncourse/courselist', 'SectionCourseController@courseList')->name('sectioncourse.courselist');
-Route::get('/sectioncourse/{id}/sectionlist', 'SectionCourseController@sectionList')->name('sectioncourse.sectionlist');
-Route::get('/section/{id}/add', 'SectionController@add')->name('section.add');
-
-//Materi
-Route::get('/section/{id}/home', 'SectionController@home')->name('section.home');
-Route::put('section/{id}/updateFile', 'SectionController@updateFile')->name('section.updateFile');
-Route::delete('section/{id}/deleteFile', 'SectionController@deleteFile')->name('section.deleteFile');
-Route::post('section/{id}/addFile', 'SectionController@addFile')->name('section.addFile');
-Route::get('/section/{id}/file', 'SectionController@file')->name('section.file');
-Route::get('/section/{id}/fileDownload', 'SectionController@fileDownload')->name('section.fileDownload');
-
-//Task
-Route::patch('/task/{id}', 'TaskController@restore')->name('task.restore');
-Route::get('/task/{id}/fileDownload', 'TaskController@fileDownload')->name('task.fileDownload');
-Route::post('/task/{id}/addFile', 'TaskController@addFile')->name('task.addFile');
-
-//Answer Task
-Route::get('/answertask/{id}/home', 'AnswerTaskController@home')->name('answertask.home');
-Route::post('/answertask/{id}/storeScore', 'AnswerTaskController@storeScore')->name('answertask.storeScore');
-Route::put('/answertask/{id}/updateScore', 'AnswerTaskController@updateScore')->name('answertask.updateScore');
-
-Route::get('/home/chartMurid', 'HomeController@chartMurid')->name('home.chartMurid');
-Route::get('/home/chartGuru', 'HomeController@chartGuru')->name('home.chartGuru');
-Route::get('/classroom/{id}/chartMurid', 'ClassroomController@chartMurid')->name('classroom.chartMurid');
-Route::get('/course/teacher', 'CourseController@teacher')->name('course.teacher');
-
+Route::get('/user/dbtb', 'Admin\UserController@dbTables')->name('user.dbtb');
+Route::get('/classroom/dbtb', 'Admin\ClassroomController@dbTables')->name('classroom.dbtb');
+Route::get('/year/dbtb', 'Admin\YearController@dbTables')->name('year.dbtb');
+Route::get('/student/dbtb', 'Admin\StudentController@dbTables')->name('student.dbtb');
+Route::get('/teacher/dbtb', 'Admin\TeacherController@dbTables')->name('teacher.dbtb');
+Route::get('/course-deactived/non-dbtb', 'Admin\CourseController@dbNon')->name('course.nondbtb');
+Route::get('/course/dbtb', 'Admin\CourseController@dbTables')->name('course.dbtb');
+Route::get('/course-detail/dbtb', 'Admin\ListCourseController@dbTables')->name('detail.dbtb');
+Route::get('/alumni/dbtb', 'Admin\AlumnusController@dbTables')->name('alumni.dbtb');
+Route::get('/task/dbtb', 'Admin\TaskController@dbTables')->name('task.dbtb');
+Route::get('/teacher-deactived/dbtb', 'Admin\UnonController@dbTables')->name('unon.dbtb');
+Route::get('/sectioncourse/dbcourse', 'Admin\SectionCourseController@dbCourse')->name('sectioncourse.dbcourse');
+Route::get('/sectioncourse/{id}/dbsection', 'Admin\SectionCourseController@dbSection')->name('sectioncourse.dbsection');
+Route::get('/answertask/{id}/dbtb', 'Admin\AnswerTaskController@dbTables')->name('answertask.dbtb');
+//Json
+Route::get('/home/chartMurid', 'Admin\HomeController@chartMurid')->name('home.chartMurid');
+Route::get('/home/chartGuru', 'Admin\HomeController@chartGuru')->name('home.chartGuru');
+Route::get('/classroom/{id}/chartMurid', 'Admin\ClassroomController@chartMurid')->name('classroom.chartMurid');
+Route::get('/course/teacher', 'Admin\CourseController@teacher')->name('course.teacher');
 //Default
-Route::resource('/home', 'HomeController');
-Route::resource('/teacher', 'TeacherController')->except(['destroy']);
-Route::put('/teacher/{id}/profile', 'TeacherController@updateProfile')->name('teacher.profile');
-Route::put('/teacher/{id}/avatar', 'TeacherController@updateAva')->name('teacher.ava');
-Route::put('/teacher/{id}/nonaktif', 'TeacherController@nonaktif')->name('teacher.nonaktif');
-Route::put('/teacher/{id}/admin', 'TeacherController@admin')->name('teacher.admin');
-Route::put('/teacher/{id}/op1', 'TeacherController@op')->name('teacher.op');
-Route::put('/teacher/{id}/op2', 'TeacherController@ope')->name('teacher.ope');
-Route::put('/teacher/{id}/nonrole', 'TeacherController@nonRole')->name('teacher.role');
-Route::put('/teacher/{id}/nonCourseHistory', 'TeacherController@nonCourse')->name('teacher.nonCourse');
-Route::put('/teacher/{id}/onCourseHistory', 'TeacherController@onCourse')->name('teacher.onCourse');
-Route::get('/teacher-deactived', 'UnonController@index')->name('unon.index');
-Route::put('/teacher-deactived/{id}/aktif', 'UnonController@aktif')->name('unon.aktif');
-Route::get('/teacher-deactived/{id}', 'UnonController@show')->name('unon.show');
-Route::put('/teacher-deactived/{id}', 'UnonController@update')->name('unon.update');
-Route::put('/teacher-deactived/{id}/profile', 'UnonController@updateProfile')->name('unon.profile');
-Route::put('/teacher-deactived/{id}/avatar', 'UnonController@updateAva')->name('unon.ava');
-Route::resource('/course-detail', 'ListCourseController');
-Route::get('/course-nonactived', 'CourseController@nonActived')->name('course.nonactived');
-Route::put('/course/{id}', 'CourseController@deActived')->name('course.deactived');
-Route::resource('/course', 'CourseController')->except(['destroy', 'edit', 'update']);
-Route::resource('/student', 'StudentController')->except(['destroy']);
-Route::put('/student/{id}/profile', 'StudentController@updateProfile')->name('student.profile');
-Route::put('/student/{id}/avatar', 'StudentController@updateAva')->name('student.ava');
-Route::put('/student/{id}/classhistory', 'StudentController@updateClassHis')->name('student.updateClassHis');
-Route::put('/student/{id}/alumni', 'StudentController@alumni')->name('student.alumni');
-Route::get('/alumni', 'AlumnusController@index')->name('alumni.index');
-Route::get('/alumni/{id}', 'AlumnusController@show')->name('alumni.show');
-Route::resource('/classroom', 'ClassroomController');
-Route::resource('/section', 'SectionController');
-Route::resource('/chapter', 'ChapterController');
-Route::resource('/task', 'TaskController');
-Route::resource('/answertask', 'AnswerTaskController');
-Route::resource('/user', 'UserController');
-Route::put('/user/{id}/avatar', 'UserController@updateAva')->name('user.ava');
-Route::put('/user/{id}/aktif', 'UserController@aktif')->name('user.aktif');
-Route::put('/user/{id}/unon', 'UserController@unon')->name('user.unon');
-Route::resource('/year', 'YearController')->except(['create']);
+Route::resource('/home', 'Admin\HomeController');
+Route::resource('/teacher', 'Admin\TeacherController')->except(['destroy']);
+Route::put('/teacher/{id}/profile', 'Admin\TeacherController@updateProfile')->name('teacher.profile');
+Route::put('/teacher/{id}/avatar', 'Admin\TeacherController@updateAva')->name('teacher.ava');
+Route::put('/teacher/{id}/nonaktif', 'Admin\TeacherController@nonaktif')->name('teacher.nonaktif');
+Route::put('/teacher/{id}/admin', 'Admin\TeacherController@admin')->name('teacher.admin');
+Route::put('/teacher/{id}/op1', 'Admin\TeacherController@op')->name('teacher.op');
+Route::put('/teacher/{id}/op2', 'Admin\TeacherController@ope')->name('teacher.ope');
+Route::put('/teacher/{id}/nonrole', 'Admin\TeacherController@nonRole')->name('teacher.role');
+Route::put('/teacher/{id}/nonCourseHistory', 'Admin\TeacherController@nonCourse')->name('teacher.nonCourse');
+Route::put('/teacher/{id}/onCourseHistory', 'Admin\TeacherController@onCourse')->name('teacher.onCourse');
+Route::get('/teacher-deactived', 'Admin\UnonController@index')->name('unon.index');
+Route::put('/teacher-deactived/{id}/aktif', 'Admin\UnonController@aktif')->name('unon.aktif');
+Route::get('/teacher-deactived/{id}', 'Admin\UnonController@show')->name('unon.show');
+Route::put('/teacher-deactived/{id}', 'Admin\UnonController@update')->name('unon.update');
+Route::put('/teacher-deactived/{id}/profile', 'Admin\UnonController@updateProfile')->name('unon.profile');
+Route::put('/teacher-deactived/{id}/avatar', 'Admin\UnonController@updateAva')->name('unon.ava');
+Route::resource('/course-detail', 'Admin\ListCourseController');
+Route::get('/course-nonactived', 'Admin\CourseController@nonActived')->name('course.nonactived');
+Route::put('/course/{id}', 'Admin\CourseController@deActived')->name('course.deactived');
+Route::resource('/course', 'Admin\CourseController')->except(['destroy', 'edit', 'update']);
+Route::resource('/student', 'Admin\StudentController')->except(['destroy']);
+Route::put('/student/{id}/profile', 'Admin\StudentController@updateProfile')->name('student.profile');
+Route::put('/student/{id}/avatar', 'Admin\StudentController@updateAva')->name('student.ava');
+Route::put('/student/{id}/classhistory', 'Admin\StudentController@updateClassHis')->name('student.updateClassHis');
+Route::put('/student/{id}/alumni', 'Admin\StudentController@alumni')->name('student.alumni');
+Route::get('/alumni', 'Admin\AlumnusController@index')->name('alumni.index');
+Route::get('/alumni/{id}', 'Admin\AlumnusController@show')->name('alumni.show');
+Route::resource('/classroom', 'Admin\ClassroomController');
+Route::resource('/section', 'Admin\SectionController');
+Route::resource('/task', 'Admin\TaskController');
+Route::resource('/answertask', 'Admin\AnswerTaskController');
+Route::get('/sectioncourse/courselist', 'Admin\SectionCourseController@courseList')->name('sectioncourse.courselist');
+Route::get('/sectioncourse/{id}/sectionlist', 'Admin\SectionCourseController@sectionList')->name('sectioncourse.sectionlist');
+Route::get('/section/{id}/add', 'Admin\SectionController@add')->name('section.add');
+Route::get('/section/{id}/home', 'Admin\SectionController@home')->name('section.home');
+Route::put('section/{id}/updateFile', 'Admin\SectionController@updateFile')->name('section.updateFile');
+Route::delete('section/{id}/deleteFile', 'Admin\SectionController@deleteFile')->name('section.deleteFile');
+Route::post('section/{id}/addFile', 'Admin\SectionController@addFile')->name('section.addFile');
+Route::get('/section/{id}/file', 'Admin\SectionController@file')->name('section.file');
+Route::get('/section/{id}/fileDownload', 'Admin\SectionController@fileDownload')->name('section.fileDownload');
+Route::patch('/task/{id}', 'Admin\TaskController@restore')->name('task.restore');
+Route::get('/task/{id}/fileDownload', 'Admin\TaskController@fileDownload')->name('task.fileDownload');
+Route::post('/task/{id}/addFile', 'Admin\TaskController@addFile')->name('task.addFile');
+Route::get('/answertask/{id}/home', 'Admin\AnswerTaskController@home')->name('answertask.home');
+Route::post('/answertask/{id}/storeScore', 'Admin\AnswerTaskController@storeScore')->name('answertask.storeScore');
+Route::put('/answertask/{id}/updateScore', 'Admin\AnswerTaskController@updateScore')->name('answertask.updateScore');
+Route::resource('/user', 'Admin\UserController');
+Route::put('/user/{id}/avatar', 'Admin\UserController@updateAva')->name('user.ava');
+Route::put('/user/{id}/aktif', 'Admin\UserController@aktif')->name('user.aktif');
+Route::put('/user/{id}/unon', 'Admin\UserController@unon')->name('user.unon');
+Route::resource('/year', 'Admin\YearController')->except(['create']);
