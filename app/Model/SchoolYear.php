@@ -13,8 +13,8 @@ class SchoolYear extends Model
     {
         return $this->hasMany(ClassHistory::class);
     }
-    public function teacherHistories()
+    public function course()
     {
-        return $this->hasMany(TeacherHistory::class);
+        return $this->hasMany(Course::class);
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Teacher;
 use App\Model\ProfileTeacher;
-use App\Model\TeacherHistory;
+use App\Model\Course;
 use Yajra\Datatables\Datatables;
 use Form;
 use Illuminate\Support\Facades\Storage;
@@ -57,7 +57,7 @@ class UnonController extends Controller
     public function show($id)
     {
         $data      = Teacher::findOrFail($id);
-        $histories = TeacherHistory::where('teacher_id', $id)->get();
+        $histories = Course::where('teacher_id', $id)->get();
         return view($this->folder.'.show', compact('data', 'histories'));
     }
 

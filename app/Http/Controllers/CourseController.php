@@ -4,34 +4,41 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Classroom;
-use App\Model\ClassroomCourse;
-use App\Model\Teacher;
 use App\Model\SchoolYear;
-use App\Model\TeacherHistory;
 use App\Model\Course;
+use App\Model\Teacher;
+use App\Model\ListCourse;
 use Yajra\Datatables\Datatables;
 use Form;
 
 class CourseController extends Controller
 {
     protected $folder     = 'pages.courses';
-    protected $rdr        = '/course-detail';
+    protected $rdr        = '/course';
 
     public function index()
     {
-        $ajax     = route('detail.dbtb');
-        return view('pages.courses.index', compact('ajax'));
+        $ajax     = route('course.dbtb');
+        return view('pages.courses.detail', compact('ajax'));
+    }
+
+    public function nonActived()
+    {
+        $ajax     = route('course.nondbtb');
+        return view('pages.courses.nonactivated', compact('ajax'));
     }
 
     public function dbTables(Request $request)
     {
-        $data     = Course::all();
+        $data     = Course::where('status',1)->get();
         return Datatables::of($data)
+        ->editColumn('teacher_id', function ($index) {
+            return isset($index->teacher->name) ? $index->teacher->name : '-';
+        })
         ->addColumn('action', function($index){
-            $tag    = "<a href=". route('course-detail.show', $index->id) ." class='btn btn-xs btn-info' ><i class='fa fa-edit'></i> Edit</a> ";
-            // $tag     = Form::open(["url"=>route('course.destroy', $index->id), "method" => "DELETE"]);
-            // $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)' ><i class='fa fa-trash'></i> Hapus</button>";
-            // $tag    .= Form::close();
+            $tag     = Form::open(["url"=>route('course.deactived', $index->id), "method" => "PUT"]);
+            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan ".$index->teacher->name." dari Mata Pelajaran ini?`)' ><i class='fa fa-minus-square'></i> Nonaktifkan</button>";
+            $tag    .= Form::close();
             return $tag;
         })
         ->rawColumns([
@@ -40,37 +47,54 @@ class CourseController extends Controller
         ->make(true);
     }
 
+    public function dbNon(Request $request)
+    {
+        $data     = Course::where('status',0)->get();
+        return Datatables::of($data)
+        ->editColumn('teacher_id', function ($index) {
+            return isset($index->teacher->name) ? $index->teacher->name : '-';
+        })
+        ->rawColumns([
+            'id'
+        ])
+        ->make(true);
+    }
+
+    public function teacher()
+    {
+        $tc     = Teacher::all();
+        return response()->json($tc);
+    }
+
     public function create()
     {
-        return view('pages.courses.create');
+        $years      = SchoolYear::all();
+        $classes    = Classroom::all();
+        $courses    = ListCourse::all();
+        return view('pages.courses.detail-create', compact('years', 'classes', 'courses'));
     }
 
     public function store(Request $request)
     {
-        $request->validate(['name'=>['required']]);
-        foreach ($request->name as $nm) {
-            $mpl           = new Course;
-            $mpl->name     = $nm;
-            $mpl->save();
+        $t                         = Teacher::where('name', '=', $request->teacher_id)->first();
+        foreach ($request->classroom as $cs => $ck) {
+            $kelas                 = new Course;
+            $kelas->teacher_id     = $t->id;
+            $kelas->school_year_id = $request->school_year_id;
+            $kelas->classroom      = $ck;
+            $kelas->list_course    = $request->list_course;
+            $kelas->assistant      = $request->assistant[$cs];
+            $kelas->status         = 1;
+            $kelas->save();
         }
-        return redirect($this->rdr)->with('notif', 'Daftar Mata Pelajaran berhasil ditambahkan');
+        return redirect($this->rdr)->with('notif', 'Data Mata Pelajaran berhasil ditambahkan');
     }
 
-    public function show($id)
+    public function deActived(Request $request, $id)
     {
-        $data       = Course::findOrFail($id);
-        return view($this->folder.'.show', compact('data'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        if ($request->name == Course::findOrFail($id)->name) {
-            return redirect()->route('course-detail.show', [$id])->with('notif', 'Tidak ada perubahan pada Daftar Mata Pelajaran');
-        }else {
-            Course::findOrFail($id)->update([
-                'name'     => $request->name
-            ]);
-            return redirect()->route('course-detail.index')->with('notif', 'Daftar Mata Pelajaran berhasil diubah');
-        }
+        Course::where('teacher_id', $id)->update([
+            'status'    => 0
+        ]);
+        return redirect($this->rdr)->with('notif', 'Data Mata Pelajaran berhasil di nonaktifkan');
     }
 }

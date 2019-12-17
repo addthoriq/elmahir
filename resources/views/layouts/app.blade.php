@@ -19,14 +19,6 @@
             @include('layouts.parts.sidebar')
         </nav>
 
-        {{-- Header Section --}}
-        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0;">
-            @include('layouts.parts.navbar')
-        </nav>
-
-        {{-- Sidebar Section --}}
-        @include('layouts.parts.sidebar')
-
         <div id="page-wrapper" class="gray-bg dashbard-1">
 
             <div class="row border-bottom">
@@ -41,7 +33,7 @@
         </div>
     </div>
 
-    @include('layouts.links.script') 
-    @yield('script') 
+    @include('layouts.links.script')
+    @yield('script')
 </body>
 </html>

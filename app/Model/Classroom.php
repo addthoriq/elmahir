@@ -21,8 +21,8 @@ class Classroom extends Model
     {
         return $this->belongsTo(Teacher::class);
     }
-    public function teacherHistories()
+    public function course()
     {
-        return $this->hasMany(TeachersHistory::class);
+        return $this->hasMany(Course::class);
     }
 }

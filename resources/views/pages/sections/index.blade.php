@@ -9,7 +9,7 @@
         background-color: #e5e5e5;
     }
     .onlamp {
-        background-color: #e5e5e5;        
+        background-color: #e5e5e5;
     }
 </style>
 
@@ -37,7 +37,7 @@
     <div class="ibox bg-white">
         <div class="ibox-title">
             <h5>
-                {{ $section->course->name }} - {{ $section->title }}
+                {{ $section->course->list_course }} - {{ $section->title }}
             </h5>
         </div>
         <div class="row">
@@ -164,7 +164,7 @@
             <!-- Modal Create Chapter -->
             @include('pages.sections.editModalSection')
             @include('pages.sections.addModalFileSection')
-            
+
             <div class="col-md-3 pl-0">
                 <div class="ibox-content px-0 py-0">
                     <div class="feed-activity-list">
@@ -225,7 +225,7 @@
                $(".erase").after("<div class='row clone bg-muted p-2'><div class='col-md-10'><div class='fileinput fileinput-new m-0' data-provides='fileinput'><span class='btn btn-default btn-file'><span class='fileinput-new'>Pilih File...</span><span class='fileinput-exists'>Ubah</span><input type='file' name='file[]'/></span><span class='fileinput-filename'></span></div> </div><div class='col-md-2'><button type='button' class='btn btn-lg btn-danger'><i class='fa fa-close'></i></button></div></div>");
              });
 
-         $(".boxs").on("click",".btn-danger",function(){ 
+         $(".boxs").on("click",".btn-danger",function(){
              $(this).parents(".clone").remove();
          });
     });

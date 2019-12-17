@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Model\ListCourse;
+use App\Model\Classroom;
 use Faker\Factory;
 
 class TeachersTableSeeder extends Seeder
@@ -29,18 +31,5 @@ class TeachersTableSeeder extends Seeder
     	}
         DB::table('teachers')->truncate();
         DB::table('teachers')->insert($data);
-
-        for ($i=1; $i < 21 ; $i++) {
-            $bata[$i]	= [
-                'teacher_id'     => $i,
-                'school_year_id' => 1,
-                'classroom_id'   => $faker->randomDigitNot(0),
-                'course_id'      => $faker->randomDigitNot(0),
-                'assistant'      => $faker->name,
-                'status'         => 1,
-            ];
-    	}
-        DB::table('teacher_histories')->truncate();
-        DB::table('teacher_histories')->insert($bata);
     }
 }

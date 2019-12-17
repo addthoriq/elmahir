@@ -75,8 +75,8 @@
                 order: [[0,'asc']],
                 columns: [
                     { data: 'id', searchable: true, orderable: true},
-                    { data: 'classroom_id', searchable: true, orderable: true},
-                    { data: 'course_id', searchable: true, orderable: true},
+                    { data: 'classroom', searchable: true, orderable: true},
+                    { data: 'list_course', searchable: true, orderable: true},
                     { data: 'teacher_id', searchable: true, orderable: true},
                     { data: 'assistant', searchable: true, orderable: false},
                     { data: 'action', searchable: false, orderable: false}

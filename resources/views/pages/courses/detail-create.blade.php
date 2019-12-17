@@ -47,21 +47,21 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label id="labelName" for="name">Nama Mata Pelajaran</label>
-                                        <select id="year" class="form-control m-b" name="course_id">
-                                            <option selected>-- Mapel --</option>
+                                        <label id="labelCourse" for="course">Nama Mata Pelajaran</label>
+                                        <select required required id="course" class="form-control m-b" name="list_course">
+                                            <option selected>-- Mata Pelajaran --</option>
                                             @foreach ($courses as $course)
-                                                <option value="{{$course->id}}">{{$course->name}}</option>
+                                                <option value="{{$course->name}}">{{$course->name}}</option>
                                             @endforeach
                                         </select>
                                         <span id="noticeName"></span>
-                                        @if ($errors->has('name'))
-                                            <span class="text-danger">{{$errors->first('name')}}</span>
+                                        @if ($errors->has('list_course'))
+                                            <span class="text-danger">{{$errors->first('list_course')}}</span>
                                         @endif
                                     </div>
                                     <div class="form-group">
                                         <label id="labelTeacher" for="teacher_id">Guru Pengajar</label>
-                                        <input id="teacher_id" type="text" name="teacher_id" autocomplete="off" data-provide="typeahead" class="typeahead form-control" />
+                                        <input required  id="teacher_id" type="text" name="teacher_id" autocomplete="off" data-provide="typeahead" class="typeahead form-control" />
                                         <span id="noticeTeacher"></span>
                                         @if ($errors->has('teacher'))
                                             <span class="text-danger">{{$errors->first('teacher')}}</span>
@@ -69,7 +69,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label id="labelYearT" class="{{$errors->has('school_year_id')?"text-danger":""}}">Tahun Ajaran {{$errors->has('school_year_id')?"*":""}}</label>
-                                        <select id="year" class="form-control m-b" name="school_year_id">
+                                        <select required id="year" class="form-control m-b" name="school_year_id">
                                             <option selected>-- Pilih Tahun Ajaran --</option>
                                             @foreach ($years as $year)
                                                 <option value="{{$year->id}}">{{$year->start_year}}/{{$year->end_year}}</option>
@@ -84,11 +84,11 @@
                                 <div class="col-lg-6" id="app">
                                     <div v-for="n in classrooms" :key="index">
                                         <div class="form-group">
-                                            <label id="labelClassroom" for="classroom_id">Untuk Kelas</label>
-                                            <select class="form-control" name="classroom_id[]" id="classroom_id">
+                                            <label id="labelClassroom" for="classroom">Untuk Kelas</label>
+                                            <select required class="form-control" name="classroom[]" id="classroom">
                                                 <option>-- Pilih kelas --</option>
                                                 @foreach ($classes as $class)
-                                                    <option value="{{$class->id}}">{{$class->name}}</option>
+                                                    <option value="{{$class->name}}">{{$class->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -164,39 +164,29 @@
                     });
                 }
             })
-            $("#name").blur(function(){
-                var name = $("#name").val();
-                if (name == "") {
-                    $("#labelName").addClass('text-danger').text('Nama Mata Pelajaran *');
-                    $("#name").addClass('border border-danger');
-                    $("#noticeName").addClass('text-danger').text('Nama Mata Pelajaran Wajib diisi');
-                    document.getElementById("tombol").disabled = true;
-                }else if (name.length < 5 || name.length >= 100) {
-                    $("#labelName").addClass('text-danger').text('Nama Mata Pelajaran *');
-                    $("#name").addClass('border border-danger');
-                    $("#noticeName").addClass('text-danger').text('Nama Mata Pelajaran minimal 5 karakter dan maksimal 100 karakter');
+            $("#course").blur(function(){
+                var course = $("#course").val();
+                if (course == "") {
+                    $("#labelCourse").addClass('text-danger').text('Nama Mata Pelajaran *');
+                    $("#course").addClass('border border-danger');
+                    $("#noticeCourse").addClass('text-danger').text('Nama Mata Pelajaran Wajib diisi');
                     document.getElementById("tombol").disabled = true;
                 }else {
-                    $("#labelName").removeClass('text-danger').text('Nama Mata Pelajaran');
-                    $("#name").removeClass('border border-danger');
-                    $("#noticeName").removeClass('text-danger').text("");
+                    $("#labelCourse").removeClass('text-danger').text('Nama Mata Pelajaran');
+                    $("#course").removeClass('border border-danger');
+                    $("#noticeCourse").removeClass('text-danger').text("");
                     document.getElementById("tombol").disabled = false;
                 }
             })
             $("#teacher_id").blur(function(){
                 var teacher_id = $("#teacher_id").val();
                 if (teacher_id == "") {
-                    $("#labelTeacher").addClass('text-danger').text('Nama Mata Pelajaran *');
+                    $("#labelTeacher").addClass('text-danger').text('Guru Pengajar *');
                     $("#teacher_id").addClass('border border-danger');
-                    $("#noticeTeacher").addClass('text-danger').text('Nama Mata Pelajaran Wajib diisi');
-                    document.getElementById("tombol").disabled = true;
-                }else if (teacher_id.length < 5 || teacher_id.length >= 100) {
-                    $("#labelTeacher").addClass('text-danger').text('Nama Mata Pelajaran *');
-                    $("#teacher_id").addClass('border border-danger');
-                    $("#noticeTeacher").addClass('text-danger').text('Nama Mata Pelajaran minimal 5 karakter dan maksimal 100 karakter');
+                    $("#noticeTeacher").addClass('text-danger').text('Guru Pengajar Wajib diisi');
                     document.getElementById("tombol").disabled = true;
                 }else {
-                    $("#labelTeacher").removeClass('text-danger').text('Nama Mata Pelajaran');
+                    $("#labelTeacher").removeClass('text-danger').text('Guru Pengajar');
                     $("#teacher_id").removeClass('border border-danger');
                     $("#noticeTeacher").removeClass('text-danger').text("");
                     document.getElementById("tombol").disabled = false;
@@ -209,11 +199,6 @@
                   $("#labelAssistant").removeClass('text-danger').text('Guru Pengganti');
                   $("#assistant").removeClass('border border-danger');
                   document.getElementById("tombol").disabled = false;
-              }else if (passNew.length < 4) {
-                $("#labelAssistant").addClass('text-danger').text('Guru Pengganti *');
-                $("#assistant").addClass('border border-danger');
-                $("#textAsistant").addClass('text-danger').text("Masukkan minimal 8 Karakter");
-                document.getElementById("tombol").disabled = true;
               }else {
                 $("#labelAssistant").removeClass('text-danger').text('Guru Pengganti');
                 $("#assistant").removeClass('border border-danger');
@@ -221,15 +206,15 @@
                 document.getElementById("tombol").disabled = true;
               }
             })
-            $("#classroom_id").blur(function(){
-                var selek = $("#classroom_id option:selected").val();
+            $("#classroom").blur(function(){
+                var selek = $("#classroom option:selected").val();
                 if (selek == "") {
                     $("#labelClassroom").addClass('text-danger').text('Untuk Kelas *');
-                    $("#classroom_id").addClass('border border-danger');
+                    $("#classroom").addClass('border border-danger');
                     document.getElementById("tombol").disabled = true;
                 }else {
                     $("#labelClassroom").removeClass('text-danger').text('Untuk Kelas');
-                    $("#classroom_id").removeClass('border border-danger');
+                    $("#classroom").removeClass('border border-danger');
                     document.getElementById("tombol").disabled = false;
                 }
             })

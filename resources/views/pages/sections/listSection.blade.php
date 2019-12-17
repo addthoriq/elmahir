@@ -5,7 +5,7 @@
 @section('content')
 <div class="row wrapper white-bg page-heading" id="modal-pop">
     <div class="col-lg-10">
-        <h2>Daftar Materi {{ $course->name }}</h2>
+        <h2>Daftar Materi - {{ $course->list_course }}</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="{{ route('home.index') }}">Beranda</a>

@@ -68,8 +68,8 @@
                 columns: [
                     { data: 'id', searchable: true, orderable: true},
                     { data: 'title', searchable: true, orderable: true},
-                    { data: 'course_id', searchable: true, orderable: true},
-                    { data: 'class', searchable: true, orderable: true},
+                    { data: 'course', searchable: true, orderable: true},
+                    { data: 'classroom', searchable: true, orderable: true},
                     { data: 'action', searchable: true, orderable: true}
                 ],
                 columnDefs: [{

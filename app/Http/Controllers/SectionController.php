@@ -50,7 +50,7 @@ class SectionController extends Controller
 
         $section    = Section::orderBy('id', 'DESC')->first();
 
-        for ($i=0; $i<$count ; $i++) { 
+        for ($i=0; $i<$count ; $i++) {
             $file               = new FileSection;
 
             $fileStore = $request->file;
@@ -76,7 +76,7 @@ class SectionController extends Controller
         $course         = Course::find($section->course_id);
         $fileSections   = fileSection::where('section_id', $section->id)->get();
         // dd($fileSections);
-    
+
         return view('pages.sections.index', compact('course', 'fileSections', 'files', 'section'));
     }
 
@@ -112,7 +112,7 @@ class SectionController extends Controller
         $filename       = $_FILES['file'];
         $count          = count($request->file('file'));
 
-        for ($i=0; $i < $count; $i++) { 
+        for ($i=0; $i < $count; $i++) {
             $data               = new FileSection;
 
             $fileStore = $request->file;

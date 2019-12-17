@@ -51,7 +51,7 @@ class CoursesTableSeeder extends Seeder
                 'name'          => 'Bahasa Jawa',
             ],
         ];
-        DB::table('courses')->truncate();
-        DB::table('courses')->insert($data);
+        DB::table('list_courses')->truncate();
+        DB::table('list_courses')->insert($data);
     }
 }

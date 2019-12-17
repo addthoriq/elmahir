@@ -28,9 +28,6 @@ class SectionCourseController extends Controller
     {
         $data     = Course::all();
         return Datatables::of($data)
-        ->editColumn('class_id', function ($index) {
-            return isset($index->classroom->name) ? $index->classroom->name : '-';
-        })
         ->editColumn('teacher_id', function ($index) {
             return isset($index->teacher->name) ? $index->teacher->name : '-';
         })

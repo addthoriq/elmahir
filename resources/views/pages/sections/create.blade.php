@@ -5,11 +5,11 @@
 @section('style')
     <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
-    
+
     <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
     <link href="{{asset('inspinia/css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
-    
+
 @endsection
 
 @section('content')
@@ -46,7 +46,7 @@
                                         <h3>Deskripsi singkat</h3>
                                         <div class="form-group">
                                             <label>Mapel</label>
-                                            <input id="courseName" name="courseName" type="text" class="form-control" value="{{ $course->name }}" disabled>
+                                            <input id="courseName" name="courseName" type="text" class="form-control" value="{{ $course->list_course }} - {{ $course->classroom }}" disabled>
                                             <input id="course_id" name="course_id" type="hidden" class="form-control" value="{{ $course->id }}">
                                         </div>
                                         <div class="form-group">
@@ -75,7 +75,7 @@
                                                         <span class="fileinput-exists">Ubah</span><input type="file" name="file[]"/></span>
                                                         <span class="fileinput-filename"></span>
                                                         <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
-                                                    </div> 
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -140,7 +140,7 @@
                   $(".erase").after("<div class='row clone bg-muted p-2'><div class='col-md-10'><div class='fileinput fileinput-new m-0' data-provides='fileinput'><span class='btn btn-default btn-file'><span class='fileinput-new'>Pilih File...</span><span class='fileinput-exists'>Ubah</span><input type='file' name='file[]'/></span><span class='fileinput-filename'></span></div> </div><div class='col-md-2'><button type='button' class='btn btn-lg btn-danger'><i class='fa fa-close'></i></button></div></div>");
                 });
 
-            $(".boxs").on("click",".btn-danger",function(){ 
+            $(".boxs").on("click",".btn-danger",function(){
                 $(this).parents(".clone").remove();
             });
        });

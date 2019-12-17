@@ -8,7 +8,7 @@ use App\Model\User;
 use App\Model\Role;
 use App\Model\Teacher;
 use App\Model\SchoolYear;
-use App\Model\TeacherHistory;
+use App\Model\Course;
 use App\Model\ProfileTeacher;
 use Yajra\Datatables\Datatables;
 use Form;
@@ -80,7 +80,7 @@ class TeacherController extends Controller
         }
         $data->status       = 1;
         $data->save();
-        $mapel              = new TeacherHistory;
+        $mapel              = new Course;
         $mapel->teacher_id  = $data->id;
         $mapel->classroom_id = $request->classroom_id;
         $mapel->school_year_id = $request->school_year_id;
@@ -99,8 +99,8 @@ class TeacherController extends Controller
         $usr       = User::where('teacher_id', $id)->first();
         $data      = Teacher::findOrFail($id);
         $years     = SchoolYear::all();
-        $histories = TeacherHistory::where('teacher_id', $id)->orderBy('created_at', 'desc')->first();
-        $history   = TeacherHistory::where('teacher_id', $id)->get();
+        $histories = Course::where('teacher_id', $id)->orderBy('created_at', 'desc')->first();
+        $history   = Course::where('teacher_id', $id)->get();
         return view($this->folder.'.show', compact('data', 'admin', 'op1', 'op2', 'user', 'usr', 'histories', 'history', 'years'));
     }
 
@@ -270,7 +270,7 @@ class TeacherController extends Controller
 
     public function nonCourse(Request $request, $id)
     {
-        TeacherHistory::where('teacher_id', $id)->update([
+        Course::where('teacher_id', $id)->update([
             'status'    => 0
         ]);
         return redirect()->route('teacher.show', [$id])->with('notif', 'Riwayat Mata Pelajaran berhasil di akhiri');
@@ -278,7 +278,7 @@ class TeacherController extends Controller
 
     public function onCourse(Request $request, $id)
     {
-        TeacherHistory::where('teacher_id', $id)->update([
+        Course::where('teacher_id', $id)->update([
             'status'    => 1
         ]);
         return redirect()->route('teacher.show', [$id])->with('notif', 'Riwayat Mata Pelajaran berhasil di aktifkan');
@@ -293,7 +293,7 @@ class TeacherController extends Controller
         if ($user) {
             User::where('teacher_id', $id)->delete();
         }
-        TeacherHistory::where('teacher_id', $id)->update([
+        Course::where('teacher_id', $id)->update([
             'status'    => 0
         ]);
         $data = Teacher::findOrFail($id);

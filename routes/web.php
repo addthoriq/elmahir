@@ -23,9 +23,9 @@ Route::get('/classroom/dbtb', 'ClassroomController@dbTables')->name('classroom.d
 Route::get('/year/dbtb', 'YearController@dbTables')->name('year.dbtb');
 Route::get('/student/dbtb', 'StudentController@dbTables')->name('student.dbtb');
 Route::get('/teacher/dbtb', 'TeacherController@dbTables')->name('teacher.dbtb');
-Route::get('/course-deactived/non-dbtb', 'CCController@dbNon')->name('course.nondbtb');
-Route::get('/course/dbtb', 'CCController@dbTables')->name('course.dbtb');
-Route::get('/course-detail/dbtb', 'CourseController@dbTables')->name('detail.dbtb');
+Route::get('/course-deactived/non-dbtb', 'CourseController@dbNon')->name('course.nondbtb');
+Route::get('/course/dbtb', 'CourseController@dbTables')->name('course.dbtb');
+Route::get('/course-detail/dbtb', 'ListCourseController@dbTables')->name('detail.dbtb');
 Route::get('/alumni/dbtb', 'AlumnusController@dbTables')->name('alumni.dbtb');
 Route::get('/task/dbtb', 'TaskController@dbTables')->name('task.dbtb');
 Route::get('/teacher-deactived/dbtb', 'UnonController@dbTables')->name('unon.dbtb');
@@ -33,14 +33,6 @@ Route::get('/teacher-deactived/dbtb', 'UnonController@dbTables')->name('unon.dbt
 Route::get('/sectioncourse/dbcourse', 'SectionCourseController@dbCourse')->name('sectioncourse.dbcourse');
 Route::get('/sectioncourse/{id}/dbsection', 'SectionCourseController@dbSection')->name('sectioncourse.dbsection');
 Route::get('/answertask/{id}/dbtb', 'AnswerTaskController@dbTables')->name('answertask.dbtb');
-
-//Json
-//Materi Bab
-Route::get('/section/dbtb', 'SectionController@dbTables')->name('section.dbtb');
-Route::get('/mapel/dbtb', 'ChapterController@mapel')->name('mapel.dbtb');
-Route::get('/chapter/{id}/homeChapter', 'ChapterController@homeChapter')->name('chapter.homeChapter');
-Route::get('/chapter/{id}/dbtb', 'ChapterController@chapter')->name('chapter.dbtb');
-
 
 //Materi
 Route::get('/sectioncourse/courselist', 'SectionCourseController@courseList')->name('sectioncourse.courselist');
@@ -68,7 +60,7 @@ Route::put('/answertask/{id}/updateScore', 'AnswerTaskController@updateScore')->
 Route::get('/home/chartMurid', 'HomeController@chartMurid')->name('home.chartMurid');
 Route::get('/home/chartGuru', 'HomeController@chartGuru')->name('home.chartGuru');
 Route::get('/classroom/{id}/chartMurid', 'ClassroomController@chartMurid')->name('classroom.chartMurid');
-Route::get('/course/teacher', 'CCController@teacher')->name('course.teacher');
+Route::get('/course/teacher', 'CourseController@teacher')->name('course.teacher');
 
 //Default
 Route::resource('/home', 'HomeController');
@@ -88,10 +80,10 @@ Route::get('/teacher-deactived/{id}', 'UnonController@show')->name('unon.show');
 Route::put('/teacher-deactived/{id}', 'UnonController@update')->name('unon.update');
 Route::put('/teacher-deactived/{id}/profile', 'UnonController@updateProfile')->name('unon.profile');
 Route::put('/teacher-deactived/{id}/avatar', 'UnonController@updateAva')->name('unon.ava');
-Route::resource('/course-detail', 'CourseController');
-Route::get('/course-nonactived', 'CCController@nonActived')->name('course.nonactived');
-Route::put('/course/{id}', 'CCController@deActived')->name('course.deactived');
-Route::resource('/course', 'CCController')->except(['destroy', 'edit', 'update']);
+Route::resource('/course-detail', 'ListCourseController');
+Route::get('/course-nonactived', 'CourseController@nonActived')->name('course.nonactived');
+Route::put('/course/{id}', 'CourseController@deActived')->name('course.deactived');
+Route::resource('/course', 'CourseController')->except(['destroy', 'edit', 'update']);
 Route::resource('/student', 'StudentController')->except(['destroy']);
 Route::put('/student/{id}/profile', 'StudentController@updateProfile')->name('student.profile');
 Route::put('/student/{id}/avatar', 'StudentController@updateAva')->name('student.ava');

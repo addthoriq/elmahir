@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use App\Model\Task;
 use App\Model\FileTask;
 use App\Model\Classroom;
-use App\Model\Course;
+use App\Model\ListCourse;
 use App\Model\AnswerTask;
 use App\Model\FileAnswerTask;
+use App\Model\Course;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Storage;
 use Form;
@@ -35,19 +36,17 @@ class TaskController extends Controller
                 $title = '-';
             }
 
-            $view    = Form::open();
-            $view   .= "<b>".$title."</b><br>";
+            $view   = "<b>".$title."</b><br>";
             $view   .= "<small>";
             $view   .= "<b>Pembuat</b> : Suryo Widiyanto, ".$index->created_at->format('d M Y H:i');
             $view   .= "</small>";
-            $view   .= Form::close();
             return $view;
         })
-        ->editColumn('course_id', function ($index) {
-            return isset($index->course->name) ? $index->course->name : '-';
+        ->addColumn('course', function ($index) {
+            return $index->course->list_course;
         })
-        ->addColumn('class', function($index){
-            return isset($index->course->classroom->name) ? $index->course->classroom->name : '-';
+        ->addColumn('classroom', function($index){
+            return $index->course->classroom;
         })
         ->addColumn('action', function($index){
             if ($index->deleted_at !== NULL) {
@@ -97,7 +96,7 @@ class TaskController extends Controller
 
         $task    = Task::orderBy('id', 'DESC')->first();
 
-        for ($i=0; $i<$count ; $i++) { 
+        for ($i=0; $i<$count ; $i++) {
             $file               = new FileTask;
 
             $fileStore = $request->file;
@@ -130,7 +129,7 @@ class TaskController extends Controller
     }
 
     public function update(Request $request, $id)
-    {   
+    {
         Task::withTrashed()->findOrFail($id)->update([
             'title'             => $request->title,
             'description'       => $request->description,
@@ -167,7 +166,7 @@ class TaskController extends Controller
         $filename       = $_FILES['file'];
         $count          = count($request->file('file'));
 
-        for ($i=0; $i < $count; $i++) { 
+        for ($i=0; $i < $count; $i++) {
             $data               = new FileTask;
 
             $fileStore = $request->file;
