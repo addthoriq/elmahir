@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProfileTeachersTable extends Migration
+class CreateProfileUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateProfileTeachersTable extends Migration
      */
     public function up()
     {
-        Schema::create('profile_teachers', function (Blueprint $table) {
+        Schema::create('profile_users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('teacher_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('nik');
             $table->text('address');
             $table->string('religion');
@@ -23,7 +23,7 @@ class CreateProfileTeachersTable extends Migration
             $table->string('date_of_birth');
             $table->string('phone_number');
             $table->timestamps();
-            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

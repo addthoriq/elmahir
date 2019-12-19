@@ -73,7 +73,7 @@
                 columns: [
                     { data: 'id', searchable: true, orderable: true},
                     { data: 'name', searchable: true, orderable: true},
-                    { data: 'teacher_id', searchable: true, orderable: true},
+                    { data: 'user_id', searchable: true, orderable: true},
                     { data: 'total_student', searchable: true, orderable: true},
                     { data: 'action', searchable: false, orderable: false}
                 ],

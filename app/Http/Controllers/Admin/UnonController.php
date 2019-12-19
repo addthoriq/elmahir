@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\Teacher;
-use App\Model\ProfileTeacher;
+use App\Model\User;
+use App\Model\ProfileUser;
 use App\Model\Course;
 use Yajra\Datatables\Datatables;
 use Form;
@@ -25,7 +25,7 @@ class UnonController extends Controller
 
     public function dbTables(Request $request)
     {
-        $data     = Teacher::where('status',0)->get();
+        $data     = User::where([['role_id',4],['status',0]])->get();
         return Datatables::of($data)
         ->editColumn('avatar', function($index){
             if ($index->avatar) {
@@ -57,48 +57,48 @@ class UnonController extends Controller
 
     public function show($id)
     {
-        $data      = Teacher::findOrFail($id);
-        $histories = Course::where('teacher_id', $id)->get();
+        $data      = User::findOrFail($id);
+        $histories = Course::where('user_id', $id)->get();
         return view($this->folder.'.show', compact('data', 'histories'));
     }
 
     public function aktif(Request $request, $id)
     {
-        Teacher::findOrFail($id)->update([
+        User::findOrFail($id)->update([
             'status'    => 1
         ]);
-        $data     = Teacher::findOrFail($id);
+        $data     = User::findOrFail($id);
         return redirect('/teacher')->with('notif', $data->name.' berhasil di aktifkan kembali');
     }
 
     public function update(Request $request, $id)
     {
         if (empty($request->password)) {
-            Teacher::find($id)->update([
+            User::find($id)->update([
                 'email'    => $request->email
             ]);
         }else {
-            Teacher::find($id)->update([
+            User::find($id)->update([
                 'email'    => $request->email,
                 'password'    => bcrypt($request->password)
             ]);
         }
-        $data     = Teacher::findOrFail($id);
+        $data     = User::findOrFail($id);
         return redirect()->route('unon.show', [$id])->with('notif', 'Akun Login '.$data->name.' berhasil diubah');
     }
 
     public function updateProfile(Request $request, $id)
     {
-        $data     = Teacher::findOrFail($id)->update([
+        $data     = User::findOrFail($id)->update([
             'name'    => $request->name,
             'nip'    => $request->nip,
             'gender'    => $request->gender,
             'start_year'    => $request->start_year,
             'status'    => 0,
         ]);
-        $ps     = ProfileTeacher::where('teacher_id', $id)->exists();
+        $ps     = ProfileUser::where('teacher_id', $id)->exists();
         if ($ps) {
-            ProfileTeacher::findOrFail($id)->update([
+            ProfileUser::findOrFail($id)->update([
                 'nik'      => $request->nik,
                 'address'  => $request->address,
                 'religion' => $request->religion,
@@ -107,7 +107,7 @@ class UnonController extends Controller
                 'phone_number' => $request->phone_number
             ]);
         }else {
-            $std     = Teacher::findOrFail($id);
+            $std     = User::findOrFail($id);
             $prof     = new ProfileTeacher;
             $prof->teacher_id = $std->id;
             $prof->nik = $request->nik;
@@ -118,13 +118,13 @@ class UnonController extends Controller
             $prof->phone_number = $request->phone_number;
             $prof->save();
         }
-        $guru     = Teacher::findOrFail($id);
+        $guru     = User::findOrFail($id);
         return redirect()->route('unon.show',[$id])->with('notif', 'Data Informasi '.$guru->name.' berhasil diubah');
     }
 
     public function updateAva(Request $request, $id)
     {
-        $data     = Teacher::findOrFail($id);
+        $data     = User::findOrFail($id);
         $ava      = $request->file('avatar');
         if ($ava) {
             if ($data->avatar && file_exists(storage_path('app/public/'.$data->avatar)) ) {

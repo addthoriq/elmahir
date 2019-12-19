@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     protected $fillable     = [
-        'teacher_id', 'classroom', 'school_year_id', 'list_course', 'assistant', 'status'
+        'user_id', 'classroom', 'school_year_id', 'list_course', 'assistant', 'status'
     ];
     public function schoolYear()
     {
         return $this->belongsTo(SchoolYear::class);
     }
-    public function teacher()
+    public function user()
     {
-        return $this->belongsTo(Teacher::class);
+        return $this->belongsTo(User::class);
     }
     public function section()
     {

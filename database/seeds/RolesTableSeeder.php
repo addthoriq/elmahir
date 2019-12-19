@@ -13,8 +13,8 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        $roles = ['Admin', 'Operator1', 'Operator2'];
-        
+        $roles = ['Admin', 'Operator1', 'Operator2', 'Guru', 'Pegawai'];
+
         for ($i=0; $i < count($roles); $i++) {
             $data[$i] = [
                 'name'    => $roles[$i],

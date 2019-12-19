@@ -78,18 +78,16 @@
                                 @endif
                             </div>
                             <div class="m-b-sm">
-                                @if ($user)
-                                    @if($data->status)
-                                        <span class='label label-success'>Pengajar Aktif</span>
-                                    @endif
-                                    @if ($usr->status)
-                                        @if ($usr->role_id == 1)
-                                            <span class='label label-warning'>Admin</span>
-                                        @elseif ($usr->role_id == 2)
-                                            <span class='label label-primary'>Operator 1</span>
-                                        @else
-                                            <span class='label label-success'>Operator 2</span>
-                                        @endif
+                                @if($data->status)
+                                    <span class='label label-success'>Aktif</span>
+                                    @if ($data->role_id == 1)
+                                        <span class='label label-warning'>Admin</span>
+                                    @elseif ($data->role_id == 2)
+                                        <span class='label label-primary'>Operator 1</span>
+                                    @elseif ($data->role_id == 3)
+                                        <span class='label label-success'>Operator 2</span>
+                                    @else
+                                        <span class='label label-info'>Pengajar</span>
                                     @endif
                                 @else
                                     <span class='label label-success'>Pengajar Aktif</span>
@@ -181,40 +179,6 @@
                                     <th>Diubah pada</th>
                                     <td>
                                         {{date('d F Y', strtotime($data->updated_at))}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Jadikan sebagai</th>
-                                    <td>
-                                        @if (!$user)
-                                            <a data-toggle="modal" href="#editAdmin" class="btn btn-sm btn-warning">Admin</a>
-                                            <a data-toggle="modal" href="#editOp" class="btn btn-sm btn-primary">Operator 1</a>
-                                            <a data-toggle="modal" href="#editOpe" class="btn btn-sm btn-success">Operator 2</a>
-                                        @else
-                                            @if ($usr->status)
-                                                <form action="{{route('teacher.role',$data->id)}}" method="post">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    @if ($usr->role_id == 1)
-                                                        <a data-toggle="modal" href="#editOp" class="btn btn-sm btn-primary">Operator 1</a>
-                                                        <a data-toggle="modal" href="#editOpe" class="btn btn-sm btn-success">Operator 2</a>
-                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="javascript:return confirm(`Apakah anda yakin ingin menonaktifkan {{$data->name}} dari User?`)" >Nonaktifkan</button>
-                                                    @elseif ($usr->role_id == 2)
-                                                        <a data-toggle="modal" href="#editAdmin" class="btn btn-sm btn-warning">Admin</a>
-                                                        <a data-toggle="modal" href="#editOpe" class="btn btn-sm btn-success">Operator 2</a>
-                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="javascript:return confirm(`Apakah anda yakin ingin menonaktifkan {{$data->name}} dari User?`)" >Nonaktifkan</button>
-                                                    @else
-                                                        <a data-toggle="modal" href="#editAdmin" class="btn btn-sm btn-warning">Admin</a>
-                                                        <a data-toggle="modal" href="#editOp" class="btn btn-sm btn-primary">Operator 1</a>
-                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="javascript:return confirm(`Apakah anda yakin ingin menonaktifkan {{$data->name}} dari User?`)" >Nonaktifkan</button>
-                                                    @endif
-                                                </form>
-                                            @else
-                                                <a data-toggle="modal" href="#editAdmin" class="btn btn-sm btn-warning">Admin</a>
-                                                <a data-toggle="modal" href="#editOp" class="btn btn-sm btn-primary">Operator 1</a>
-                                                <a data-toggle="modal" href="#editOpe" class="btn btn-sm btn-success">Operator 2</a>
-                                            @endif
-                                        @endif
                                     </td>
                                 </tr>
                             </tbody>

@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class ProfileTeacher extends Model
 {
     protected $guarded     = [];
-    public function teacher()
+    public function user()
     {
-        return $this->belongsTo(Teacher::class);
+        return $this->belongsTo(User::class);
     }
 }

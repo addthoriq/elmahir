@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\TeacherRequest;
+use App\Http\Requests\UserRequest;
 use App\Model\User;
 use App\Model\Role;
-use App\Model\Teacher;
 use App\Model\SchoolYear;
 use App\Model\Course;
-use App\Model\ProfileTeacher;
+use App\Model\ProfileUser;
 use Yajra\Datatables\Datatables;
 use Form;
 use Illuminate\Support\Facades\Storage;
@@ -29,7 +28,7 @@ class TeacherController extends Controller
 
     public function dbTables(Request $request)
     {
-        $data     = Teacher::where('status',1)->get();
+        $data     = User::where([['role_id',4],['status',1]])->get();
         return Datatables::of($data)
         ->editColumn('avatar', function($index){
             if ($index->avatar) {
@@ -67,7 +66,7 @@ class TeacherController extends Controller
     public function store(TeacherRequest $request)
     {
         dd($request->all());
-        $data               = new Teacher;
+        $data               = new User;
         $data->nip         = $request->nip;
         $data->name         = $request->name;
         $data->start_year   = $request->start_year;
@@ -96,34 +95,32 @@ class TeacherController extends Controller
         $admin     = Role::findOrFail(1);
         $op1       = Role::findOrFail(2);
         $op2       = Role::findOrFail(3);
-        $user      = User::where('teacher_id', $id)->exists();
-        $usr       = User::where('teacher_id', $id)->first();
-        $data      = Teacher::findOrFail($id);
+        $data      = User::findOrFail($id);
         $years     = SchoolYear::all();
-        $histories = Course::where('teacher_id', $id)->orderBy('created_at', 'desc')->first();
-        $history   = Course::where('teacher_id', $id)->get();
-        return view($this->folder.'.show', compact('data', 'admin', 'op1', 'op2', 'user', 'usr', 'histories', 'history', 'years'));
+        $histories = Course::where('user_id', $id)->orderBy('created_at', 'desc')->first();
+        $history   = Course::where('user_id', $id)->get();
+        return view($this->folder.'.show', compact('data', 'admin', 'op1', 'op2', 'histories', 'history', 'years'));
     }
 
     public function update(TeacherRequest $request, $id)
     {
         if (empty($request->password)) {
-            Teacher::find($id)->update([
+            User::find($id)->update([
                 'email'    => $request->email
             ]);
         }else {
-            Teacher::find($id)->update([
+            User::find($id)->update([
                 'email'    => $request->email,
                 'password'    => bcrypt($request->password)
             ]);
         }
-        $guru     = Teacher::findOrFail($id);
+        $guru     = User::findOrFail($id);
         return redirect()->route('teacher.show', [$id])->with('notif', 'Akun Login '.$guru->name.' berhasil diubah');
     }
 
     public function admin(Request $request, $id)
     {
-        $data     = Teacher::findOrFail($id);
+        $data     = User::findOrFail($id);
         $datu     = User::where('teacher_id', $id)->exists();
         if ($data->id == $datu) {
             User::where('teacher_id', $id)->update([
@@ -152,7 +149,7 @@ class TeacherController extends Controller
     }
     public function op(Request $request, $id)
     {
-        $data     = Teacher::findOrFail($id);
+        $data     = User::findOrFail($id);
         $datu     = User::where('teacher_id', $id)->exists();
         if ($data->id == $datu) {
             User::where('teacher_id', $id)->update([
@@ -182,7 +179,7 @@ class TeacherController extends Controller
 
     public function ope(Request $request, $id)
     {
-        $data     = Teacher::findOrFail($id);
+        $data     = User::findOrFail($id);
         $datu     = User::where('teacher_id', $id)->exists();
         if ($data->id == $datu) {
             User::where('teacher_id', $id)->update([
@@ -221,16 +218,16 @@ class TeacherController extends Controller
 
     public function updateProfile(Request $request, $id)
     {
-        $data     = Teacher::findOrFail($id)->update([
+        $data     = User::findOrFail($id)->update([
             'name'    => $request->name,
             'nip'    => $request->nip,
             'gender'    => $request->gender,
             'start_year'    => $request->start_year,
             'status'    => $request->status,
         ]);
-        $ps     = ProfileTeacher::where('teacher_id', $id)->exists();
+        $ps     = ProfileUser::where('teacher_id', $id)->exists();
         if ($ps) {
-            ProfileTeacher::findOrFail($id)->update([
+            ProfileUser::findOrFail($id)->update([
                 'nik'      => $request->nik,
                 'address'  => $request->address,
                 'religion' => $request->religion,
@@ -239,8 +236,8 @@ class TeacherController extends Controller
                 'phone_number' => $request->phone_number
             ]);
         }else {
-            $std     = Teacher::findOrFail($id);
-            $prof     = new ProfileTeacher;
+            $std     = User::findOrFail($id);
+            $prof     = new ProfileUser;
             $prof->teacher_id = $std->id;
             $prof->nik = $request->nik;
             $prof->address = $request->address;
@@ -250,13 +247,13 @@ class TeacherController extends Controller
             $prof->phone_number = $request->phone_number;
             $prof->save();
         }
-        $guru     = Teacher::findOrFail($id);
+        $guru     = User::findOrFail($id);
         return redirect()->route('teacher.show',[$id])->with('notif', 'Data Informasi '.$guru->name.' berhasil diubah');
     }
 
     public function updateAva(Request $request, $id)
     {
-        $data     = Teacher::findOrFail($id);
+        $data     = User::findOrFail($id);
         $ava      = $request->file('avatar');
         if ($ava) {
             if ($data->avatar && file_exists(storage_path('app/public/'.$data->avatar)) ) {
@@ -287,7 +284,7 @@ class TeacherController extends Controller
 
     public function nonaktif(Request $request, $id)
     {
-        Teacher::findOrFail($id)->update([
+        User::findOrFail($id)->update([
             'status'    => 0,
         ]);
         $user = User::where('teacher_id',$id)->exists();
@@ -297,7 +294,7 @@ class TeacherController extends Controller
         Course::where('teacher_id', $id)->update([
             'status'    => 0
         ]);
-        $data = Teacher::findOrFail($id);
+        $data = User::findOrFail($id);
         return redirect($this->rdr)->with('notif', $data->name.' berhasil di nonaktifkan!');
     }
 }

@@ -66,7 +66,7 @@
                                 </tr>
                                 <tr>
                                     <th>Wali Kelas</th>
-                                    <td>{{$data->teacher->name}}</td>
+                                    <td>{{$data->user->name}}</td>
                                 </tr>
                                 <tr>
                                     <th>Kapasitas Maksimal Siswa</th>

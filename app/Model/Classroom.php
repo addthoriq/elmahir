@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Classroom extends Model
 {
     protected $fillable = [
-        'teacher_id', 'name', 'max_student'
+        'user_id', 'name', 'max_student'
     ];
     public function classHistories()
     {
@@ -17,9 +17,9 @@ class Classroom extends Model
     {
         return $this->hasOne(Student::class);
     }
-    public function teacher()
+    public function user()
     {
-        return $this->belongsTo(Teacher::class);
+        return $this->belongsTo(User::class);
     }
     public function course()
     {

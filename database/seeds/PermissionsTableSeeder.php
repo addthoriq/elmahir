@@ -16,7 +16,15 @@ class PermissionsTableSeeder extends Seeder
         $actions = ['index', 'create', 'update', 'delete'];
 
         $objects = [
-            'student', 'school-year', 'teacher', 'class', 'course'
+            'student',
+            'school-year',
+            'user',
+            'classroom',
+            'list-course',
+            'course',
+            'alumni',
+            'non-course',
+            'non-user'
         ];
 
         for ($i=0; $i < count($objects) ; $i++) {

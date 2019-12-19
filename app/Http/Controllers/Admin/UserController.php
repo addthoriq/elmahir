@@ -31,8 +31,10 @@ class UserController extends Controller
                 return "<span class='label label-warning'>Admin</span>";
             }elseif ($index->role_id === 2) {
                 return "<span class='label label-primary'>Operator 1</span>";
-            }else {
+            }elseif ($index->role_id === 3) {
                 return "<span class='label label-success'>Operator 2</span>";
+            }else {
+                return "<span class='label label-info'>Pengajar</span>";
             }
         })
         ->editColumn('status', function($index){

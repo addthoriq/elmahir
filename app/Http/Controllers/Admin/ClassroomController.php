@@ -7,7 +7,6 @@ use App\Model\Classroom;
 use App\Model\ClassHistory;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
-use App\Model\Teacher;
 use Form;
 
 class ClassroomController extends Controller
@@ -24,8 +23,8 @@ class ClassroomController extends Controller
     {
         $data = Classroom::all();
         return Datatables::of($data)
-        ->editColumn('teacher_id', function ($index) {
-            return isset($index->teacher->name) ? $index->teacher->name : '-';
+        ->editColumn('user_id', function ($index) {
+            return isset($index->user->name) ? $index->user->name : '-';
         })
         ->addColumn('total_student', function($index){
             return Classhistory::where([['status', 1],['classroom_id', $index->id]])->count();

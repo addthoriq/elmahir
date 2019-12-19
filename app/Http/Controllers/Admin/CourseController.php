@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\Classroom;
 use App\Model\SchoolYear;
 use App\Model\Course;
-use App\Model\Teacher;
+use App\Model\User;
 use App\Model\ListCourse;
 use Yajra\Datatables\Datatables;
 use Form;
@@ -33,7 +33,7 @@ class CourseController extends Controller
     {
         $data     = Course::where('status',1)->get();
         return Datatables::of($data)
-        ->editColumn('teacher_id', function ($index) {
+        ->editColumn('user_id', function ($index) {
             return isset($index->teacher->name) ? $index->teacher->name : '-';
         })
         ->addColumn('action', function($index){
@@ -52,7 +52,7 @@ class CourseController extends Controller
     {
         $data     = Course::where('status',0)->get();
         return Datatables::of($data)
-        ->editColumn('teacher_id', function ($index) {
+        ->editColumn('user_id', function ($index) {
             return isset($index->teacher->name) ? $index->teacher->name : '-';
         })
         ->rawColumns([
@@ -63,7 +63,7 @@ class CourseController extends Controller
 
     public function teacher()
     {
-        $tc     = Teacher::all();
+        $tc     = User::all();
         return response()->json($tc);
     }
 
@@ -77,10 +77,10 @@ class CourseController extends Controller
 
     public function store(Request $request)
     {
-        $t                         = Teacher::where('name', '=', $request->teacher_id)->first();
+        $t                         = User::where(['name', '=', $request->user_id],['role_id','=',4])->first();
         foreach ($request->classroom as $cs => $ck) {
             $kelas                 = new Course;
-            $kelas->teacher_id     = $t->id;
+            $kelas->user_id     = $t->id;
             $kelas->school_year_id = $request->school_year_id;
             $kelas->classroom      = $ck;
             $kelas->list_course    = $request->list_course;
@@ -93,7 +93,7 @@ class CourseController extends Controller
 
     public function deActived(Request $request, $id)
     {
-        Course::where('teacher_id', $id)->update([
+        Course::where('user_id', $id)->update([
             'status'    => 0
         ]);
         return redirect($this->rdr)->with('notif', 'Data Mata Pelajaran berhasil di nonaktifkan');

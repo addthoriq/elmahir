@@ -15,12 +15,12 @@ class CreateClassroomsTable extends Migration
     {
         Schema::create('classrooms', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('teacher_id')->nullable(); //Menunggu Teacher Table dan Controller Berjalan
+            $table->unsignedBigInteger('user_id')->nullable(); //Menunggu User Table dan Controller Berjalan
             $table->string('name');
             $table->integer('max_student');
             $table->timestamps();
 
-            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

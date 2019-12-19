@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\User;
 use App\Model\Student;
-use App\Model\Teacher;
 use App\Model\Course;
 
 class HomeController extends Controller
@@ -24,10 +23,10 @@ class HomeController extends Controller
     public function index()
     {
         $users         = User::where('status',1)->get();
+        $teachers      = User::where([['role_id',4],['status',1]])->get();
         $students      = Student::where('status',1)->get();
-        $teachers      = Teacher::where('status',1)->get();
         $courses       = Course::all();
-        return view('admin.index', compact('users', 'students', 'teachers', 'courses'));
+        return view('admin.index', compact('users', 'teachers', 'students', 'courses'));
     }
 
     public function chartMurid()
@@ -40,8 +39,8 @@ class HomeController extends Controller
 
     public function chartGuru()
     {
-        $lk   = Teacher::where('status', 1)->where('gender','=','L')->count();
-        $pr   = Teacher::where('status', 1)->where('gender','=','P')->count();
+        $lk   = User::where([['role_id',4],['status', 1]])->where('gender','=','L')->count();
+        $pr   = User::where([['role_id',4],['status', 1]])->where('gender','=','P')->count();
         $gender = [$lk, $pr];
         return response()->json($gender);
     }
