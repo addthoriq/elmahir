@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title>E Learning 2019</title>
-  @include('admin.layouts.links.style')
+  @include('admin.layouts2.links.style')
   @yield('style')
 </head>
 
@@ -13,19 +13,19 @@
     <div class="main-wrapper">
       {{-- <div class="navbar-bg"></div> --}}
 
-      @include('admin.layouts.parts.navbar')
-      @include('admin.layouts.parts.sidebar')
+      @include('admin.layouts2.parts.navbar')
+      @include('admin.layouts2.parts.sidebar')
 
 
       <!-- Main Content -->
-      <div class="main-content">      
+      <div class="main-content">
         @yield('content')
       </div>
-      @include('admin.layouts.parts.footer')
+      @include('admin.layouts2.parts.footer')
     </div>
   </div>
 
-@include('admin.layouts.links.script')
+@include('admin.layouts2.links.script')
 @yield('script')
 </body>
 </html>
