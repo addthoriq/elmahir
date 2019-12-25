@@ -31,6 +31,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Course::class);
     }
+    public function task()
+    {
+        return $this->hasMany(Task::class);
+    }
     public function role()
     {
         return $this->belongsTo(Role::class);
