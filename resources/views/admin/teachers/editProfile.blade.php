@@ -49,30 +49,21 @@
                                 <input id="ttl" type="text" value="{{isset($data->profileTeacher->place_of_birth)?$data->profileTeacher->place_of_birth:''}}" name="place_of_birth" class="form-control">
                                 <span id="noticeTtl"></span>
                             </div>
-                            <div class="form-group" id="data_1">
-                                <label id="labelDate" class="font-normal">Tanggal Lahir</label>
-                                <div class="input-group date">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                    <input type="text" name="date_of_birth" value="{{isset($data->profileTeacher->date_of_birth)?$data->profileTeacher->date_of_birth:''}}" class="form-control" placeholder="07/24/1980">
-                                </div>
+                            <div class="form-group">
+                              <label>Tanggal Lahir</label>
+                              <input type="text" name="date_of_birth" placeholder="07/24/1980" value="{{isset($data->profileTeacher->date_of_birth)?$data->profileTeacher->date_of_birth:''}}" class="form-control datepicker">
                             </div>
                             <div class="form-group">
-                                <label>Jenis Kelamin</label>
-                                <div class="i-checks col-sm-6">
-                                    <label>
-                                        <input type="radio" value="L" name="gender" {{($data->gender == 'L')?'checked':''}} >
-                                        <i></i>
-                                        Laki-Laki
-                                    </label>
-                                </div>
-                                <div class="i-checks col-sm-6">
-                                    <label>
-                                        <input type="radio" value="P" name="gender" {{($data->gender == 'P')?'checked':''}} >
-                                        <i></i>
-                                        Perempuan
-                                    </label>
+                                <label class="form-label">Jenis Kelamin</label>
+                                <div class="selectgroup w-100">
+                                  <label class="selectgroup-item">
+                                    <input required type="radio" name="gender" value="L" class="selectgroup-input" {{($data->gender == 'L')?'checked':''}}>
+                                    <span class="selectgroup-button">Laki-laki</span>
+                                  </label>
+                                  <label class="selectgroup-item">
+                                    <input required type="radio" name="gender" value="P" class="selectgroup-input" {{($data->gender == 'P')?'checked':''}}>
+                                    <span class="selectgroup-button">Perempuan</span>
+                                  </label>
                                 </div>
                             </div>
                         </div>
@@ -105,20 +96,16 @@
                                 <span id="noticePhone"></span>
                             </div>
                             <div class="form-group">
-                                <label>Status</label>
-                                <div class="i-checks col-sm-6">
-                                    <label>
-                                        <input type="radio" value="1" name="status" {{($data->status)?'checked':''}} >
-                                        <i></i>
-                                        Pengajar Aktif
-                                    </label>
-                                </div>
-                                <div class="i-checks col-sm-6">
-                                    <label>
-                                        <input type="radio" value="0" name="status" {{($data->status)?'':'checked'}} >
-                                        <i></i>
-                                        Berhenti
-                                    </label>
+                                <label class="form-label">Status</label>
+                                <div class="selectgroup w-100">
+                                  <label class="selectgroup-item">
+                                    <input required type="radio" name="status" value="1" class="selectgroup-input" {{($data->status)?'checked':''}}>
+                                    <span class="selectgroup-button">Aktif</span>
+                                  </label>
+                                  <label class="selectgroup-item">
+                                    <input required type="radio" name="status" value="0" class="selectgroup-input" {{($data->status)?'':'checked'}}>
+                                    <span class="selectgroup-button">Berhenti</span>
+                                  </label>
                                 </div>
                             </div>
                         </div>

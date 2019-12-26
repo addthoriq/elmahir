@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
 use App\Model\User;
 use App\Model\Role;
 use App\Model\SchoolYear;
@@ -60,14 +59,14 @@ class TeacherController extends Controller
 
     public function create()
     {
-        return view('admin.teachers.create');
+        return view($this->folder.'.create');
     }
 
-    public function store(TeacherRequest $request)
+    public function store(Request $request)
     {
-        dd($request->all());
         $data               = new User;
-        $data->nip         = $request->nip;
+        $data->nip          = $request->nip;
+        $data->role_id      = 4;
         $data->name         = $request->name;
         $data->start_year   = $request->start_year;
         $data->gender       = $request->gender;
@@ -80,13 +79,6 @@ class TeacherController extends Controller
         }
         $data->status       = 1;
         $data->save();
-        $mapel              = new Course;
-        $mapel->teacher_id  = $data->id;
-        $mapel->classroom_id = $request->classroom_id;
-        $mapel->school_year_id = $request->school_year_id;
-        $mapel->course_id   = $request->course_id;
-        $mapel->status = 1;
-        $mapel->save();
         return redirect($this->rdr)->with('notif', 'Data Guru berhasil ditambahkan');
     }
 

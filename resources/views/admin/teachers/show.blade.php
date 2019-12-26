@@ -1,56 +1,42 @@
-@extends('admin.layouts.app')
+@extends('admin.layouts2.app')
 
 @section('title', 'Data Guru')
 
 @section('style')
-    <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
-    <style media="screen">
-        .fileinput-preview.fileinput-exists.img-thumbnail img{
-            max-width: 100%;
-        }
-    </style>
+    <link rel="stylesheet" href="{{asset('stisla/node_modules/bootstrap-daterangepicker/daterangepicker.css')}}">
+    <link rel="stylesheet" href="{{ asset('jasny/jasny-bootstrap.min.css') }}">
 @endsection
 
 @section('content')
-    <div class="row wrapper white-bg page-heading">
-        <div class="col-lg-10">
-            <h2>Data Guru</h2>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{{ route('home.index') }}">Beranda</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{{ route('teacher.index') }}">Data Guru</a>
-                </li>
-                </li>
-                <li class="breadcrumb-item active">
-                    <strong>Detail Guru</strong>
-                </li>
-            </ol>
-        </div>
-    </div>
 
-    <div class="wrapper wrapper-content animated fadeInRight">
+    <section class="section">
+        <div class="section-header">
+          <h1>Profil Pengajar</h1>
+          <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item"><a href="{{route('home.index')}}">Beranda</a></div>
+            <div class="breadcrumb-item"><a href="{{route('teacher.index')}}">Daftar Pengajar</a></div>
+            <div class="breadcrumb-item">{{$data->name}}</div>
+          </div>
+        </div>
+    </section>
+
+    <div class="section-body">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-title">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
                         <h5>Profil Guru</h5>
-                        <div class="ibox-tools">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a data-toggle="modal" class="dropdown-item" href="#editAccount">Ubah Akun</a></li>
-                                <li><a data-toggle="modal" class="dropdown-item" href="#editProfile">Ubah Profil</a></li>
-                                <li><a data-toggle="modal" class="dropdown-item" href="#editAvatar">Ubah Poto Profil</a></li>
-                            </ul>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
+                        <div class="card-header-action" style="margin-left: auto">
+                            <div class="dropdown">
+                              <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Ubah Profil
+                              </button>
+                              <div class="dropdown-menu">
+                                <a data-toggle="modal" class="dropdown-item has-icon" href="#editAccount"><i class="fa fa-wrench"></i> Ubah Akun</a>
+                                <a data-toggle="modal" class="dropdown-item has-icon" href="#editProfile"><i class="fa fa-user"></i> Ubah Profil</a>
+                                <a data-toggle="modal" class="dropdown-item has-icon" href="#editAvatar"><i class="fa fa-image"></i> Ubah Poto Profil</a>
+                              </div>
+                            </div>
                         </div>
 
                         {{-- Modal disini --}}
@@ -58,10 +44,9 @@
                         @include('admin.teachers.editProfile')
                         @include('admin.teachers.editAvatar')
 
-
                     </div>
 
-                    <div class="ibox-content">
+                    <div class="card-body">
                         @if (session('notif'))
                             <div class="alert alert-success alert-dismissable">
                                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
@@ -192,21 +177,12 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-title">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
                         <h5>Riwayat Mengajar</h5>
-                        <div class="ibox-tools">
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a data-toggle="modal" class="dropdown-item" href="#editClass">Ubah data Kelas Guru</a></li>
-                            </ul>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </div>
                     </div>
-
-                    <div class="ibox-content">
+                    <div class="card-body">
                         <table class="table">
                             <tbody>
                                 <tr>
@@ -222,9 +198,9 @@
                                 @foreach ($history as $h)
                                     <tr>
                                         <td>{{$no++}}</td>
-                                        <td>{{$h->school_year->start_year}}/{{$h->school_year->end_year}}</td>
-                                        <td>{{$h->classroom->name}}</td>
-                                        <td>{{$h->course->name}}</td>
+                                        <td>{{$h->schoolYear->start_year}}/{{$h->schoolYear->end_year}}</td>
+                                        <td>{{$h->classroom}}</td>
+                                        <td>{{$h->list_course}}</td>
                                         <td>
                                             @if ($h->status)
                                                 <span class='label label-success'>Kelas Sekarang</span>
@@ -249,7 +225,7 @@
                             @csrf
                             @method('PUT')
                             <a href="{{route('teacher.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
-                            <button type="submit" class="btn btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan {{$data->name}} dari Guru aktif?`)'><i class="fa fa-minus-square"></i> Nonaktifkan</button>
+                            <button type="submit" class="btn btn-danger" onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan {{$data->name}} dari Guru aktif?`)'><i class="fa fa-minus-square"></i> Nonaktifkan</button>
                         </form>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-@extends('admin.layouts.app2')
+@extends('admin.layouts2.app')
 
 @section('title', 'Data Guru')
 
@@ -30,6 +30,12 @@
             <a href="" class="btn btn-info"><i class="fa fa-print"></i> Print</a>
           </div>
           <div class="card-body">
+            @if (session('notif'))
+                <div class="alert alert-success alert-dismissable">
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                    {{session('notif')}}
+                </div>
+            @endif
             <div class="table-responsive">
               <table class="table table-striped table-hover dataTables-example">
                 <thead>

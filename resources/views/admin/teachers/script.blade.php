@@ -1,9 +1,6 @@
 <!-- Jasny -->
 <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
-<!-- iCheck -->
-<script src="{{asset('inspinia/js/plugins/iCheck/icheck.min.js')}}"></script>
-<!-- Data picker -->
-<script src="{{asset('inspinia/js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
+<script src="{{asset('stisla/node_modules/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 <script>
     $(document).ready(function(){
         $('.i-checks').iCheck({
