@@ -25,7 +25,6 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Profil Guru</h5>
                         <div class="card-header-action" style="margin-left: auto">
                             <div class="dropdown">
                               <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,12 +37,6 @@
                               </div>
                             </div>
                         </div>
-
-                        {{-- Modal disini --}}
-                        @include('admin.teachers.editAccount')
-                        @include('admin.teachers.editProfile')
-                        @include('admin.teachers.editAvatar')
-
                     </div>
 
                     <div class="card-body">
@@ -92,8 +85,8 @@
                                 <tr>
                                     <th>NIK</th>
                                     <td>
-                                        @isset($data->profileTeacher->nik)
-                                            {{$data->profileTeacher->nik}}
+                                        @isset($data->profileUser->nik)
+                                            {{$data->profileUser->nik}}
                                         @else
                                             <i>Data Belum ditambahkan</i>
                                         @endif
@@ -116,8 +109,8 @@
                                 <tr>
                                     <th>Agama</th>
                                     <td>
-                                        @isset($data->profileTeacher->religion)
-                                            {{$data->profileTeacher->religion}}
+                                        @isset($data->profileUser->religion)
+                                            {{$data->profileUser->religion}}
                                         @else
                                             <i>Data Belum ditambahkan</i>
                                         @endif
@@ -127,8 +120,8 @@
                                 <tr>
                                     <th>Alamat</th>
                                     <td>
-                                        @isset($data->profileTeacher->address)
-                                            {{$data->profileTeacher->address}}
+                                        @isset($data->profileUser->address)
+                                            {{$data->profileUser->address}}
                                         @else
                                             <i>Data Belum ditambahkan</i>
                                         @endif
@@ -137,8 +130,8 @@
                                 <tr>
                                     <th>TTL</th>
                                     <td>
-                                        @isset($data->profileTeacher->date_of_birth)
-                                            {{$data->profileTeacher->place_of_birth}}, {{date('d F Y', strtotime($data->profileTeacher->date_of_birth))}}
+                                        @isset($data->profileUser->date_of_birth)
+                                            {{$data->profileUser->place_of_birth}}, {{date('d F Y', strtotime($data->profileUser->date_of_birth))}}
                                         @else
                                             <i>Data Belum ditambahkan</i>
                                         @endif
@@ -147,8 +140,8 @@
                                 <tr>
                                     <th>Nomor Hp</th>
                                     <td>
-                                        @isset($data->profileTeacher->phone_number)
-                                            {{$data->profileTeacher->phone_number}}
+                                        @isset($data->profileUser->phone_number)
+                                            {{$data->profileUser->phone_number}}
                                         @else
                                             <i>Data Belum ditambahkan</i>
                                         @endif
@@ -232,6 +225,11 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal disini --}}
+    @include('admin.teachers.editAccount')
+    @include('admin.teachers.editProfile')
+    @include('admin.teachers.editAvatar')
 
 @endsection
 

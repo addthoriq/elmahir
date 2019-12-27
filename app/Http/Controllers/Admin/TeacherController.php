@@ -94,7 +94,7 @@ class TeacherController extends Controller
         return view($this->folder.'.show', compact('data', 'admin', 'op1', 'op2', 'histories', 'history', 'years'));
     }
 
-    public function update(TeacherRequest $request, $id)
+    public function update(Request $request, $id)
     {
         if (empty($request->password)) {
             User::find($id)->update([
@@ -217,9 +217,8 @@ class TeacherController extends Controller
             'start_year'    => $request->start_year,
             'status'    => $request->status,
         ]);
-        $ps     = ProfileUser::where('teacher_id', $id)->exists();
-        if ($ps) {
-            ProfileUser::findOrFail($id)->update([
+        if (ProfileUser::where('user_id', $id)->exists()) {
+            ProfileUser::where('user_id', $id)->update([
                 'nik'      => $request->nik,
                 'address'  => $request->address,
                 'religion' => $request->religion,
@@ -227,10 +226,12 @@ class TeacherController extends Controller
                 'date_of_birth' => $request->date_of_birth,
                 'phone_number' => $request->phone_number
             ]);
+            $guru     = User::findOrFail($id);
+            return redirect()->route('teacher.show',[$id])->with('notif', 'Data Informasi '.$guru->name.' berhasil diubah');
         }else {
             $std     = User::findOrFail($id);
             $prof     = new ProfileUser;
-            $prof->teacher_id = $std->id;
+            $prof->user_id = $std->id;
             $prof->nik = $request->nik;
             $prof->address = $request->address;
             $prof->religion = $request->religion;
@@ -238,9 +239,9 @@ class TeacherController extends Controller
             $prof->date_of_birth = $request->date_of_birth;
             $prof->phone_number = $request->phone_number;
             $prof->save();
+            $guru     = User::findOrFail($id)->get();
+            return redirect()->route('teacher.show',[$id])->with('notif', 'Data Informasi '.$guru->name.' berhasil diubah');
         }
-        $guru     = User::findOrFail($id);
-        return redirect()->route('teacher.show',[$id])->with('notif', 'Data Informasi '.$guru->name.' berhasil diubah');
     }
 
     public function updateAva(Request $request, $id)
