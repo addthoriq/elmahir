@@ -88,3 +88,11 @@ Route::put('/user/{id}/avatar', 'Admin\UserController@updateAva')->name('user.av
 Route::put('/user/{id}/aktif', 'Admin\UserController@aktif')->name('user.aktif');
 Route::put('/user/{id}/unon', 'Admin\UserController@unon')->name('user.unon');
 Route::resource('/year', 'Admin\YearController')->except(['create']);
+
+
+Route::prefix('studentlog')->group(function () {
+	//Student Index Home
+    Route::get('/', 'Student\HomeController@index')->name('s1.index');
+    //Course Detail
+    Route::get('/coursedetail', 'Student\CourseDetailController@index')->name('s2.index');
+});
