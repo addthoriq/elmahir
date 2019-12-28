@@ -1,31 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>E Learning 2019</title>
-  @include('admin.layouts2.links.style')
-  @yield('style')
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>ELearning | @yield('title')</title>
+    <script src="https://kit.fontawesome.com/6f5b55d32c.js" crossorigin="anonymous"></script>
+    @include('admin.layouts2.links.style')
+    @yield('style')
 </head>
 
 <body>
-  <div id="app">
-    <div class="main-wrapper">
-      {{-- <div class="navbar-bg"></div> --}}
 
-      @include('admin.layouts2.parts.navbar')
-      @include('admin.layouts2.parts.sidebar')
-
-
-      <!-- Main Content -->
-      <div class="main-content">
-        @yield('content')
-      </div>
-      @include('admin.layouts2.parts.footer')
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
     </div>
-  </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
 
-@include('admin.layouts2.links.script')
-@yield('script')
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        @include('admin.layouts2.parts.nav-header')
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        @include('admin.layouts2.parts.header')
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        @include('admin.layouts2.parts.sidebar')
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        @yield('content')
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        @include('admin.layouts2.parts.footer')
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    @include('admin.layouts2.links.script')
+    @yield('script')
 </body>
+
 </html>
