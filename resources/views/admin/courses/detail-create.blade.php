@@ -60,9 +60,9 @@
                                         @endif
                                     </div>
                                     <div class="form-group">
-                                        <label id="labelTeacher" for="teacher_id">Guru Pengajar</label>
-                                        <input required  id="teacher_id" type="text" name="teacher_id" autocomplete="off" data-provide="typeahead" class="typeahead form-control" />
-                                        <span id="noticeTeacher"></span>
+                                        <label id="labelUser" for="user_id">Guru Pengajar</label>
+                                        <input required  id="user_id" type="text" name="user_id" autocomplete="off" data-provide="typeahead" class="typeahead form-control" />
+                                        <span id="noticeUser"></span>
                                         @if ($errors->has('teacher'))
                                             <span class="text-danger">{{$errors->first('teacher')}}</span>
                                         @endif
@@ -155,7 +155,7 @@
         $(document).ready(function(){
             $.get(teacher, function(response){
                 if (response == "") {
-                    document.getElementById('teacher_id').readOnly = true;
+                    document.getElementById('user_id').readOnly = true;
                 }else {
                     $('.typeahead').typeahead({
                         minLength: 3,
@@ -178,17 +178,17 @@
                     document.getElementById("tombol").disabled = false;
                 }
             })
-            $("#teacher_id").blur(function(){
-                var teacher_id = $("#teacher_id").val();
-                if (teacher_id == "") {
-                    $("#labelTeacher").addClass('text-danger').text('Guru Pengajar *');
-                    $("#teacher_id").addClass('border border-danger');
-                    $("#noticeTeacher").addClass('text-danger').text('Guru Pengajar Wajib diisi');
+            $("#user_id").blur(function(){
+                var user_id = $("#user_id").val();
+                if (user_id == "") {
+                    $("#labelUser").addClass('text-danger').text('Guru Pengajar *');
+                    $("#user_id").addClass('border border-danger');
+                    $("#noticeUser").addClass('text-danger').text('Guru Pengajar Wajib diisi');
                     document.getElementById("tombol").disabled = true;
                 }else {
-                    $("#labelTeacher").removeClass('text-danger').text('Guru Pengajar');
-                    $("#teacher_id").removeClass('border border-danger');
-                    $("#noticeTeacher").removeClass('text-danger').text("");
+                    $("#labelUser").removeClass('text-danger').text('Guru Pengajar');
+                    $("#user_id").removeClass('border border-danger');
+                    $("#noticeUser").removeClass('text-danger').text("");
                     document.getElementById("tombol").disabled = false;
                 }
             })

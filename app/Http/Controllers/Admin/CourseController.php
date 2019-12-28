@@ -34,11 +34,14 @@ class CourseController extends Controller
         $data     = Course::where('status',1)->get();
         return Datatables::of($data)
         ->editColumn('user_id', function ($index) {
-            return isset($index->teacher->name) ? $index->teacher->name : '-';
+            return isset($index->user->name) ? $index->user->name : '-';
+        })
+        ->editColumn('assistant', function ($index) {
+            return isset($index->assistant) ? $index->assistant : '-';
         })
         ->addColumn('action', function($index){
             $tag     = Form::open(["url"=>route('course.deactived', $index->id), "method" => "PUT"]);
-            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan ".$index->teacher->name." dari Mata Pelajaran ini?`)' ><i class='fa fa-minus-square'></i> Nonaktifkan</button>";
+            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan ".$index->user->name." dari Mata Pelajaran ini?`)' ><i class='fa fa-minus-square'></i> Nonaktifkan</button>";
             $tag    .= Form::close();
             return $tag;
         })
@@ -63,7 +66,7 @@ class CourseController extends Controller
 
     public function teacher()
     {
-        $tc     = User::all();
+        $tc     = User::where('role_id',4)->get();
         return response()->json($tc);
     }
 
@@ -77,10 +80,10 @@ class CourseController extends Controller
 
     public function store(Request $request)
     {
-        $t                         = User::where(['name', '=', $request->user_id],['role_id','=',4])->first();
+        $t                         = User::where('name', '=', $request->user_id)->first();
         foreach ($request->classroom as $cs => $ck) {
             $kelas                 = new Course;
-            $kelas->user_id     = $t->id;
+            $kelas->user_id        = $t->id;
             $kelas->school_year_id = $request->school_year_id;
             $kelas->classroom      = $ck;
             $kelas->list_course    = $request->list_course;

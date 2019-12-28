@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
 use App\Model\User;
 use App\Model\Role;
 use App\Model\SchoolYear;
@@ -60,14 +59,14 @@ class TeacherController extends Controller
 
     public function create()
     {
-        return view('admin.teachers.create');
+        return view($this->folder.'.create');
     }
 
-    public function store(TeacherRequest $request)
+    public function store(Request $request)
     {
-        dd($request->all());
         $data               = new User;
-        $data->nip         = $request->nip;
+        $data->nip          = $request->nip;
+        $data->role_id      = 4;
         $data->name         = $request->name;
         $data->start_year   = $request->start_year;
         $data->gender       = $request->gender;
@@ -80,13 +79,6 @@ class TeacherController extends Controller
         }
         $data->status       = 1;
         $data->save();
-        $mapel              = new Course;
-        $mapel->teacher_id  = $data->id;
-        $mapel->classroom_id = $request->classroom_id;
-        $mapel->school_year_id = $request->school_year_id;
-        $mapel->course_id   = $request->course_id;
-        $mapel->status = 1;
-        $mapel->save();
         return redirect($this->rdr)->with('notif', 'Data Guru berhasil ditambahkan');
     }
 
@@ -102,7 +94,7 @@ class TeacherController extends Controller
         return view($this->folder.'.show', compact('data', 'admin', 'op1', 'op2', 'histories', 'history', 'years'));
     }
 
-    public function update(TeacherRequest $request, $id)
+    public function update(Request $request, $id)
     {
         if (empty($request->password)) {
             User::find($id)->update([
@@ -225,9 +217,8 @@ class TeacherController extends Controller
             'start_year'    => $request->start_year,
             'status'    => $request->status,
         ]);
-        $ps     = ProfileUser::where('teacher_id', $id)->exists();
-        if ($ps) {
-            ProfileUser::findOrFail($id)->update([
+        if (ProfileUser::where('user_id', $id)->exists()) {
+            ProfileUser::where('user_id', $id)->update([
                 'nik'      => $request->nik,
                 'address'  => $request->address,
                 'religion' => $request->religion,
@@ -235,10 +226,12 @@ class TeacherController extends Controller
                 'date_of_birth' => $request->date_of_birth,
                 'phone_number' => $request->phone_number
             ]);
+            $guru     = User::findOrFail($id);
+            return redirect()->route('teacher.show',[$id])->with('notif', 'Data Informasi '.$guru->name.' berhasil diubah');
         }else {
             $std     = User::findOrFail($id);
             $prof     = new ProfileUser;
-            $prof->teacher_id = $std->id;
+            $prof->user_id = $std->id;
             $prof->nik = $request->nik;
             $prof->address = $request->address;
             $prof->religion = $request->religion;
@@ -246,9 +239,9 @@ class TeacherController extends Controller
             $prof->date_of_birth = $request->date_of_birth;
             $prof->phone_number = $request->phone_number;
             $prof->save();
+            $guru     = User::findOrFail($id)->get();
+            return redirect()->route('teacher.show',[$id])->with('notif', 'Data Informasi '.$guru->name.' berhasil diubah');
         }
-        $guru     = User::findOrFail($id);
-        return redirect()->route('teacher.show',[$id])->with('notif', 'Data Informasi '.$guru->name.' berhasil diubah');
     }
 
     public function updateAva(Request $request, $id)

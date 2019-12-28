@@ -38,7 +38,7 @@ Route::get('/course/teacher', 'Admin\CourseController@teacher')->name('course.te
 //Default
 Route::resource('/home', 'Admin\HomeController');
 Route::resource('/teacher', 'Admin\TeacherController')->except(['destroy']);
-Route::put('/teacher/{id}/profile', 'Admin\TeacherController@updateProfile')->name('teacher.profile');
+Route::put('/teacher-profile/{id}', 'Admin\TeacherController@updateProfile')->name('teacher.profile');
 Route::put('/teacher/{id}/avatar', 'Admin\TeacherController@updateAva')->name('teacher.ava');
 Route::put('/teacher/{id}/nonaktif', 'Admin\TeacherController@nonaktif')->name('teacher.nonaktif');
 Route::put('/teacher/{id}/admin', 'Admin\TeacherController@admin')->name('teacher.admin');

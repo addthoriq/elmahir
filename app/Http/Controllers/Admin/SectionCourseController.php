@@ -29,8 +29,8 @@ class SectionCourseController extends Controller
     {
         $data     = Course::all();
         return Datatables::of($data)
-        ->editColumn('teacher_id', function ($index) {
-            return isset($index->teacher->name) ? $index->teacher->name : '-';
+        ->editColumn('user_id', function ($index) {
+            return isset($index->user->name) ? $index->user->name : '-';
         })
         ->addColumn('section', function($index) {
             $isi    = Section::where('course_id', $index->id)->get();

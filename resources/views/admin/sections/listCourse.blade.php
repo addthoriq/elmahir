@@ -65,7 +65,7 @@
                     { data: 'id', searchable: true, orderable: true},
                     { data: 'list_course', searchable: true, orderable: true},
                     { data: 'classroom', searchable: true, orderable: true},
-                    { data: 'teacher_id', searchable: true, orderable: true},
+                    { data: 'user_id', searchable: true, orderable: true},
                     { data: 'section', searchable: true, orderable: true},
                     { data: 'action', searchable: true, orderable: true}
                 ],

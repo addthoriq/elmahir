@@ -1,17 +1,27 @@
 <!-- Jasny -->
 <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
-<!-- iCheck -->
-<script src="{{asset('inspinia/js/plugins/iCheck/icheck.min.js')}}"></script>
-<!-- Data picker -->
-<script src="{{asset('inspinia/js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
+<script src="{{asset('stisla/node_modules/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 <script>
     $(document).ready(function(){
-        $('.i-checks').iCheck({
-            radioClass: 'iradio_square-green',
-        });
         $('.custom-file-input').on('change', function() {
             let fileName = $(this).val().split('\\').pop();
             $(this).next('.custom-file-label').addClass("selected").html(fileName);
+        });
+        $('#nik').bind('keypress', function(e){
+            var keyCode = e.which ? e.which : e.keyCode;
+            if (!(keyCode >= 48 && keyCode <= 57)) {
+                return false;
+            }else {
+                return true;
+            }
+        });
+        $('#phone_number').bind('keypress', function(e){
+            var keyCode = e.which ? e.which : e.keyCode;
+            if (!(keyCode >= 48 && keyCode <= 57)) {
+                return false;
+            }else {
+                return true;
+            }
         });
         var mem = $('#data_1 .input-group.date').datepicker({
             todayBtn: "linked",
@@ -43,19 +53,17 @@
               $("#textPassword").removeClass('text-danger').text("").append("<i>Password minimal 8 karakter</i>");
               $("#labelPass").removeClass('text-danger').text('Password');
               $("#password").removeClass('border border-danger');
-              document.getElementById("tombol").disabled = false;
+
           }else if (passNew.length < 8) {
             $(".text-muted").remove();
             $("#labelPass").addClass('text-danger').text('Password *');
             $("#password").addClass('border border-danger');
             $("#textPassword").addClass('text-danger').text("Masukkan minimal 8 Karakter");
-            document.getElementById("tombol").disabled = true;
           }else {
             $(".text-muted").remove();
             $("#labelPass").removeClass('text-danger').text('Password');
             $("#password").removeClass('border border-danger');
             $("#textPassword").removeClass('text-danger').text("");
-            document.getElementById("tombol").disabled = true;
           }
         })
         $("#confirmation_password").blur(function(){
@@ -66,7 +74,7 @@
               $("#konfirPass").removeClass('text-danger').text('Konfirmasi Password');
               $("#confirmation_password").removeClass('border border-danger');
               $(".text-muted").text("Password minimal 8 karakter");
-              document.getElementById("tombol").disabled = false;
+
           }else if (konfirPass !== passNew) {
             $(".text-muted").remove();
             $("#labelPass").addClass('text-danger').text('Password *');
@@ -74,19 +82,16 @@
             $("#konfirPass").addClass('text-danger').text('Konfirmasi Password *');
             $("#confirmation_password").addClass('border border-danger');
             $("#textCPassword").addClass('text-danger').text("Password tidak sama");
-            document.getElementById("tombol").disabled = true;
           }else if (konfirPass.length < 8) {
             $(".text-muted").remove();
             $("#konfirPass").addClass('text-danger').text('Konfirmasi Password *');
             $("#confirmation_password").addClass('border border-danger');
             $("#textCPassword").addClass('text-danger').text("Lengkapi Password anda");
-            document.getElementById("tombol").disabled = true;
           }else {
             $(".text-muted").remove();
             $("#konfirPass").removeClass('text-danger').text('Konfirmasi Password');
             $("#confirmation_password").removeClass('border border-danger');
             $("#textCPassword").removeClass('text-danger').text("");
-            document.getElementById("tombol").disabled = false;
           }
         })
         $("#nip").bind("keypress", function(e){

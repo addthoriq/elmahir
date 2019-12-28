@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProfileTeacher extends Model
+class ProfileUser extends Model
 {
     protected $guarded     = [];
     public function user()
