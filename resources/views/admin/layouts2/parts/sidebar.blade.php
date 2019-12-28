@@ -1,67 +1,83 @@
-<div class="main-sidebar">
-  <aside id="sidebar-wrapper">
-    <div class="sidebar-brand">
-      <a href="index.html" class="text-white">E - Learning</a>
-    </div>
-    <div class="sidebar-brand sidebar-brand-sm">
-      <a href="index.html" class="text-white">EL</a>
-    </div>
-    <ul class="sidebar-menu text-white">
-        <li class="menu-header">Main Navigation</li>
-        <li class="nav-item dropdown active">
-          <a href="{{ route('home.index') }}" class="nav-link"><i class="fas fa-fire"></i><span>Beranda</span></a>
-        </li>
-        <li class="menu-header">Pendataan</li>
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-chalkboard-teacher"></i> <span>Data Guru</span></a>
-          <ul class="dropdown-menu">
-            <li><a class="nav-link" href="{{ route('teacher.index') }}">Beranda</a></li>
-            <li><a class="nav-link" href="{{ route('teacher.create') }}">Tambah Data</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-user"></i> <span>Data Siswa</span></a>
-          <ul class="dropdown-menu">
-            <li><a class="nav-link" href="">Beranda</a></li>
-            <li><a class="nav-link" href="">Tambah Data</a></li>
-          </ul>
-        </li>
-        <li class="menu-header">Manajemen Kelas & Mapel</li>
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-clipboard-list"></i> <span>Daftar Mapel</span></a>
-          <ul class="dropdown-menu">
-            <li><a class="nav-link" href="">Beranda</a></li>
-            <li><a class="nav-link" href="">Tambah Data</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-database"></i> <span>Data Mapel Kelas</span></a>
-          <ul class="dropdown-menu">
-            <li><a class="nav-link" href="">Beranda</a></li>
-            <li><a class="nav-link" href="">Tambah Data</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Manajemen Kelas</span></a>
-          <ul class="dropdown-menu">
-            <li><a class="nav-link" href="">Beranda</a></li>
-            <li><a class="nav-link" href="">Tambah Data</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link"><i class="fas fa-school"></i><span>Tahun Ajaran</span></a>
-        </li>
-        <li class="menu-header">Kompetensi Siswa</li>
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link"><i class="fas fa-book"></i><span>Materi</span></a>
-        </li>
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link"><i class="fas fa-paperclip"></i><span>Tugas</span></a>
-        </li>
-        <li class="menu-header">Sistem Setting</li>
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link"><i class="fas fa-users"></i><span>Users</span></a>
-        </li>
-      </ul>
-  </aside>
-</div>
+<div class="nk-sidebar">           
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label text-secondary">Utama</li>
+                    <li>
+                        <a href="widgets.html" aria-expanded="false">
+                            <i class="icon-home menu-icon"></i><span class="nav-text">Beranda</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Data Guru</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="#">Daftar Guru</a></li>
+                            <li><a href="#">Tambah Data</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-people menu-icon"></i><span class="nav-text">Data Siswa</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="#">Daftar Siswa</a></li>
+                            <li><a href="#">Tambah Data</a></li>
+                        </ul>
+                    </li>
+
+
+                    <li class="nav-label text-secondary">Manajemen</li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-graph menu-icon"></i> <span class="nav-text">Mata Pelajaran</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="#">Daftar Mapel</a></li>
+                            <li><a href="#">Tambah Mapel</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-pin menu-icon"></i> <span class="nav-text">Pengajar Mapel</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="#">Data Mapel</a></li>
+                            <li><a href="#">Tambah Data</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-label text-secondary">Kompetensi Siswa</li>
+                    <li>
+                        <a href="widgets.html" aria-expanded="false">
+                            <i class="icon-book-open menu-icon"></i><span class="nav-text">Materi</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="widgets.html" aria-expanded="false">
+                            <i class="icon-paper-clip menu-icon"></i><span class="nav-text">Tugas Siswa</span>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-label text-secondary">Sistem Manajemen</li>
+                    <li>
+                        <a href="widgets.html" aria-expanded="false">
+                            <i class="icon-people menu-icon"></i><span class="nav-text">User</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="widgets.html" aria-expanded="false">
+                            <i class="icon-settings menu-icon"></i><span class="nav-text">Role</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="widgets.html" aria-expanded="false">
+                            <i class="icon-wrench menu-icon"></i><span class="nav-text">Pengaturan</span>
+                        </a>
+                    </li>
+
+
+                        
+                </ul>
+            </div>
+        </div>
