@@ -9,6 +9,8 @@
     <script src="https://kit.fontawesome.com/6f5b55d32c.js" crossorigin="anonymous"></script>
     @include('admin.layouts2.links.style')
     @yield('style')
+    <!-- Custom Stylesheet -->
+    <link href="{{ asset('qlab/css/style.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -26,7 +28,7 @@
     <!--*******************
         Preloader end
     ********************-->
-    
+
     <!--**********************************
         Main wrapper start
     ***********************************-->
@@ -63,7 +65,7 @@
         <!--**********************************
             Content body end
         ***********************************-->
-        
+
         <!--**********************************
             Footer start
         ***********************************-->

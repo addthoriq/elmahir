@@ -4,8 +4,8 @@
         <div class="modal-content">
             <div class="modal-body">
 
-                <h3 class="m-t-none m-b">Ubah profil Guru</h3>
-                <p>Mengubah data Informasi profil Guru</p>
+                <h3 class="m-t-none m-b">Ubah profil Pengajar</h3>
+                <p>Mengubah data Informasi profil Pengajar</p>
                 <form method="POST" action="{{route('teacher.profile',$data->id)}}" class="edit">
                     @csrf
                     @method('PUT')
@@ -13,49 +13,65 @@
                         <div class="col-sm-6">
                             @isset($data->nip)
                                 <div class="form-group">
-                                    <label id="labelNip" for="nisn">NIP</label>
-                                    <input id="nip" type="text" value="{{$data->nip}}" name="nip" class="form-control" readonly>
-                                    <span id="noticeNip"></span>
+                                    <label id="labelNip" for="nip">Nomor Induk Pegawai (NIP)</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-id-card"></i></span></div>
+                                        <input required readonly id="nip" name="nip" type="text" value="{{$data->nip}}" class="form-control">
+                                    </div>
+                                    <i id="noticeNip"></i>
                                 </div>
                             @endisset
                             @empty ($data->nip)
-                            <div class="form-group">
-                                <label id="labelNip" for="nisn">NIP</label>
-                                <input id="nip" type="text" value="{{$data->nip}}" name="nip" class="form-control">
-                                <span id="noticeNip"></span>
-                            </div>
+                                <div class="form-group">
+                                    <label id="labelNip" for="nip">Nomor Induk Pegawai (NIP)</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-id-card"></i></span></div>
+                                        <input required id="nip" name="nip" type="text" value="{{$data->nip}}" class="form-control">
+                                    </div>
+                                    <i id="noticeNip"></i>
+                                </div>
                             @endempty
                             @isset($data->profileTeacher->nik)
                                 <div class="form-group">
-                                    <label id="labelNik" for="nik">NIK</label>
-                                    <input id="nik" type="text" value="{{isset($data->profileTeacher->nik)?$data->profileTeacher->nik:''}}" name="nik" class="form-control" readonly>
-                                    <span id="noticeNik"></span>
+                                    <label id="labelNik" for="nik">Nomor Induk Kependudukan (NIK)</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-address-card"></i></span></div>
+                                        <input required readonly id="nik" type="text" value="{{isset($data->profileTeacher->nik)?$data->profileTeacher->nik:''}}" name="nik" class="form-control">
+                                    </div>
+                                    <i id="noticeNik"></i>
                                 </div>
                             @endisset
                             @empty ($data->profileTeacher->nik)
                                 <div class="form-group">
-                                    <label id="labelNik" for="nik">NIK</label>
-                                    <input id="nik" type="text" value="{{isset($data->profileTeacher->nik)?$data->profileTeacher->nik:''}}" name="nik" class="form-control">
-                                    <span id="noticeNik"></span>
+                                    <label id="labelNip" for="nik">Nomor Induk Kependudukan (NIK)</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-address-card"></i></span></div>
+                                        <input required id="nik" type="text" value="{{isset($data->profileTeacher->nik)?$data->profileTeacher->nik:''}}" name="nik" class="form-control">
+                                    </div>
+                                    <i id="noticeNik"></i>
                                 </div>
                             @endempty
                             <div class="form-group">
                                 <label id="labelName" for="name">Nama</label>
-                                <input id="name" type="text" value="{{$data->name}}" name="name" class="form-control">
-                                <span id="noticeName"></span>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-user"></i></span></div>
+                                    <input required id="name" value="{{$data->name}}" name="name" type="text" class="form-control">
+                                </div>
+                                <i id="noticeName"></i>
                             </div>
                             <div class="form-group">
                                 <label id="labelTtl" for="ttl">Tempat Lahir</label>
-                                <input id="ttl" type="text" value="{{isset($data->profileTeacher->place_of_birth)?$data->profileTeacher->place_of_birth:''}}" name="place_of_birth" class="form-control">
-                                <span id="noticeTtl"></span>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-thumbtack"></i></span></div>
+                                    <input id="ttl" type="text" value="{{isset($data->profileTeacher->place_of_birth)?$data->profileTeacher->place_of_birth:''}}" name="place_of_birth" class="form-control">
+                                </div>
+                                <i id="noticeTtl"></i>
                             </div>
-                            <div class="form-group" id="data_1">
+                            <div class="form-group">
                                 <label id="labelDate" class="font-normal">Tanggal Lahir</label>
-                                <div class="input-group date">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                    <input type="text" name="date_of_birth" value="{{isset($data->profileTeacher->date_of_birth)?$data->profileTeacher->date_of_birth:''}}" class="form-control" placeholder="07/24/1980">
+                                <div class="input-group">
+                                    <span class="input-group-append"><span class="input-group-text"><i class="fas fa-calendar-alt"></i></span></span>
+                                    <input type="text" class="form-control" value="{{isset($data->profileTeacher->date_of_birth)?$data->profileTeacher->date_of_birth:''}}" id="datepicker-autoclose" placeholder="07/24/1980" name="date_of_birth">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -78,9 +94,9 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label id="labelYear" for="year">Tahun Masuk</label>
-                                <input id="year" type="text" value="{{$data->start_year}}" name="start_year" class="form-control">
-                                <span id="noticeYear"></span>
+                                <label id="labelSYear">Tahun Masuk</label>
+                                <input required id="start_year" value="{{$data->start_year}}" maxlength="4" name="start_year" type="text" maxlength="4" class="form-control">
+                                <i id="noticeSYear"></i>
                             </div>
                             <div class="form-group">
                                 <label id="labelReligion">Agama </label>
@@ -96,13 +112,19 @@
                             </div>
                             <div class="form-group">
                                 <label id="labelAddress" for="address">Alamat</label>
-                                <input id="address" type="text" value="{{isset($data->profileTeacher->address)?$data->profileTeacher->address:''}}" name="address" class="form-control">
-                                <span id="noticeAddress"></span>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span></div>
+                                    <input required id="address" type="text" value="{{isset($data->profileTeacher->address)?$data->profileTeacher->address:''}}" name="address" class="form-control">
+                                </div>
+                                <i id="noticeAddress"></i>
                             </div>
                             <div class="form-group">
                                 <label id="labelPhone" for="phone">Nomor Hp</label>
-                                <input id="phone" type="number" value="{{isset($data->profileTeacher->phone_number)?$data->profileTeacher->phone_number:''}}" name="phone_number" class="form-control">
-                                <span id="noticePhone"></span>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-phone"></i></span></div>
+                                    <input required id="phone" type="number" value="{{isset($data->profileTeacher->phone_number)?$data->profileTeacher->phone_number:''}}" name="phone_number" class="form-control">
+                                </div>
+                                <i id="noticePhone"></i>
                             </div>
                             <div class="form-group">
                                 <label>Status</label>
@@ -124,7 +146,7 @@
                         </div>
                     </div>
                     <div>
-                        <button id="tombol1" type="submit" disabled class="btn btn-sm btn-primary float-right m-t-n-xs"><i class="fa fa-send"></i> Ubah</button>
+                        <button type="submit" class="btn btn-sm btn-primary float-right m-t-n-xs"><i class="fa fa-send"></i> Ubah</button>
                     </div>
                 </form>
             </div>

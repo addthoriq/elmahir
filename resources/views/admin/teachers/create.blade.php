@@ -36,16 +36,16 @@
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-id-card"></i></span>
                                             </div>
-                                            <input id="nip" name="nip" type="text" value="{{old('nip')}}" class="form-control {{$errors->has('nip')?"border border-danger":""}}">
+                                            <input required id="nip" name="nip" type="text" value="{{old('nip')}}" class="form-control {{$errors->has('nip')?"border border-danger":""}}">
                                         </div>
                                         <span id="noticeNip"></span>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label id="labelEmail" for="email" class="{{$errors->has('email')?"text-danger":""}}" for="email">Email {{$errors->has('email')?"*":""}}</label>
+                                        <label id="labelEmail" for="email" class="{{$errors->has('email')?"text-danger":""}}">Email {{$errors->has('email')?"*":""}}</label>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-at"></i></span>
                                             </div>
-                                            <input id="email" value="{{old('email')}}" name="email" type="text" class="form-control {{$errors->has('email')?"border border-danger":""}}">
+                                            <input required id="email" value="{{old('email')}}" name="email" type="text" class="form-control {{$errors->has('email')?"border border-danger":""}}">
                                         </div>
                                         <span id="noticeEmail"></span>
                                     </div>
@@ -54,7 +54,7 @@
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-user"></i></span>
                                             </div>
-                                            <input id="name" value="{{old('name')}}" name="name" type="text" class="form-control {{$errors->has('name')?"border border-danger":""}}">
+                                            <input required id="name" value="{{old('name')}}" name="name" type="text" class="form-control {{$errors->has('name')?"border border-danger":""}}">
                                         </div>
                                         <span id="noticeName"></span>
                                     </div>
@@ -63,13 +63,13 @@
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-lock"></i></span>
                                             </div>
-                                            <input id="email" value="{{old('email')}}" name="email" type="text" class="form-control {{$errors->has('email')?"border border-danger":""}}">
+                                            <input required id="passowrd" value="{{old('passowrd')}}" name="passowrd" type="password" class="form-control {{$errors->has('passowrd')?"border border-danger":""}}">
                                         </div>
-                                        <span id="noticeName"></span>
+                                        <span id="noticePassword"></span>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label id="labelSYear" class="{{$errors->has('start_year')?"text-danger":""}}">Tahun Masuk {{$errors->has('start_year')?"*":""}}</label>
-                                        <input id="start_year" value="{{old('start_year')}}" maxlength="4" name="start_year" type="text" maxlength="4" class="form-control {{$errors->has('start_year')?"border border-danger":""}}">
+                                        <input required id="start_year" value="{{old('start_year')}}" maxlength="4" name="start_year" type="text" maxlength="4" class="form-control {{$errors->has('start_year')?"border border-danger":""}}">
                                         <span id="noticeSYear"></span>
                                     </div>
                                     <div class="form-group col-md-6">
@@ -77,7 +77,7 @@
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-lock"></i></span>
                                             </div>
-                                            <input id="confirmation_password" name="confirmation_password" type="password" class="form-control {{$errors->has('confirmation_password')?"border border-danger":""}}">
+                                            <input required id="confirmation_password" name="confirmation_password" type="password" class="form-control {{$errors->has('confirmation_password')?"border border-danger":""}}">
                                         </div>
                                         <span id="noticeCPassword"></span>
                                     </div>
@@ -85,12 +85,12 @@
                                         <label class="{{$errors->has('gender')?"text-danger":""}}">Jenis Kelamin {{$errors->has('gender')?"*":""}}</label>
                                         <div class="input-group mb-3">
                                             <label class="radio-inline mr-3 {{$errors->has('gender')?"text-danger":""}}">
-                                                <input type="radio" value="L" value="{{old('gender')}}" name="gender">
+                                                <input required type="radio" value="L" value="{{old('gender')}}" name="gender">
                                                 <i></i>
                                                 Laki-Laki
                                             </label>
                                             <label class="radio-inline mr-3 {{$errors->has('gender')?"text-danger":""}}">
-                                                <input type="radio" value="P" value="{{old('gender')}}" name="gender">
+                                                <input required type="radio" value="P" value="{{old('gender')}}" name="gender">
                                                 <i></i>
                                                 Perempuan
                                             </label>
@@ -108,7 +108,7 @@
                                                 <span class="btn btn-outline-secondary btn-file">
                                                     <span class="fileinput-new">Pilih Gambar</span>
                                                     <span class="fileinput-exists">Ubah</span>
-                                                    <input type="file" name="avatar">
+                                                    <input required type="file" name="avatar">
                                                 </span>
                                                 <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Hapus</a>
                                               </div>
