@@ -1,66 +1,60 @@
-@extends('admin.layouts.app')
+@extends('admin.layouts2.app')
 
-@section('title', 'Data Guru')
+@section('title', 'Daftar Pengajar')
 
 @section('style')
-<!-- CSS Libraries -->
-<link rel="stylesheet" href="{{ asset('stisla/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('stisla/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
+    <link href="{{asset('qlab/plugins/tables/css/datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')
-<section class="section">
-  <div class="section-header">
-    <h1>Daftar Guru</h1>
-    <div class="section-header-breadcrumb">
-      <div class="breadcrumb-item"><a href="#">Beranda</a></div>
-      <div class="breadcrumb-item">Daftar Guru</div>
-    </div>
-  </div>
-
-  <div class="section-body">
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header d-flex justify-content-between">
-            <div class="">
-              <a href="{{ route('teacher.create') }}" class="btn btn-primary">Tambah Data</a>
-              <a href="" class="btn btn-success">Ekspor</a>
+    <div class="content-body">
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
+                    <li class="breadcrumb-item active"><a href="{{route('teacher.index')}}">Daftar Pengajar</a></li>
+                </ol>
             </div>
-            <a href="" class="btn btn-info"><i class="fa fa-print"></i> Print</a>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-striped table-hover dataTables-example">
-                <thead>
-                  <tr>
-                    <th class="text-center">No</th>
-                    <th>Avatar</th>
-                    <th>NIP</th>
-                    <th>Nama</th>
-                    <th>Gender</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
-      </div>
+        <!-- row -->
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Daftar Pengajar</h4>
+                            <a href="{{route('teacher.create')}}" class="btn mb-1 btn-rounded btn-primary btn-sm"><i class="fa fa-plus"></i> Tambah</a>
+                            <a href="#" class="btn mb-1 btn-rounded btn-success btn-sm text-white"><i class="fas fa-download"></i> Ekspor</a>
+                            <a href="#" class="btn mb-1 btn-rounded btn-info btn-sm pull-right"><i class="fa fa-print"></i> Cetak</a>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">No</th>
+                                            <th>Avatar</th>
+                                            <th>NIP</th>
+                                            <th>Nama</th>
+                                            <th>Gender</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</section>
 @endsection
 
 @section('script')
-<!-- JS Libraies -->
-<script src="{{ asset('stisla/node_modules/datatables/media/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('stisla/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('stisla/node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
-<!-- Page Specific JS File -->
-<script src="{{ asset('stisla/assets/js/page/modules-datatables.js') }}"></script>
+<script src="{{asset('qlab/plugins/tables/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('qlab/plugins/tables/js/datatable/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('qlab/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script>
 <script type="text/javascript">
     var table;
     $(function() {

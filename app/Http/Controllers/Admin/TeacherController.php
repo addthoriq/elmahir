@@ -40,15 +40,15 @@ class TeacherController extends Controller
         })
         ->editColumn('gender',function($index){
             if ($index->gender == 'L') {
-                return "<span class='label label-primary'>Laki-Laki</span>";
+                return "<span class='badge badge-pill badge-success text-white'>Laki-Laki</span>";
             }else {
-                return "<span class='label label-success'>Perempuan</span>";
+                return "<span class='badge badge-pill badge-primary'>Perempuan</span>";
             }
         })
         ->addColumn('action', function($index){
             $tag     = Form::open(["url"=>route('teacher.nonaktif', $index->id), "method" => "PUT"]);
-            $tag    .= "<a href=". route('teacher.show', $index->id) ." class='btn btn-sm btn-info' ><i class='fa fa-search'></i> Detail</a> ";
-            $tag    .= "<button type='submit' class='btn btn-sm btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan ".$index->name." dari guru?`)' ><i class='fa fa-minus-square'></i> Nonaktifkan</button>";
+            $tag    .= "<a href=". route('teacher.show', $index->id) ." class='btn btn-xs btn-info' ><i class='fa fa-search'></i></a> ";
+            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan ".$index->name." dari guru?`)' ><i class='fa fa-minus-square'></i></button>";
             $tag    .= Form::close();
             return $tag;
         })

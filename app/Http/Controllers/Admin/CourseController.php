@@ -77,10 +77,10 @@ class CourseController extends Controller
 
     public function store(Request $request)
     {
-        $t                         = User::where(['name', '=', $request->user_id],['role_id','=',4])->first();
+        $t                         = User::where('name', '=', $request->user_id)->first();
         foreach ($request->classroom as $cs => $ck) {
             $kelas                 = new Course;
-            $kelas->user_id     = $t->id;
+            $kelas->user_id        = $t->id;
             $kelas->school_year_id = $request->school_year_id;
             $kelas->classroom      = $ck;
             $kelas->list_course    = $request->list_course;
