@@ -5,7 +5,6 @@
 <script src="{{asset('jasny/jasny-bootstrap.min.js')}}"></script>
 <script>
     $(document).ready(function(){
-        console.log('#datepicker-autoclose');
         $('.custom-file-input').on('change', function() {
             let fileName = $(this).val().split('\\').pop();
             $(this).next('.custom-file-label').addClass("selected").html(fileName);

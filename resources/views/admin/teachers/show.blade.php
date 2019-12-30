@@ -1,7 +1,5 @@
 @extends('admin.layouts2.app')
-
 @section('title', 'Data Pengajar')
-
 @section('style')
     <link href="{{asset('qlab/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet">
     <link href="{{asset('jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
@@ -58,14 +56,16 @@
                                     @if ($data->role_id == 1)
                                         <span class='label label-pill label-warning'>Admin</span>
                                     @elseif ($data->role_id == 2)
-                                        <span class='label label-pill label-primary'>Operator 1</span>
+                                        <span class='label label-pill label-info'>Operator 1</span>
                                     @elseif ($data->role_id == 3)
                                         <span class='label label-pill label-success'>Operator 2</span>
+                                    @elseif ($data->role_id == 4)
+                                        <span class='label label-pill label-primary'>Pengajar</span>
                                     @else
-                                        <span class='label label-pill label-info'>Pengajar</span>
+                                        <span class='label label-pill label-light'>Pegawai</span>
                                     @endif
                                 @else
-                                    <span class='label label-pill label-danger'>Pengajar Aktif</span>
+                                    <span class='label label-pill label-danger'>Pengajar tidak Aktif</span>
                                 @endif
                             </div>
                             <div class="table-responsive">
@@ -204,7 +204,7 @@
                                 <form action="{{route('teacher.nonaktif',$data->id)}}" method="post">
                                     @csrf
                                     @method('PUT')
-                                    <a href="{{route('teacher.index')}}" class="btn btn-sm btn-success text-white"><i class="fa fa-chevron-left"></i> Kembali</a>
+                                    <a href="{{route('teacher.index')}}" class="btn btn-sm btn-light"><i class="fa fa-chevron-left"></i> Kembali</a>
                                     <button type="submit" class="btn btn-sm btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan {{$data->name}} dari Guru aktif?`)'><i class="fa fa-minus-square"></i> Nonaktifkan</button>
                                 </form>
                             </div>

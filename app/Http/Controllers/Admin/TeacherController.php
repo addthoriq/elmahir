@@ -40,14 +40,14 @@ class TeacherController extends Controller
         })
         ->editColumn('gender',function($index){
             if ($index->gender == 'L') {
-                return "<span class='badge badge-pill badge-success text-white'>Laki-Laki</span>";
+                return "<span class='badge badge-pill badge-primary'>Laki-Laki</span>";
             }else {
-                return "<span class='badge badge-pill badge-primary'>Perempuan</span>";
+                return "<span class='badge badge-pill badge-danger'>Perempuan</span>";
             }
         })
         ->addColumn('action', function($index){
             $tag     = Form::open(["url"=>route('teacher.nonaktif', $index->id), "method" => "PUT"]);
-            $tag    .= "<a href=". route('teacher.show', $index->id) ." class='btn btn-xs btn-info' ><i class='fa fa-search'></i></a> ";
+            $tag    .= "<a href=". route('teacher.show', $index->id) ." class='btn btn-xs btn-warning text-white' ><i class='fa fa-search'></i></a> ";
             $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan ".$index->name." dari guru?`)' ><i class='fa fa-minus-square'></i></button>";
             $tag    .= Form::close();
             return $tag;
@@ -65,9 +65,9 @@ class TeacherController extends Controller
 
     public function store(TeacherRequest $request)
     {
-        dd($request->all());
         $data               = new User;
-        $data->nip         = $request->nip;
+        $data->role_id      = 4;
+        $data->nip          = $request->nip;
         $data->name         = $request->name;
         $data->start_year   = $request->start_year;
         $data->gender       = $request->gender;

@@ -130,7 +130,7 @@ class StudentController extends Controller
             'nisn'    => $request->nisn,
             'gender'    => $request->gender,
             'start_year'    => $request->start_year,
-            'status'    => $request->status,
+            'status'    => 1,
         ]);
         $ps     = ProfileStudent::where('student_id', $id)->exists();
         if ($ps) {

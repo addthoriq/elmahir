@@ -64,6 +64,7 @@ Route::put('/student/{id}/classhistory', 'Admin\StudentController@updateClassHis
 Route::put('/student/{id}/alumni', 'Admin\StudentController@alumni')->name('student.alumni');
 Route::get('/alumni', 'Admin\AlumnusController@index')->name('alumni.index');
 Route::get('/alumni/{id}', 'Admin\AlumnusController@show')->name('alumni.show');
+Route::put('/alumni/{id}/profile', 'Admin\AlumnusController@updateProfile')->name('alumni.profile');
 Route::resource('/classroom', 'Admin\ClassroomController');
 Route::resource('/section', 'Admin\SectionController');
 Route::resource('/task', 'Admin\TaskController');
@@ -84,6 +85,7 @@ Route::get('/answertask/{id}/home', 'Admin\AnswerTaskController@home')->name('an
 Route::post('/answertask/{id}/storeScore', 'Admin\AnswerTaskController@storeScore')->name('answertask.storeScore');
 Route::put('/answertask/{id}/updateScore', 'Admin\AnswerTaskController@updateScore')->name('answertask.updateScore');
 Route::resource('/user', 'Admin\UserController');
+Route::put('/user/{id}/profile', 'Admin\UserController@updateProfile')->name('user.profile');
 Route::put('/user/{id}/avatar', 'Admin\UserController@updateAva')->name('user.ava');
 Route::put('/user/{id}/aktif', 'Admin\UserController@aktif')->name('user.aktif');
 Route::put('/user/{id}/unon', 'Admin\UserController@unon')->name('user.unon');

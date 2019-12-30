@@ -1,149 +1,171 @@
-@extends('admin.layouts.app')
-
-@section('title', 'Tambah Data User')
-
+@extends('admin.layouts2.app')
+@section('title', 'Data Pegawai')
 @section('style')
-    <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
+    <link href="{{asset('qlab/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet">
+    <link href="{{asset('jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     <style media="screen">
         .fileinput-preview.fileinput-exists.img-thumbnail img{
             max-width: 100%;
         }
     </style>
 @endsection
-
 @section('content')
-    <div class="row wrapper white-bg page-heading">
-        <div class="col-lg-10">
-            <h2>Data User</h2>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{{ route('home.index') }}">Beranda</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{{ route('user.index') }}">Data User</a>
-                </li>
-                </li>
-                <li class="breadcrumb-item active">
-                    <strong>Detail User</strong>
-                </li>
-            </ol>
+    <div class="content-body">
+        <div class="row page-titles mx-0">
+            <div class="col pd-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('user.index')}}">Daftar Pegawai</a></li>
+                    <li class="breadcrumb-item active"><a href="">Detail Pegawai</a></li>
+                </ol>
+            </div>
         </div>
-    </div>
-
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-title">
-                        <h5>Profil User</h5>
-                        <div class="ibox-tools">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li>
-                                    <a data-toggle="modal" class="dropdown-item" href="#editProfile">Ubah Profil</a>
-                                </li>
-                                <li><a data-toggle="modal" class="dropdown-item" href="#editAvatar">Ubah Poto Profil</a></li>
-                            </ul>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </div>
-
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        {{-- Modal disini --}}
                         @include('admin.users.edit')
+                        @include('admin.users.editProfile')
                         @include('admin.users.editAvatar')
-
-
-                    </div>
-
-                    <div class="ibox-content">
-                        @if (session('notif'))
-                            <div class="alert alert-success alert-dismissable">
-                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                {{session('notif')}}
+                        <div class="card-body">
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Ubah Pegawai</button>
+                                <div class="dropdown-menu">
+                                    <a data-toggle="modal" class="dropdown-item" href="#editAccount"><i class="fa fa-wrench"></i> Ubah Akun</a>
+                                    <a data-toggle="modal" class="dropdown-item" href="#editProfile"><i class="fa fa-user"></i> Ubah Profil</a>
+                                    <a data-toggle="modal" class="dropdown-item" href="#editAvatar"><i class="fas fa-image"></i> Ubah Poto Profil</a>
+                                </div>
                             </div>
-                        @endif
-                        <div class="text-center">
-                            <h1>{{$data->name}}</h1>
-                            <div class="m-b-sm">
+                            @if (session('notif'))
+                                <div class="alert alert-success alert-dismissable">
+                                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                    {{session('notif')}}
+                                </div>
+                            @endif
+                            <div class="text-center mb-3">
                                 @if ($data->avatar)
-                                    <img alt="image" class="rounded-circle" src="{{Storage::url($data->avatar)}}" width="100px" height="100px">
+                                    <img alt="image" class="rounded-circle mt-2" src="{{Storage::url($data->avatar)}}" width="100px" height="100px">
                                 @else
-                                    <img alt="image" class="rounded-circle" src="{{Avatar::create($data->name)->toBase64()}}">
+                                    <img alt="image" class="rounded-circle mt-2" src="{{Avatar::create($data->name)->toBase64()}}">
+                                @endif
+                                <h4 class="my-3">{{$data->name}}</h4>
+                                @if($data->status)
+                                    <span class='label label-pill label-success'>Aktif</span>
+                                    @if ($data->role_id == 1)
+                                        <span class='label label-pill label-warning'>Admin</span>
+                                    @elseif ($data->role_id == 2)
+                                        <span class='label label-pill label-info'>Operator 1</span>
+                                    @elseif ($data->role_id == 3)
+                                        <span class='label label-pill label-success'>Operator 2</span>
+                                    @elseif ($data->role_id == 4)
+                                        <span class='label label-pill label-primary'>Pengajar</span>
+                                    @else
+                                        <span class='label label-pill label-light'>Pegawai</span>
+                                    @endif
+                                @else
+                                    <span class='label label-pill label-danger'>Pegawai tidak Aktif</span>
                                 @endif
                             </div>
-                            <div class="m-b-sm">
-                                @if($data->role_id === 1)
-                                    <span class='label label-warning'>Admin</span>
-                                @elseif ($data->role_id === 2)
-                                    <span class='label label-primary'>Operator 1</span>
-                                @else
-                                    <span class='label label-success'>Operator 2</span>
-                                @endif
-                            </div>
-                            <div class="m-b-sm">
-                                @if(!$data->status)
-                                <form action="{{route('user.aktif', $data->id)}}" method="post">
+                            <div class="table-responsive">
+                                <h5>Informasi Pribadi</h5>
+                                <table class="table header-border">
+                                    <tbody>
+                                        <tr>
+                                            <th>Tahun Masuk</th>
+                                            <td>{{$data->start_year}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>NIP</th>
+                                            <td>{{$data->nip}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>NIK</th>
+                                            <td>
+                                                @isset($data->profileTeacher->nik)
+                                                    {{$data->profileTeacher->nik}}
+                                                @else
+                                                    <i>Data Belum ditambahkan</i>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Email</th>
+                                            <td>{{$data->email}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Jenis Kelamin</th>
+                                            <td>
+                                                @if ($data->gender == 'L')
+                                                    <span class='label label-pill label-primary'>Laki-Laki</span>
+                                                @else
+                                                    <span class='label label-pill label-warning text-white'>Perempuan</span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Agama</th>
+                                            <td>
+                                                @isset($data->profileTeacher->religion)
+                                                    {{$data->profileTeacher->religion}}
+                                                @else
+                                                    <i>Data Belum ditambahkan</i>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </tr>
+                                        <tr>
+                                            <th>Alamat</th>
+                                            <td>
+                                                @isset($data->profileTeacher->address)
+                                                    {{$data->profileTeacher->address}}
+                                                @else
+                                                    <i>Data Belum ditambahkan</i>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>TTL</th>
+                                            <td>
+                                                @isset($data->profileTeacher->date_of_birth)
+                                                    {{$data->profileTeacher->place_of_birth}}, {{date('d F Y', strtotime($data->profileTeacher->date_of_birth))}}
+                                                @else
+                                                    <i>Data Belum ditambahkan</i>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Nomor Hp</th>
+                                            <td>
+                                                @isset($data->profileTeacher->phone_number)
+                                                    {{$data->profileTeacher->phone_number}}
+                                                @else
+                                                    <i>Data Belum ditambahkan</i>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Dibuat pada</th>
+                                            <td>
+                                                {{date('d F Y', strtotime($data->created_at))}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Diubah pada</th>
+                                            <td>
+                                                {{date('d F Y', strtotime($data->updated_at))}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <form action="{{route('user.unon',$data->id)}}" method="post">
                                     @csrf
                                     @method('PUT')
-                                    <button type="submit" class="btn btn-xs btn-info" onclick='javascript:return confirm(`Apakah anda yakin ingin mengaktifkan {{$data->name}} ?`)'><i class="fa fa-check"></i> Aktifkan</button>
+                                    <a href="{{route('user.index')}}" class="btn btn-sm btn-light"><i class="fa fa-chevron-left"></i> Kembali</a>
+                                    <button type="submit" class="btn btn-sm btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan {{$data->name}} dari Pegawai aktif?`)'><i class="fa fa-minus-square"></i> Nonaktifkan</button>
                                 </form>
-                                @endif
                             </div>
                         </div>
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <th>Nama</th>
-                                    <td>{{$data->name}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Email</th>
-                                    <td>{{$data->email}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Status</th>
-                                    <td>
-                                        @if ($data->status)
-                                            <span class='label label-primary'>Aktif</span>
-                                        @else
-                                            <span class='label label-danger'>Tidak Aktif</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                                </tr>
-                                <tr>
-                                    <th>Dibuat pada</th>
-                                    <td>
-                                        {{date('d F Y', strtotime($data->created_at))}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Diubah pada</th>
-                                    <td>
-                                        {{date('d F Y', strtotime($data->updated_at))}}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        @if (!$data->status)
-                            <form action="{{route('user.destroy',$data->id)}}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <a href="{{route('user.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
-                                <button type="submit" class="btn btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)'><i class="fa fa-trash"></i> Hapus</button>
-                            </form>
-                        @else
-                            <form action="{{route('user.destroy',$data->id)}}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <a href="{{route('user.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
-                                <button type="submit" class="btn btn-danger pull-right" disabled onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)'><i class="fa fa-trash"></i> Hapus</button>
-                            </form>
-                        @endif
                     </div>
                 </div>
             </div>
