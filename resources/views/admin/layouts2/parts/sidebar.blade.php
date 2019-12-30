@@ -28,13 +28,13 @@
 
 
                     <li class="nav-label text-secondary">Manajemen</li>
-                    <li class="{{ Request::is('course-detail', 'course-nonactived') || Request::is('course-detail/*', 'course-nonactived/*')? 'active' : '' }}">
+                    <li class="{{ Request::is('list-course', 'course-nonactived') || Request::is('list-course/*', 'course-nonactived/*')? 'active' : '' }}">
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="icon-graph menu-icon"></i> <span class="nav-text">Mata Pelajaran</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li class="{{ Request::is('course-detail')? 'active' : '' }}"><a href="{{route('course-detail.index')}}">Daftar Mapel</a></li>
-                            <li class="{{ Request::is('course-detail/create')? 'active' : '' }}"><a href="{{route('course-detail.create')}}">Tambah Daftar Mapel</a></li>
+                            <li class="{{ Request::is('list-course')? 'active' : '' }}"><a href="{{route('list-course.index')}}">Daftar Mapel</a></li>
+                            <li class="{{ Request::is('list-course/create')? 'active' : '' }}"><a href="{{route('list-course.create')}}">Tambah Daftar Mapel</a></li>
                         </ul>
                     </li>
                     <li class="{{ Request::is('course') || Request::is('course/*')? 'active' : '' }}">

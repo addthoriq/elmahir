@@ -23,7 +23,7 @@ Route::get('/student/dbtb', 'Admin\StudentController@dbTables')->name('student.d
 Route::get('/teacher/dbtb', 'Admin\TeacherController@dbTables')->name('teacher.dbtb');
 Route::get('/course-deactived/non-dbtb', 'Admin\CourseController@dbNon')->name('course.nondbtb');
 Route::get('/course/dbtb', 'Admin\CourseController@dbTables')->name('course.dbtb');
-Route::get('/course-detail/dbtb', 'Admin\ListCourseController@dbTables')->name('detail.dbtb');
+Route::get('/list-course/dbtb', 'Admin\ListCourseController@dbTables')->name('listCourse.dbtb');
 Route::get('/alumni/dbtb', 'Admin\AlumnusController@dbTables')->name('alumni.dbtb');
 Route::get('/task/dbtb', 'Admin\TaskController@dbTables')->name('task.dbtb');
 Route::get('/teacher-deactived/dbtb', 'Admin\UnonController@dbTables')->name('unon.dbtb');
@@ -53,7 +53,7 @@ Route::get('/teacher-deactived/{id}', 'Admin\UnonController@show')->name('unon.s
 Route::put('/teacher-deactived/{id}', 'Admin\UnonController@update')->name('unon.update');
 Route::put('/teacher-deactived/{id}/profile', 'Admin\UnonController@updateProfile')->name('unon.profile');
 Route::put('/teacher-deactived/{id}/avatar', 'Admin\UnonController@updateAva')->name('unon.ava');
-Route::resource('/course-detail', 'Admin\ListCourseController');
+Route::resource('/list-course', 'Admin\ListCourseController');
 Route::get('/course-nonactived', 'Admin\CourseController@nonActived')->name('course.nonactived');
 Route::put('/course/{id}', 'Admin\CourseController@deActived')->name('course.deactived');
 Route::resource('/course', 'Admin\CourseController')->except(['destroy', 'edit', 'update']);

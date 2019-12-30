@@ -10,13 +10,13 @@ use Form;
 
 class ListCourseController extends Controller
 {
-    protected $folder     = 'admin.courses';
-    protected $rdr        = '/course-detail';
+    protected $folder     = 'admin.listCourses';
+    protected $rdr        = '/list-course';
 
     public function index()
     {
-        $ajax     = route('detail.dbtb');
-        return view('admin.courses.index', compact('ajax'));
+        $ajax     = route('listCourse.dbtb');
+        return view($this->folder.'.index', compact('ajax'));
     }
 
     public function dbTables(Request $request)
@@ -24,10 +24,10 @@ class ListCourseController extends Controller
         $data     = ListCourse::all();
         return Datatables::of($data)
         ->addColumn('action', function($index){
-            $tag    = "<a href=". route('course-detail.show', $index->id) ." class='btn btn-xs btn-info' ><i class='fa fa-edit'></i> Edit</a> ";
-            // $tag     = Form::open(["url"=>route('course.destroy', $index->id), "method" => "DELETE"]);
-            // $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)' ><i class='fa fa-trash'></i> Hapus</button>";
-            // $tag    .= Form::close();
+            $tag     = Form::open(["url"=>route('list-course.destroy', $index->id), "method" => "DELETE"]);
+            $tag    .= "<a href=". route('list-course.show', $index->id) ." class='btn btn-xs btn-warning text-white' ><i class='fa fa-search'></i></a> ";
+            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus mata pelajaran ".$index->name."?`)' ><i class='fas fa-trash'></i></button>";
+            $tag    .= Form::close();
             return $tag;
         })
         ->rawColumns([
@@ -38,7 +38,7 @@ class ListCourseController extends Controller
 
     public function create()
     {
-        return view('admin.courses.create');
+        return view($this->folder.'.create');
     }
 
     public function store(Request $request)
@@ -47,6 +47,7 @@ class ListCourseController extends Controller
         foreach ($request->name as $nm) {
             $mpl           = new ListCourse;
             $mpl->name     = $nm;
+            $mpl->slug     = \Str::slug($nm, '-');
             $mpl->save();
         }
         return redirect($this->rdr)->with('notif', 'Daftar Mata Pelajaran berhasil ditambahkan');
@@ -61,12 +62,18 @@ class ListCourseController extends Controller
     public function update(Request $request, $id)
     {
         if ($request->name == ListCourse::findOrFail($id)->name) {
-            return redirect()->route('course-detail.show', [$id])->with('notif', 'Tidak ada perubahan pada Daftar Mata Pelajaran');
+            return redirect()->route('list-course.show', [$id])->with('notif', 'Tidak ada perubahan pada Daftar Mata Pelajaran');
         }else {
             ListCourse::findOrFail($id)->update([
-                'name'     => $request->name
+                'name'     => $request->name,
+                'slug'     => \Str::slug($request->name, '-')
             ]);
-            return redirect()->route('course-detail.index')->with('notif', 'Daftar Mata Pelajaran berhasil diubah');
+            return redirect()->route('list-course.index')->with('notif', 'Daftar Mata Pelajaran berhasil diubah');
         }
+    }
+
+    public function destroy($id)
+    {
+        // code...
     }
 }
