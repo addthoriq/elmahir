@@ -5,7 +5,7 @@
             <div class="modal-body">
 
                 <h3 class="m-t-none m-b">Ubah profil Pengajar</h3>
-                <p>Mengubah data Informasi profil Pengajar</p>
+                <p>Mengubah data Informasi profil {{$data->name}}</p>
                 <form method="POST" action="{{route('teacher.profile',$data->id)}}" class="edit">
                     @csrf
                     @method('PUT')

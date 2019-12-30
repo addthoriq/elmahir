@@ -4,8 +4,8 @@
         <div class="modal-content">
             <div class="modal-body">
 
-                <h3 class="m-t-none m-b">Ubah Akun Login Guru</h3>
-                <p>Mengubah data Akun Login Guru</p>
+                <h3 class="m-t-none m-b">Ubah Akun Login User</h3>
+                <p>Mengubah data Akun Login {{$data->name}}</p>
                 <form method="POST" action="{{route('teacher.update',$data->id)}}" class="edit">
                     @csrf
                     @method('PUT')

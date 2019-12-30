@@ -9,7 +9,6 @@
         }
     </style>
 @endsection
-
 @section('content')
     <div class="content-body">
         <div class="row page-titles mx-0">
@@ -100,7 +99,7 @@
                                                 @if ($data->gender == 'L')
                                                     <span class='label label-pill label-primary'>Laki-Laki</span>
                                                 @else
-                                                    <span class='label label-pill label-warning text-white'>Perempuan</span>
+                                                    <span class='label label-pill label-danger'>Perempuan</span>
                                                 @endif
                                             </td>
                                         </tr>
@@ -215,7 +214,6 @@
         </div>
     </div>
 @endsection
-
 @section('script')
     @include('admin.teachers.script')
 @endsection

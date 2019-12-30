@@ -1,14 +1,10 @@
-<!-- Jasny -->
-<script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
-<!-- iCheck -->
-<script src="{{asset('inspinia/js/plugins/iCheck/icheck.min.js')}}"></script>
 <!-- Data picker -->
-<script src="{{asset('inspinia/js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
+<script src="{{asset('qlab/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{asset('qlab/js/plugins-init/form-pickers-init.js')}}"></script>
+<!-- Jasny -->
+<script src="{{asset('jasny/jasny-bootstrap.min.js')}}"></script>
 <script>
     $(document).ready(function(){
-        $('.i-checks').iCheck({
-            radioClass: 'iradio_square-green',
-        });
         $('.custom-file-input').on('change', function() {
             let fileName = $(this).val().split('\\').pop();
             $(this).next('.custom-file-label').addClass("selected").html(fileName);
@@ -89,7 +85,7 @@
             document.getElementById("tombol").disabled = false;
           }
         })
-        $("#nip").bind("keypress", function(e){
+        $("#nisn").bind("keypress", function(e){
             var keyCode = e.which ? e.which : e.keyCode;
             if (!(keyCode >= 48 && keyCode <=57)) {
                 return false;

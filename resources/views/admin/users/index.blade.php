@@ -1,5 +1,5 @@
 @extends('admin.layouts2.app')
-@section('title', 'Daftar Pegawai')
+@section('title', 'Daftar User')
 @section('style')
     <link href="{{asset('qlab/plugins/tables/css/datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 @endsection
@@ -9,7 +9,7 @@
             <div class="col p-md-0">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
-                    <li class="breadcrumb-item active"><a href="{{route('user.index')}}">Daftar Pegawai</a></li>
+                    <li class="breadcrumb-item active"><a href="{{route('user.index')}}">Daftar User</a></li>
                 </ol>
             </div>
         </div>
@@ -20,7 +20,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Daftar Pegawai</h4>
+                            <h4 class="card-title">Daftar User</h4>
                             <a href="{{route('user.create')}}" class="btn mb-1 btn-rounded btn-primary btn-sm"><i class="fa fa-plus"></i> Tambah</a>
                             <a href="#" class="btn mb-1 btn-rounded btn-success btn-sm text-white"><i class="fas fa-download"></i> Ekspor</a>
                             <a href="#" class="btn mb-1 btn-rounded btn-info btn-sm pull-right"><i class="fa fa-print"></i> Cetak</a>

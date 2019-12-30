@@ -3,7 +3,7 @@
                 <ul class="metismenu" id="menu">
                     <li class="nav-label text-secondary">Utama</li>
                     <li class="{{ Request::is('home') || Request::is('home/*')? 'active' : '' }}">
-                        <a href="widgets.html" aria-expanded="false">
+                        <a href="#" aria-expanded="false">
                             <i class="icon-home menu-icon"></i><span class="nav-text">Beranda</span>
                         </a>
                     </li>
@@ -49,33 +49,33 @@
 
                     <li class="nav-label text-secondary">Kompetensi Siswa</li>
                     <li>
-                        <a href="widgets.html" aria-expanded="false">
+                        <a href="#" aria-expanded="false">
                             <i class="icon-book-open menu-icon"></i><span class="nav-text">Materi</span>
                         </a>
                     </li>
                     <li>
-                        <a href="widgets.html" aria-expanded="false">
+                        <a href="#" aria-expanded="false">
                             <i class="icon-paper-clip menu-icon"></i><span class="nav-text">Tugas Siswa</span>
                         </a>
                     </li>
 
                     <li class="nav-label text-secondary">Sistem Manajemen</li>
                     <li class="{{ Request::is('user') || Request::is('user/*')? 'active' : '' }}">
-                        <a href="widgets.html" aria-expanded="false">
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="icon-people menu-icon"></i><span class="nav-text">User</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li class="{{ Request::is('user/index')? 'active' : '' }}"><a href="{{ route('user.index') }}">Daftar Siswa</a></li>
+                            <li class="{{ Request::is('user/index')? 'active' : '' }}"><a href="{{ route('user.index') }}">Daftar User</a></li>
                             <li class="{{ Request::is('user/create')? 'active' : '' }}"><a href="{{ route('user.create') }}">Tambah Data</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="widgets.html" aria-expanded="false">
+                        <a href="#" aria-expanded="false">
                             <i class="icon-settings menu-icon"></i><span class="nav-text">Role</span>
                         </a>
                     </li>
                     <li>
-                        <a href="widgets.html" aria-expanded="false">
+                        <a href="#" aria-expanded="false">
                             <i class="icon-wrench menu-icon"></i><span class="nav-text">Pengaturan</span>
                         </a>
                     </li>

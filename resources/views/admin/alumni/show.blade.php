@@ -26,7 +26,7 @@
                 <div class="col-12">
                     <div class="card">
                         {{-- Modal disini --}}
-                        @include('admin.students.editProfile')
+                        @include('admin.alumni.editProfile')
                         <div class="card-body">
                             <div class="dropdown">
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Ubah Alumnus</button>
@@ -186,31 +186,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('script')
-    <!-- Jasny -->
-    <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
-    <!-- iCheck -->
-    <script src="{{asset('inspinia/js/plugins/iCheck/icheck.min.js')}}"></script>
-    <!-- Data picker -->
-    <script src="{{asset('inspinia/js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
-    <script>
-        $(document).ready(function(){
-            $('.i-checks').iCheck({
-                radioClass: 'iradio_square-green',
-            });
-            $('.custom-file-input').on('change', function() {
-                let fileName = $(this).val().split('\\').pop();
-                $(this).next('.custom-file-label').addClass("selected").html(fileName);
-            });
-            var mem = $('#data_1 .input-group.date').datepicker({
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                calendarWeeks: true,
-                autoclose: true
-            });
-       });
-    </script>
 @endsection

@@ -1,7 +1,5 @@
 @extends('admin.layouts2.app')
-
-@section('title', 'Tambah Pegawai')
-
+@section('title', 'Tambah User')
 @section('style')
     <link href="{{asset('jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     <style media="screen">
@@ -10,15 +8,14 @@
         }
     </style>
 @endsection
-
 @section('content')
     <div class="content-body">
         <div class="row page-titles mx-0">
             <div class="col p-md-0">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('user.index')}}">Daftar Pegawai</a></li>
-                    <li class="breadcrumb-item active"><a href="{{route('user.create')}}">Tambah Pegawai</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('user.index')}}">Daftar User</a></li>
+                    <li class="breadcrumb-item active"><a href="{{route('user.create')}}">Tambah User</a></li>
                 </ol>
             </div>
         </div>
@@ -137,7 +134,7 @@
                                                 <span class="btn btn-outline-secondary btn-file">
                                                     <span class="fileinput-new">Pilih Gambar</span>
                                                     <span class="fileinput-exists">Ubah</span>
-                                                    <input required type="file" name="avatar">
+                                                    <input required accept="image/*" type="file" name="avatar">
                                                 </span>
                                                 <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Hapus</a>
                                               </div>

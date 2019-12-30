@@ -1,5 +1,5 @@
 @extends('admin.layouts2.app')
-@section('title', 'Data Pegawai')
+@section('title', 'Data User')
 @section('style')
     <link href="{{asset('qlab/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet">
     <link href="{{asset('jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
@@ -15,8 +15,8 @@
             <div class="col pd-md-0">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('user.index')}}">Daftar Pegawai</a></li>
-                    <li class="breadcrumb-item active"><a href="">Detail Pegawai</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('user.index')}}">Daftar User</a></li>
+                    <li class="breadcrumb-item active"><a href="">Detail User</a></li>
                 </ol>
             </div>
         </div>
@@ -30,7 +30,7 @@
                         @include('admin.users.editAvatar')
                         <div class="card-body">
                             <div class="dropdown">
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Ubah Pegawai</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Ubah User</button>
                                 <div class="dropdown-menu">
                                     <a data-toggle="modal" class="dropdown-item" href="#editAccount"><i class="fa fa-wrench"></i> Ubah Akun</a>
                                     <a data-toggle="modal" class="dropdown-item" href="#editProfile"><i class="fa fa-user"></i> Ubah Profil</a>

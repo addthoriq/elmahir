@@ -1,7 +1,5 @@
 @extends('admin.layouts2.app')
-
 @section('title', 'Tambah Pengajar')
-
 @section('style')
     <link href="{{asset('jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     <style media="screen">
@@ -10,7 +8,6 @@
         }
     </style>
 @endsection
-
 @section('content')
     <div class="content-body">
         <div class="row page-titles mx-0">
@@ -108,7 +105,7 @@
                                                 <span class="btn btn-outline-secondary btn-file">
                                                     <span class="fileinput-new">Pilih Gambar</span>
                                                     <span class="fileinput-exists">Ubah</span>
-                                                    <input required type="file" name="avatar">
+                                                    <input required accept="image/*" type="file" name="avatar">
                                                 </span>
                                                 <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Hapus</a>
                                               </div>
@@ -131,7 +128,6 @@
         </div>
     </div>
 @endsection
-
 @section('script')
     <script src="{{asset('jasny/jasny-bootstrap.min.js')}}"></script>
     <script>

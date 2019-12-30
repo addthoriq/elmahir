@@ -5,29 +5,41 @@
             <div class="modal-body">
 
                 <h3 class="m-t-none m-b">Ubah Akun Login Siswa</h3>
-                <p>Mengubah data Akun Login Siswa</p>
+                <p>Mengubah data Akun Login {{$data->name}}</p>
                 <form method="POST" action="{{route('student.update',$data->id)}}" class="edit">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
                         <label for="email" id="labelEmail">Email</label>
-                        <input id="email" type="text" value="{{$data->email}}" name="email" class="form-control">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-at"></i></span>
+                            </div>
+                            <input required id="email" value="{{$data->email}}" name="email" type="text" class="form-control">
+                        </div>
                         <span id="textEmail" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="password" id="labelPass">Password</label>
-                        <input id="password" type="password" class="form-control">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-lock"></i></span>
+                            </div>
+                            <input id="password" name="password" type="password" class="form-control">
+                        </div>
                         <i class="text-muted">Password minimal 8 karakter</i>
                         <span id="textPassword" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="confirmation_password" id="konfirPass">Konfirmasi Password</label>
-                        <input id="confirmation_password" type="password" name="password" class="form-control">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-lock"></i></span>
+                            </div>
+                            <input required id="confirmation_password" name="password" type="password" class="form-control {{$errors->has('confirmation_password')?"border border-danger":""}}">
+                        </div>
                         <i class="text-muted">Password minimal 8 karakter</i>
                         <span id="textCPassword"></span>
                     </div>
                     <div>
-                        <button id="tombol" disabled type="submit" class="btn btn-sm btn-primary float-right m-t-n-xs">
+                        <button id="tombol" type="submit" class="btn btn-sm btn-primary float-right m-t-n-xs">
                             <i class="fa fa-send"></i> Ubah
                         </button>
                     </div>
