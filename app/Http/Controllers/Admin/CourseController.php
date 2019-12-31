@@ -63,7 +63,7 @@ class CourseController extends Controller
 
     public function user()
     {
-        $tc     = User::all();
+        $tc     = User::where('role_id',4)->get();
         return response()->json($tc);
     }
 

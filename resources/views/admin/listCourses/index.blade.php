@@ -20,9 +20,9 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Daftar Mata Pelajaran</h4>
-                            <a href="{{route('list-course.create')}}" class="btn mb-1 btn-rounded btn-primary btn-sm"><i class="fa fa-plus"></i> Tambah</a>
-                            <a href="#" class="btn mb-1 btn-rounded btn-success btn-sm text-white"><i class="fas fa-download"></i> Ekspor</a>
-                            <a href="#" class="btn mb-1 btn-rounded btn-info btn-sm pull-right"><i class="fa fa-print"></i> Cetak</a>
+                            <a href="{{route('list-course.create')}}" class="btn mb-4 btn-rounded btn-primary btn-sm"><i class="fa fa-plus"></i> Tambah</a>
+                            <a href="#" class="btn mb-4 btn-rounded btn-success btn-sm text-white"><i class="fas fa-download"></i> Ekspor</a>
+                            <a href="#" class="btn mb-4 btn-rounded btn-info btn-sm pull-right"><i class="fa fa-print"></i> Cetak</a>
                             @if (session('notif'))
                                 <div class="alert alert-success alert-dismissible fade show">
                                     <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>

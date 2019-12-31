@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\UserRequests;
 use App\Model\User;
 use App\Model\ProfileUser;
 use App\Model\Role;
@@ -70,7 +69,7 @@ class UserController extends Controller
         return view($this->folder.'.create', compact('roles'));
     }
 
-    public function store(UserRequests $request)
+    public function store(Request $request)
     {
         $data             = new User;
         $data->role_id    = $request->role_id;

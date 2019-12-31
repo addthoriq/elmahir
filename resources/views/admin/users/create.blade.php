@@ -27,117 +27,121 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Informasi Dasar & Pengaturan Akun</h4>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label id="labelNip" for="nip" class="{{$errors->has('nip')?"text-danger":""}}">Nomor Induk Pegawai (NIP) {{$errors->has('nip')?"*":""}}</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                                            </div>
-                                            <input required id="nip" name="nip" type="text" value="{{old('nip')}}" class="form-control {{$errors->has('nip')?"border border-danger":""}}">
-                                        </div>
-                                        <span id="noticeNip"></span>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label id="labelEmail" for="email" class="{{$errors->has('email')?"text-danger":""}}">Email {{$errors->has('email')?"*":""}}</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-at"></i></span>
-                                            </div>
-                                            <input required id="email" value="{{old('email')}}" name="email" type="text" class="form-control {{$errors->has('email')?"border border-danger":""}}">
-                                        </div>
-                                        <span id="noticeEmail"></span>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label id="labelName" for="name" class="{{$errors->has('name')?"text-danger":""}}">Nama {{$errors->has('name')?"*":""}}</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-user"></i></span>
-                                            </div>
-                                            <input required id="name" value="{{old('name')}}" name="name" type="text" class="form-control {{$errors->has('name')?"border border-danger":""}}">
-                                        </div>
-                                        <span id="noticeName"></span>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label id="labelPassword" for="password" class="{{$errors->has('password')?"text-danger":""}}" for="password">Password {{$errors->has('password')?"*":""}}</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-lock"></i></span>
-                                            </div>
-                                            <input required id="passowrd" value="{{old('passowrd')}}" name="passowrd" type="password" class="form-control {{$errors->has('passowrd')?"border border-danger":""}}">
-                                        </div>
-                                        <span id="noticePassword"></span>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label id="labelSYear" class="{{$errors->has('start_year')?"text-danger":""}}">Tahun Masuk {{$errors->has('start_year')?"*":""}}</label>
-                                        <input required id="start_year" value="{{old('start_year')}}" maxlength="4" name="start_year" type="text" maxlength="4" class="form-control {{$errors->has('start_year')?"border border-danger":""}}">
-                                        <span id="noticeSYear"></span>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label id="labelCPassword" for="confirmation_password" class="{{$errors->has('confirmation_password')?"text-danger":""}}" for="confirmation_password">Konfirmasi Password {{$errors->has('confirmation_password')?"*":""}}</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-lock"></i></span>
-                                            </div>
-                                            <input required id="confirmation_password" name="confirmation_password" type="password" class="form-control {{$errors->has('confirmation_password')?"border border-danger":""}}">
-                                        </div>
-                                        <span id="noticeCPassword"></span>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label class="{{$errors->has('gender')?"text-danger":""}}">Jenis Kelamin {{$errors->has('gender')?"*":""}}</label>
-                                                <div class="input-group mb-3">
-                                                    <label class="radio-inline mr-3 {{$errors->has('gender')?"text-danger":""}}">
-                                                        <input required type="radio" value="L" value="{{old('gender')}}" name="gender">
-                                                        Laki-Laki
-                                                    </label>
-                                                    <label class="radio-inline mr-3 {{$errors->has('gender')?"text-danger":""}}">
-                                                        <input required type="radio" value="P" value="{{old('gender')}}" name="gender">
-                                                        Perempuan
-                                                    </label>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label id="labelNip" for="nip" class="{{$errors->has('nip')?"text-danger":""}}">Nomor Induk Pegawai (NIP) {{$errors->has('nip')?"*":""}}</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-id-card"></i></span>
                                                 </div>
+                                                <input required id="nip" name="nip" type="text" maxlength="16" value="{{old('nip')}}" class="form-control {{$errors->has('nip')?"border border-danger":""}}">
                                             </div>
-                                            <div class="col-md-12">
-                                                <label class="{{$errors->has('role_id')?"text-danger":""}}">Jadikan sebagai {{$errors->has('role_id')?"*":""}}</label>
-                                                <div class="col-sm-12">
-                                                    <label class="{{$errors->has('role_id')?"text-danger":""}}">
-                                                        <input type="radio" value="1" value="{{old('role_id')}}" name="role_id">
-                                                        Admin
-                                                    </label>
+                                            <span id="noticeNip"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="labelName" for="name" class="{{$errors->has('name')?"text-danger":""}}">Nama {{$errors->has('name')?"*":""}}</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-user"></i></span>
                                                 </div>
-                                                <div class="col-sm-12">
-                                                    <label class="{{$errors->has('role_id')?"text-danger":""}}">
-                                                        <input type="radio" value="2" value="{{old('role_id')}}" name="role_id">
-                                                        Operator 1 (Kesiswaan)
-                                                    </label>
+                                                <input required id="name" value="{{old('name')}}" name="name" type="text" class="form-control {{$errors->has('name')?"border border-danger":""}}">
+                                            </div>
+                                            <span id="noticeName"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="labelSYear" class="{{$errors->has('start_year')?"text-danger":""}}">Tahun Masuk {{$errors->has('start_year')?"*":""}}</label>
+                                            <input required id="start_year" value="{{old('start_year')}}" maxlength="4" name="start_year" type="text" maxlength="4" class="form-control {{$errors->has('start_year')?"border border-danger":""}}">
+                                            <span id="noticeSYear"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="{{$errors->has('gender')?"text-danger":""}}">Jenis Kelamin {{$errors->has('gender')?"*":""}}</label>
+                                                    <div class="input-group mb-3">
+                                                        <label class="radio-inline mr-3 {{$errors->has('gender')?"text-danger":""}}">
+                                                            <input required type="radio" value="L" value="{{old('gender')}}" name="gender">
+                                                            Laki-Laki
+                                                        </label>
+                                                        <label class="radio-inline mr-3 {{$errors->has('gender')?"text-danger":""}}">
+                                                            <input required type="radio" value="P" value="{{old('gender')}}" name="gender">
+                                                            Perempuan
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                                <div class="col-sm-12">
-                                                    <label class="{{$errors->has('role_id')?"text-danger":""}}">
-                                                        <input type="radio" value="3" value="{{old('role_id')}}" name="role_id">
-                                                        Operator 2 (Kurikulum)
-                                                    </label>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <label class="{{$errors->has('role_id')?"text-danger":""}}">
-                                                        <input type="radio" value="4" value="{{old('role_id')}}" name="role_id">
-                                                        Pengajar
-                                                    </label>
+                                                <div class="col-md-12">
+                                                    <label class="{{$errors->has('role_id')?"text-danger":""}}">Jadikan sebagai {{$errors->has('role_id')?"*":""}}</label>
+                                                    <div class="col-sm-12">
+                                                        <label class="{{$errors->has('role_id')?"text-danger":""}}">
+                                                            <input type="radio" value="1" value="{{old('role_id')}}" name="role_id">
+                                                            Admin
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <label class="{{$errors->has('role_id')?"text-danger":""}}">
+                                                            <input type="radio" value="2" value="{{old('role_id')}}" name="role_id">
+                                                            Operator 1 (Kesiswaan)
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <label class="{{$errors->has('role_id')?"text-danger":""}}">
+                                                            <input type="radio" value="3" value="{{old('role_id')}}" name="role_id">
+                                                            Operator 2 (Kurikulum)
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <label class="{{$errors->has('role_id')?"text-danger":""}}">
+                                                            <input type="radio" value="4" value="{{old('role_id')}}" name="role_id">
+                                                            Pengajar
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="">Foto Profil</label>
-                                        <div class="custom-file">
-                                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                              <div class="fileinput-new img-thumbnail" style="height: 160px;">
-                                                <img src="{{asset('img/150.png')}}">
-                                              </div>
-                                              <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: 200px;"></div>
-                                              <div>
-                                                <span class="btn btn-outline-secondary btn-file">
-                                                    <span class="fileinput-new">Pilih Gambar</span>
-                                                    <span class="fileinput-exists">Ubah</span>
-                                                    <input required accept="image/*" type="file" name="avatar">
-                                                </span>
-                                                <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Hapus</a>
-                                              </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label id="labelEmail" for="email">Email</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-at"></i></span>
+                                                </div>
+                                                <input required id="email" name="email" type="text" class="form-control">
+                                            </div>
+                                            <span id="noticeEmail"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="labelPassword" for="password" for="password">Password</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-lock"></i></span>
+                                                </div>
+                                                <input required id="password" name="password" type="password" class="form-control">
+                                            </div>
+                                            <span id="noticePassword"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="labelCPassword" for="confirmation_password" class="{{$errors->has('confirmation_password')?"text-danger":""}}" for="confirmation_password">Konfirmasi Password {{$errors->has('confirmation_password')?"*":""}}</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-lock"></i></span>
+                                                </div>
+                                                <input required id="confirmation_password" name="confirmation_password" type="password" class="form-control {{$errors->has('confirmation_password')?"border border-danger":""}}">
+                                            </div>
+                                            <span id="noticeCPassword"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Foto Profil</label>
+                                            <div class="custom-file">
+                                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                  <div class="fileinput-new img-thumbnail" style="height: 160px;">
+                                                    <img src="{{asset('img/150.png')}}">
+                                                  </div>
+                                                  <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: 200px;"></div>
+                                                  <div>
+                                                    <span class="btn btn-outline-secondary btn-file">
+                                                        <span class="fileinput-new">Pilih Gambar</span>
+                                                        <span class="fileinput-exists">Ubah</span>
+                                                        <input required accept="image/*" type="file" name="avatar">
+                                                    </span>
+                                                    <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Hapus</a>
+                                                  </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -226,80 +230,70 @@
               var email   = $("#email").val();
               if (email == "") {
                   var pesan   = "Email tidak boleh kosong";
-                  $("#labelEmail").addClass('text-danger').text('Email');
+                  $("#labelEmail").addClass('text-danger').text('Email *');
                   $("#email").addClass('border border-danger');
                   $("#noticeEmail").addClass('text-danger').text(pesan);
-                  document.getElementById("tombol").disabled = true;
               }
               else if (email.search('@')>=0) {
                 var pesan2   = "Email Terverifikasi";
-                $("#labelEmail").remmoveClass('text-danger').text('Email');
+                $("#labelEmail").remmoveClass('text-danger').text('Email *');
                 $("#email").remmoveClass('border border-danger');
                 $("#noticeEmail").text(pesan2);
-                document.getElementById("tombol").disabled = true;
               }else {
                 var pesan3   = "Email harus sesuai standar";
                 $("#labelEmail").addClass('text-danger').text('Email *');
                 $("#email").addClass('border border-danger');
                 $("#noticeEmail").text(pesan3);
-                document.getElementById("tombol").disabled = false;
               }
             })
             $("#password").blur(function(){
               var passNew   = $("#password").val();
-              var noticeCPassword  = $("#confirmation_password").val();
-              if (passNew == "" && noticeCPassword == "") {
+              var passwordKonfir  = $("#confirmation_password").val();
+              if (passNew == "" && passwordKonfir == "") {
                   $(".text-muted").remove();
-                  $("#noticePassword").addClass('text-danger').text("Password tidak boleh kosong");
                   $("#labelPassword").addClass('text-danger').text('Password *');
+                  $("#noticePassword").addClass('text-danger').text("Password tidak boleh kosong");
                   $("#password").addClass('border border-danger');
-                  document.getElementById("tombol").disabled = true;
+
               }else if (passNew.length < 8) {
                 $(".text-muted").remove();
                 $("#labelPassword").addClass('text-danger').text('Password *');
                 $("#password").addClass('border border-danger');
                 $("#noticePassword").addClass('text-danger').text("Password kurang 8 Karakter");
-                document.getElementById("tombol").disabled = true;
               }else {
                 $(".text-muted").remove();
                 $("#labelPassword").removeClass('text-danger').text('Password');
                 $("#password").removeClass('border border-danger');
                 $("#noticePassword").removeClass('text-danger').text("");
-                document.getElementById("tombol").disabled = false;
               }
             })
             $("#confirmation_password").blur(function(){
               var passNew     = $("#password").val();
-              var noticeCPassword  = $("#confirmation_password").val();
-              if (passNew == "" && noticeCPassword == "") {
-                  $("#noticeCPassword").addClass('text-danger').text('Password tidak boleh kosong');
+              var passKonfir  = $("#confirmation_password").val();
+              if (passNew == "" && passKonfir == "") {
                   $("#labelCPassword").addClass('text-danger').text('Konfirmasi Password *');
+                  $("#noticeCPassword").addClass('text-danger').text('Password tidak boleh kosong');
                   $("#confirmation_password").addClass('border border-danger');
                   $(".text-muted").text("Password minimal 8 karakter");
-                  document.getElementById("tombol").disabled = true;
-              }else if (noticeCPassword !== passNew) {
+              }else if (passKonfir !== passNew) {
                 $(".text-muted").remove();
                 $("#password").addClass('border border-danger');
                 $("#labelPassword").addClass('text-danger').text('Password *');
                 $("#labelCPassword").addClass('text-danger').text('Konfirmasi Password *');
                 $("#confirmation_password").addClass('border border-danger');
                 $("#noticeCPassword").addClass('text-danger').text("Password tidak sama");
-                document.getElementById("tombol").disabled = true;
               }else if (noticeCPassword.length < 8) {
                 $(".text-muted").remove();
                 $("#labelCPassword").addClass('text-danger').text('Konfirmasi Password *');
                 $("#confirmation_password").addClass('border border-danger');
                 $("#noticeCPassword").addClass('text-danger').text("Lengkapi Password anda");
-                document.getElementById("tombol").disabled = true;
               }else {
                 $(".text-muted").remove();
                 $("#labelCPassword").removeClass('text-danger').text('Konfirmasi Password');
                 $("#confirmation_password").removeClass('border border-danger');
                 $("#noticeCPassword").removeClass('text-danger').text("Password benar");
-                document.getElementById("tombol").disabled = false;
               }
             })
-
        });
     </script>
 @endsection
