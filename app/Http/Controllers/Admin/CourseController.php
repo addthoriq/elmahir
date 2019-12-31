@@ -20,7 +20,7 @@ class CourseController extends Controller
     public function index()
     {
         $ajax     = route('course.dbtb');
-        return view('admin.courses.detail', compact('ajax'));
+        return view('admin.courses.index', compact('ajax'));
     }
 
     public function nonActived()
@@ -34,11 +34,11 @@ class CourseController extends Controller
         $data     = Course::where('status',1)->get();
         return Datatables::of($data)
         ->editColumn('user_id', function ($index) {
-            return isset($index->teacher->name) ? $index->teacher->name : '-';
+            return isset($index->user->name) ? $index->user->name : '-';
         })
         ->addColumn('action', function($index){
             $tag     = Form::open(["url"=>route('course.deactived', $index->id), "method" => "PUT"]);
-            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan ".$index->teacher->name." dari Mata Pelajaran ini?`)' ><i class='fa fa-minus-square'></i> Nonaktifkan</button>";
+            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin mengakhiri Mata Pelajaran ".$index->list_course." ?`)' ><i class='fa fa-minus-square'></i> Akhiri</button>";
             $tag    .= Form::close();
             return $tag;
         })
@@ -53,7 +53,7 @@ class CourseController extends Controller
         $data     = Course::where('status',0)->get();
         return Datatables::of($data)
         ->editColumn('user_id', function ($index) {
-            return isset($index->teacher->name) ? $index->teacher->name : '-';
+            return isset($index->user->name) ? $index->user->name : '-';
         })
         ->rawColumns([
             'id'
@@ -61,7 +61,7 @@ class CourseController extends Controller
         ->make(true);
     }
 
-    public function teacher()
+    public function user()
     {
         $tc     = User::all();
         return response()->json($tc);
@@ -72,7 +72,7 @@ class CourseController extends Controller
         $years      = SchoolYear::all();
         $classes    = Classroom::all();
         $courses    = ListCourse::all();
-        return view('admin.courses.detail-create', compact('years', 'classes', 'courses'));
+        return view('admin.courses.create', compact('years', 'classes', 'courses'));
     }
 
     public function store(Request $request)

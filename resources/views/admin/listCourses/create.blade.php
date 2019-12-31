@@ -22,13 +22,13 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-12" id="app">
                                         <label id="labelName" for="name">Nama Mata Pelajaran</label>
+                                        <button class="pull-right btn btn-sm btn-warning mb-2 text-white ml-1" type="button" @click="delKelas()"><i class="fa fa-minus"></i></button>
+                                        <button class="pull-right btn btn-sm btn-success mb-2 text-white" type="button" @click="addKelas()"><i class="fa fa-plus"></i></button>
                                         <div class="input-group mb-3" v-for="n in classrooms" :key="index">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-tag"></i></span>
                                             </div>
                                             <input required id="name" name="name[]" type="text" class="form-control">
                                         </div>
-                                        <button class="pull-right btn btn-sm btn-success text-white" type="button" @click="addKelas()"><i class="fa fa-plus"></i></button>
-                                        <button class="pull-right btn btn-sm btn-warning text-white mr-1" type="button" @click="delKelas()"><i class="fa fa-minus"></i></button>
                                     </div>
                                 </div>
                                 <div class="form-row">
