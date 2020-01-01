@@ -8,23 +8,64 @@ use App\Model\Section;
 use App\Model\Course;
 use App\Model\FileSection;
 use App\Model\Chapter;
+use App\Model\ListCourse;
+use App\Model\Classroom;
 use Yajra\Datatables\Datatables;
 use Form;
 use Illuminate\Support\Facades\Storage;
 
 class SectionController extends Controller
 {
+    public function sectionList()
+    {
+        $listCourse = ListCourse::all();
+        $classroom = Classroom::all();
+        $ajax     = route('section.dbtb');
+        return view('admin.sections.listCourse', compact('ajax', 'listCourse', 'classroom'));
+    }
+
+    public function dbTables(Request $Request)
+    {
+        $data     = Section::all();
+        return Datatables::of($data)
+        ->editColumn('created_at', function ($index) {
+            return $index->created_at->format('d M Y');
+        })
+        ->addColumn('file', function($index) {
+            $isi    = FileSection::where('section_id', $index->id)->get();
+            $count  = count($isi);
+            if ($count < 1) {
+                return "<span class='badge badge-warning'>Kosong</span>";
+            } else {
+                return "<span class='badge badge-primary'>".$count." File</span>";
+            }
+        })
+        ->addColumn('user_id', function ($index) {
+            return isset($index->course->user->name) ? $index->course->user->name : '-';
+        })
+        ->addColumn('action', function($index){
+            $tag     = Form::open(["url"=>route("section.destroy", $index->id), "method" => "DELETE"]);
+            $tag    .= "<div class='btn-group'>";
+            $tag    .= "<a href='".route('section.home', $index->id)."' class='btn btn-xs btn-primary' data-toggle='tooltip' data-placement='top' title='Lihat'><i class='fa fa-eye'></i></a>";
+            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' data-toggle='tooltip' data-placement='top' title='Hapus'><i class='fas fa-trash'></i></button>";
+            $tag    .= "</div>";
+            $tag    .= Form::close();
+            return $tag;
+        })
+        ->rawColumns([
+            'id', 'file', 'action'
+        ])
+        ->make(true);
+    }
+
     public function home($id)
     {
         $section = Section::find($id);
-        $fileSections = FileSection::where('section_id', $id)->get();
-        return view('admin.sections.index', compact('section', 'fileSections'));
+        $fileSections   = FileSection::where('section_id', $id)->get();
+        return view('admin.sections.index2', compact('section', 'fileSections'));
     }
 
-    public function index()
-    {
-
-    }
+    public function index() {}
 
     public function add($id)
     {
@@ -34,13 +75,15 @@ class SectionController extends Controller
 
     public function create()
     {
-
-        return view('admin.sections.create');
+        $course = Course::all();
+        $listCourse = ListCourse::all();
+        $classroom = Classroom::all();
+        return view('admin.sections.create2', compact('course', 'listCourse', 'classroom'));
     }
 
     public function store(Request $request)
     {
-        $filename       = $_FILES['file'];
+        $filename       = $_FILES['file'];        
 
         $count          = count($request->file('file'));
         $data = new Section;
@@ -66,19 +109,17 @@ class SectionController extends Controller
             $file->save();
         }
 
-        return redirect()->route('sectioncourse.sectionlist', [$request->course_id])->with('notif', 'Data Materi berhasil ditambahkan');
+        return redirect()->route('section.list')->with('notif', 'Data Materi berhasil ditambahkan');
     }
 
     public function show($id)
     {
-        //untuk menemukan data
+        // untuk menemukan data
         $files          = FileSection::find($id);
         $section        = Section::find($files->section_id);
         $course         = Course::find($section->course_id);
         $fileSections   = fileSection::where('section_id', $section->id)->get();
-        // dd($fileSections);
-
-        return view('admin.sections.index', compact('course', 'fileSections', 'files', 'section'));
+        return view('admin.sections.fileView', compact('course', 'fileSections', 'files', 'section'));
     }
 
     public function fileDownload($id)
@@ -100,7 +141,7 @@ class SectionController extends Controller
             'title'         => $request->title,
             'description'   => $request->description,
         ]);
-        // dd($request->description);
+        
         if ($request->sectionId) {
             return redirect()->route('section.home', $request->sectionId)->with('notif', 'Data Materi berhasil diubah');
         } else {
@@ -111,6 +152,7 @@ class SectionController extends Controller
     public function addFile(Request $request, $id)
     {
         $filename       = $_FILES['file'];
+
         $count          = count($request->file('file'));
 
         for ($i=0; $i < $count; $i++) {
@@ -128,7 +170,25 @@ class SectionController extends Controller
             $data->save();
         }
 
-        return redirect()->route('section.home', $id)->with('notif', 'Data File Materi berhasil ditambah');
+        if ($request->sectionId) {
+            return redirect()->route('section.home', $request->sectionId)->with('notif', 'Data File Materi berhasil ditambah');
+        } else {
+            return redirect()->route('section.show', $request->fileId)->with('notif', 'Data File Materi berhasil ditambah');
+        }
+    }
+
+    public function deleteFileHome($id)
+    {
+        $file       = FileSection::find($id);
+        $section    = Section::find($file->section_id);
+
+        //Deleting File
+        $data       = FileSection::findOrFail($id);
+        $data->delete();
+
+        $fileCheck  = FileSection::where('section_id', $section->id)->first();
+
+        return redirect()->route('section.home', [$section->id])->with('notif', 'Data File berhasil dihapus');
     }
 
     public function deleteFile($id)
@@ -155,6 +215,6 @@ class SectionController extends Controller
     {
         $data       = Section::findOrFail($id);
         $data->delete();
-        return redirect()->route('sectioncourse.sectionlist', $data->course_id)->with('notif', 'Data Materi berhasil dihapus');
+        return redirect()->route('section.list')->with('notif', 'Data Materi berhasil dihapus');
     }
 }

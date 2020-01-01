@@ -12,61 +12,26 @@ use Form;
 
 class SectionCourseController extends Controller
 {
-    public function courseList()
+
+    public function sectionList()
     {
-        $ajax     = route('sectioncourse.dbcourse');
+        $ajax     = route('section.dbtb');
         return view('admin.sections.listCourse', compact('ajax'));
     }
 
-    public function sectionList($id)
+    public function dbTables(Request $Request)
     {
-        $course = Course::find($id);
-        $ajax     = route('sectioncourse.dbsection', $id);
-        return view('admin.sections.listSection', compact('ajax', 'course'));
-    }
-
-    public function dbCourse(Request $request)
-    {
-        $data     = Course::all();
+        $data     = Section::all();
         return Datatables::of($data)
-        ->editColumn('user_id', function ($index) {
-            return isset($index->user->name) ? $index->user->name : '-';
-        })
-        ->addColumn('section', function($index) {
-            $isi    = Section::where('course_id', $index->id)->get();
-            $count  = count($isi);
-            if ($count < 1) {
-                return "<span class='label label-warning'>Kosong</span>";
-            } else {
-                return "<span class='label label-primary'>".$count." Materi</span>";
-            }
-        })
-        ->addColumn('action', function($index){
-            $tag = "<a href='".route('sectioncourse.sectionlist', $index->id)."' class='btn btn-xs btn-default'><i class='fa fa-folder'></i> Lihat Materi</a>";
-            return $tag;
-        })
-        ->rawColumns([
-            'id', 'section', 'action'
-        ])
-        ->make(true);
-    }
-
-    public function dbSection(Request $request, $id)
-    {
-        $data     = Section::where('course_id', $id)->get();
-        return Datatables::of($data)
-        ->editColumn('created_at', function ($index) {
-            return $index->created_at->format('d M Y').$index->created_at->format(' H:i')." WIB";
-        })
-        ->addColumn('file', function($index) {
-            $isi    = FileSection::where('section_id', $index->id)->get();
-            $count  = count($isi);
-            if ($count < 1) {
-                return "<span class='label label-warning'>Kosong</span>";
-            } else {
-                return "<span class='label label-primary'>".$count." File</span>";
-            }
-        })
+        // ->addColumn('file', function($index) {
+        //     $isi    = FileSection::where('section_id', $index->id)->get();
+        //     $count  = count($isi);
+        //     if ($count < 1) {
+        //         return "<span class='label label-warning'>Kosong</span>";
+        //     } else {
+        //         return "<span class='label label-primary'>".$count." File</span>";
+        //     }
+        // })
         ->addColumn('action', function($index){
             $tag     = Form::open(["url"=>route("section.destroy", $index->id), "method" => "DELETE"]);
             $tag    .= "<div class='btn-group'>";
@@ -77,7 +42,7 @@ class SectionCourseController extends Controller
             return $tag;
         })
         ->rawColumns([
-            'id', 'file', 'action'
+            'id', 'action'
         ])
         ->make(true);
     }

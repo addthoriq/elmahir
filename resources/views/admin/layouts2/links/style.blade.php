@@ -5,5 +5,3 @@
 <!-- Chartist -->
 <link rel="stylesheet" href="{{ asset('qlab/plugins/chartist/css/chartist.min.css') }}">
 <link rel="stylesheet" href="{{ asset('qlab/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css') }}">
-<!-- Custom Stylesheet -->
-<link href="{{ asset('qlab/css/style.css') }}" rel="stylesheet">
