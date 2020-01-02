@@ -1,89 +1,94 @@
-@extends('admin.layouts.app')
-
-@section('title', 'Tambah Data User')
-
-@section('style')
-    <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-@endsection
-
+@extends('admin.layouts2.app')
+@section('title', 'Tambah Mata Pelajaran')
 @section('content')
-    <div class="row wrapper white-bg page-heading">
-        <div class="col-lg-10">
-            <h2>Data Kelas</h2>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{{ route('home.index') }}">Beranda</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{{ route('classroom.index') }}">Data Kelas</a>
-                </li>
-                </li>
-                <li class="breadcrumb-item active">
-                    <strong>Tambah Kelas</strong>
-                </li>
-            </ol>
-        </div>
-    </div>
-
-    <div class="wrapper wrapper-content animated fadeInRight" id="app">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>Tambah Data Kelas</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h2>
-                            Data Kelas
-                        </h2>
-                        <p>
-                            Data Kelas ini merujuk pada Kelas-Kelas yang ada di sekolah
-                        </p>
-                        <form id="form" action="{{route('classroom.store')}}" class="wizard-big" method="post">
-                            @csrf
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <h3>Informasi Dasar</h3>
-                                    <div class="form-group">
-                                        <label>Nama Kelas *</label>
-                                        <input id="name" type="text" name="name" class="form-control ">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="teacher_id">Wali Kelas *</label>
-                                        <input id="teacher_id" type="text" name="teacher_id" class="form-control ">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="max_student">Jumlah Maksimal Siswa *</label>
-                                        <input id="max_student" type="number" name="max_student" class="form-control ">
-                                    </div>
-                                    <button class="btn btn-success mt-4 pull-right" type="submit"><i class="fa fa-save"></i> Simpan</button>
-                                    <a class="btn btn-default mt-4" href="{{route('classroom.index')}}"><i class="fa fa-arrow-left"></i> Kembali</a>
-                                    <button class="btn btn-danger mt-4" type="reset"><i class="fa fa-trash"></i> Buang</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+    <div class="content-body">
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('classroom.index')}}">Daftar Ruang Kelas</a></li>
+                    <li class="breadcrumb-item active"><a href="{{route('classroom.create')}}">Tambah Ruang Kelas</a></li>
+                </ol>
             </div>
         </div>
+        <div class="container-fluid">
+            <form action="{{route('classroom.store')}}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body" id="app">
+                                <div class="row">
+                                    <div class="col">
+                                        <h4 class="card-title">Tambah Ruang Kelas</h4>
+                                    </div>
+                                    <div class="col">
+                                        <button class="pull-right btn btn-sm btn-warning mb-2 text-white ml-1" type="button" @click="delKelas()"><i class="fa fa-minus"></i></button>
+                                        <button class="pull-right btn btn-sm btn-success mb-2 text-white" type="button" @click="addKelas()"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <div class="row"  v-for="n in classrooms" :key="index">
+                                    <div class="form-group col-md-12" id="app">
+                                        <label id="labelName" for="name">Nama Kelas</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                            </div>
+                                            <input required id="name" name="name[]" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label id="labelName" for="user_id">Nama Wali Kelas</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-user"></i></span>
+                                            </div>
+                                            <input required id="user_id" name="user_id[]" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label id="labelName" for="max_student">Jumlah maksimal Siswa</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-flag"></i></span>
+                                            </div>
+                                            <input required id="max_student" name="max_student[]" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <button class="btn btn-primary pull-right" type="submit">Tambah <i class="fa fa-send"></i></button>
+                                        <a href="{{route('list-course.index')}}" class="btn btn-light"><i class="fa fa-arrow-left"></i> Kembali</a>
+                                        <button class="btn btn-danger" type="reset"><i class="fas fa-trash"></i> Hapus</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 @endsection
-
 @section('script')
-    <!-- Jasny -->
-    <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
-    <!-- iCheck -->
-    <script src="{{asset('inspinia/js/plugins/iCheck/icheck.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
-        $(document).ready(function(){
-            $('.i-checks').iCheck({
-                radioClass: 'iradio_square-green',
-            });
-            $('.custom-file-input').on('change', function() {
-                let fileName = $(this).val().split('\\').pop();
-                $(this).next('.custom-file-label').addClass("selected").html(fileName);
-            });
-
-       });
+        new Vue({
+            el: '#app',
+            data: {
+                classrooms: 1,
+            },
+            methods:{
+                addKelas(){
+                    this.classrooms++;
+                },
+                delKelas(){
+                    if (this.classrooms > 1) {
+                        this.classrooms--;
+                    }
+                }
+            }
+        })
     </script>
 @endsection

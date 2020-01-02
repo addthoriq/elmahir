@@ -89,7 +89,7 @@ Route::put('/user/{id}/profile', 'Admin\UserController@updateProfile')->name('us
 Route::put('/user/{id}/avatar', 'Admin\UserController@updateAva')->name('user.ava');
 Route::put('/user/{id}/aktif', 'Admin\UserController@aktif')->name('user.aktif');
 Route::put('/user/{id}/unon', 'Admin\UserController@unon')->name('user.unon');
-Route::resource('/year', 'Admin\YearController')->except(['create']);
+Route::resource('/year', 'Admin\YearController')->except('create');
 
 
 Route::prefix('studentlog')->group(function () {
