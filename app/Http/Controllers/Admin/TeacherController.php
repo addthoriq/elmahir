@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
 use App\Model\User;
 use App\Model\Role;
 use App\Model\SchoolYear;
@@ -40,15 +39,15 @@ class TeacherController extends Controller
         })
         ->editColumn('gender',function($index){
             if ($index->gender == 'L') {
-                return "<span class='label label-primary'>Laki-Laki</span>";
+                return "<span class='badge badge-pill badge-primary'>Laki-Laki</span>";
             }else {
-                return "<span class='label label-success'>Perempuan</span>";
+                return "<span class='badge badge-pill badge-danger'>Perempuan</span>";
             }
         })
         ->addColumn('action', function($index){
             $tag     = Form::open(["url"=>route('teacher.nonaktif', $index->id), "method" => "PUT"]);
-            $tag    .= "<a href=". route('teacher.show', $index->id) ." class='btn btn-sm btn-info' ><i class='fa fa-search'></i> Detail</a> ";
-            $tag    .= "<button type='submit' class='btn btn-sm btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan ".$index->name." dari guru?`)' ><i class='fa fa-minus-square'></i> Nonaktifkan</button>";
+            $tag    .= "<a href=". route('teacher.show', $index->id) ." class='btn btn-xs btn-warning text-white' ><i class='fa fa-search'></i></a> ";
+            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan ".$index->name." dari guru?`)' ><i class='fa fa-minus-square'></i></button>";
             $tag    .= Form::close();
             return $tag;
         })
@@ -63,30 +62,23 @@ class TeacherController extends Controller
         return view('admin.teachers.create');
     }
 
-    public function store(TeacherRequest $request)
+    public function store(Request $request)
     {
-        dd($request->all());
-        $data               = new User;
-        $data->nip         = $request->nip;
-        $data->name         = $request->name;
-        $data->start_year   = $request->start_year;
-        $data->gender       = $request->gender;
-        $data->email        = $request->email;
-        $data->password     = bcrypt($request->password);
-        $ava                = $request->file('avatar');
+        $data                  = new User;
+        $data->role_id         = 4;
+        $data->nip             = $request->nip;
+        $data->name            = $request->name;
+        $data->start_year      = $request->start_year;
+        $data->gender          = $request->gender;
+        $data->email           = $request->email;
+        $data->password        = bcrypt($request->password);
+        $ava                   = $request->file('avatar');
         if ($ava) {
-            $ava_path       = $ava->store('ava_teacher', 'public');
-            $data->avatar   = $ava_path;
+            $ava_path          = $ava->store('ava_teacher', 'public');
+            $data->avatar      = $ava_path;
         }
-        $data->status       = 1;
+        $data->status          = 1;
         $data->save();
-        $mapel              = new Course;
-        $mapel->teacher_id  = $data->id;
-        $mapel->classroom_id = $request->classroom_id;
-        $mapel->school_year_id = $request->school_year_id;
-        $mapel->course_id   = $request->course_id;
-        $mapel->status = 1;
-        $mapel->save();
         return redirect($this->rdr)->with('notif', 'Data Guru berhasil ditambahkan');
     }
 
@@ -102,7 +94,7 @@ class TeacherController extends Controller
         return view($this->folder.'.show', compact('data', 'admin', 'op1', 'op2', 'histories', 'history', 'years'));
     }
 
-    public function update(TeacherRequest $request, $id)
+    public function update(Request $request, $id)
     {
         if (empty($request->password)) {
             User::find($id)->update([
@@ -121,9 +113,9 @@ class TeacherController extends Controller
     public function admin(Request $request, $id)
     {
         $data     = User::findOrFail($id);
-        $datu     = User::where('teacher_id', $id)->exists();
+        $datu     = User::where('user_id', $id)->exists();
         if ($data->id == $datu) {
-            User::where('teacher_id', $id)->update([
+            User::where('user_id', $id)->update([
                 'role_id'    => $request->role_id,
                 'email'      => $request->email,
                 'password'   => bcrypt($request->password)
@@ -132,7 +124,7 @@ class TeacherController extends Controller
         }else {
             $user     = new User;
             $user->role_id = 1;
-            $user->teacher_id = $data->id;
+            $user->user_id = $data->id;
             $user->name    = $data->name;
             $user->email   = $data->email;
             $ps       = $request->password;
@@ -150,9 +142,9 @@ class TeacherController extends Controller
     public function op(Request $request, $id)
     {
         $data     = User::findOrFail($id);
-        $datu     = User::where('teacher_id', $id)->exists();
+        $datu     = User::where('user_id', $id)->exists();
         if ($data->id == $datu) {
-            User::where('teacher_id', $id)->update([
+            User::where('user_id', $id)->update([
                 'role_id'    => $request->role_id,
                 'email'      => $request->email,
                 'password'   => bcrypt($request->password)
@@ -161,7 +153,7 @@ class TeacherController extends Controller
         }else {
             $user     = new User;
             $user->role_id = 2;
-            $user->teacher_id = $data->id;
+            $user->user_id = $data->id;
             $user->name    = $data->name;
             $user->email   = $data->email;
             $ps       = $request->password;
@@ -180,9 +172,9 @@ class TeacherController extends Controller
     public function ope(Request $request, $id)
     {
         $data     = User::findOrFail($id);
-        $datu     = User::where('teacher_id', $id)->exists();
+        $datu     = User::where('user_id', $id)->exists();
         if ($data->id == $datu) {
-            User::where('teacher_id', $id)->update([
+            User::where('user_id', $id)->update([
                 'role_id'    => $request->role_id,
                 'email'      => $request->email,
                 'password'   => bcrypt($request->password)
@@ -191,7 +183,7 @@ class TeacherController extends Controller
         }else {
             $user     = new User;
             $user->role_id = 3;
-            $user->teacher_id = $data->id;
+            $user->user_id = $data->id;
             $user->name    = $data->name;
             $user->email   = $data->email;
             $ps       = $request->password;
@@ -209,10 +201,10 @@ class TeacherController extends Controller
 
     public function nonRole($id)
     {
-        User::where('teacher_id',$id)->update([
+        User::where('user_id',$id)->update([
             'status'    => 0
         ]);
-        $data     = User::where('teacher_id', $id)->first();
+        $data     = User::where('user_id', $id)->first();
         return redirect()->route('teacher.show',[$id])->with('notif', $data->name.' berhasil dinonaktifkan dari User');
     }
 
@@ -225,7 +217,7 @@ class TeacherController extends Controller
             'start_year'    => $request->start_year,
             'status'    => $request->status,
         ]);
-        $ps     = ProfileUser::where('teacher_id', $id)->exists();
+        $ps     = ProfileUser::where('user_id', $id)->exists();
         if ($ps) {
             ProfileUser::findOrFail($id)->update([
                 'nik'      => $request->nik,
@@ -238,7 +230,7 @@ class TeacherController extends Controller
         }else {
             $std     = User::findOrFail($id);
             $prof     = new ProfileUser;
-            $prof->teacher_id = $std->id;
+            $prof->user_id = $std->id;
             $prof->nik = $request->nik;
             $prof->address = $request->address;
             $prof->religion = $request->religion;
@@ -268,7 +260,7 @@ class TeacherController extends Controller
 
     public function nonCourse(Request $request, $id)
     {
-        Course::where('teacher_id', $id)->update([
+        Course::where('user_id', $id)->update([
             'status'    => 0
         ]);
         return redirect()->route('teacher.show', [$id])->with('notif', 'Riwayat Mata Pelajaran berhasil di akhiri');
@@ -276,7 +268,7 @@ class TeacherController extends Controller
 
     public function onCourse(Request $request, $id)
     {
-        Course::where('teacher_id', $id)->update([
+        Course::where('user_id', $id)->update([
             'status'    => 1
         ]);
         return redirect()->route('teacher.show', [$id])->with('notif', 'Riwayat Mata Pelajaran berhasil di aktifkan');
@@ -287,11 +279,11 @@ class TeacherController extends Controller
         User::findOrFail($id)->update([
             'status'    => 0,
         ]);
-        $user = User::where('teacher_id',$id)->exists();
+        $user = User::where('user_id',$id)->exists();
         if ($user) {
-            User::where('teacher_id', $id)->delete();
+            User::where('user_id', $id)->delete();
         }
-        Course::where('teacher_id', $id)->update([
+        Course::where('user_id', $id)->update([
             'status'    => 0
         ]);
         $data = User::findOrFail($id);

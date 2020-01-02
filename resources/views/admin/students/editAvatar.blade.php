@@ -4,8 +4,8 @@
         <div class="modal-content">
             <div class="modal-body">
 
-                <h3 class="m-t-none m-b">Ubah profil User</h3>
-                <p>Mengubah Poto Profil User</p>
+                <h3 class="m-t-none m-b">Ubah profil Siswa</h3>
+                <p>Mengubah Poto Profil {{$data->name}}</p>
 
                 <div class="text-center">
                     <div class="m-b-sm">

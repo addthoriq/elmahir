@@ -24,13 +24,13 @@ class YearController extends Controller
         $data = SchoolYear::all();
         return Datatables::of($data)
         ->editColumn('status', function($index){
-            return ($index->status)?'<span class="label label-primary">Saat ini</span>':'<span class="label label-danger">Telah berakhir</span>';
+            return ($index->status)?'<span class="badge badge-pill badge-success text-white">Saat ini</span>':'<span class="badge badge-pill badge-danger">Telah berakhir</span>';
         })
         ->addColumn('action', function($index){
             $tag     = Form::open(["url"=>route('year.update', $index->id), "method" => "PUT"]);
-            $tag    .= "<a href=". route('year.show', $index->id) ." class='btn btn-xs btn-info' ><i class='fa fa-search'></i> Detail</a> ";
+            $tag    .= "<a href=". route('year.show', $index->id) ." class='btn btn-xs btn-warning text-white' ><i class='fa fa-search'></i></a> ";
             if ($index->status) {
-                        $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin mengakhiri Tahun Ajaran ini?`)' ><i class='fa fa-minus-square'></i> Akhiri TA</button>";
+                $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin mengakhiri Tahun Ajaran ini?`)' ><i class='fa fa-minus-square'></i></button>";
             }
             $tag    .= Form::close();
             return $tag;

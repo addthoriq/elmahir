@@ -31,8 +31,8 @@ class ClassroomController extends Controller
         })
         ->addColumn('action', function($index){
             $tag     = Form::open(["url"=>route('classroom.destroy', $index->id), "method" => "DELETE"]);
-            $tag    .= "<a href=". route('classroom.show', $index->id) ." class='btn btn-xs btn-info' ><i class='fa fa-search'></i> Detail</a> ";
-            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)' ><i class='fa fa-trash'></i> Hapus</button>";
+            $tag    .= "<a href=". route('classroom.show', $index->id) ." class='btn btn-xs btn-warning text-white' ><i class='fa fa-search'></i></a> ";
+            $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)' ><i class='fas fa-trash'></i></button>";
             $tag    .= Form::close();
             return $tag;
         })
@@ -49,12 +49,15 @@ class ClassroomController extends Controller
 
     public function store(Request $request)
     {
-        $data     = new Classroom;
-        $data->teacher_id     = $request->teacher_id;
-        $data->name           = $request->name;
-        $data->max_student  = $request->max_student;
-        $data->save();
-        return redirect($this->rdr)->with('notif', 'Kelas berhasil ditambahkan');
+        $count     = count($request->name);
+        for ($i=0; $i < $count; $i++) {
+            $data                 = new Classroom;
+            $data->user_id        = $request->user_id[$i];
+            $data->name           = $request->name[$i];
+            $data->max_student    = $request->max_student[$i];
+            $data->save();
+        }
+        return redirect($this->rdr)->with('notif', 'Ruang Kelas berhasil ditambahkan');
     }
 
     public function show($id)
@@ -84,13 +87,13 @@ class ClassroomController extends Controller
             'name'              => $request->name,
             'max_student'     => $request->max_student,
         ]);
-        return redirect()->route('classroom.show', [$id])->with('notif', 'Data Kelas berhasil diubah');
+        return redirect()->route('classroom.show', [$id])->with('notif', 'Ruang Kelas berhasil diubah');
     }
 
     public function destroy($id)
     {
         $data     = Classroom::findOrFail($id);
         $data->delete();
-        return redirect($this->rdr)->with('notif', 'Kelas berhasil dihapus');
+        return redirect($this->rdr)->with('notif', 'Ruang Kelas berhasil dihapus');
     }
 }

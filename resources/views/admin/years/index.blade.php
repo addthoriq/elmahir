@@ -1,76 +1,61 @@
-@extends('admin.layouts.app')
-
-@section('title', 'Data Kelas')
-
+@extends('admin.layouts2.app')
+@section('title', 'Daftar Mata Pelajaran')
 @section('style')
-    <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
+    <link href="{{asset('qlab/plugins/tables/css/datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 @endsection
-
 @section('content')
-<div class="row wrapper white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Data Tahun Ajar</h2>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="{{ route('home.index') }}">Beranda</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="{{ route('classroom.index') }}">Manajemen Kelas</a>
-            </li>
-            <li class="breadcrumb-item active">
-                <strong>Manajemen Tahun Ajar</strong>
-            </li>
-        </ol>
-    </div>
-</div>
-
-<div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-lg-12">
-        <div class="ibox ">
-            <div class="ibox-title">
-                <h5>Daftar Tahun Ajar</h5>
+    <div class="content-body">
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
+                    <li class="breadcrumb-item active"><a href="{{route('year.index')}}">Daftar Tahun Ajaran</a></li>
+                </ol>
             </div>
-            <div class="ibox-content">
-                <div class="mb-3 mt-0">
-                    <a data-toggle="modal" class="btn btn-sm btn-success" href="#store"><i class="fa fa-plus-circle"></i> Tambah</a>
-                    <a href="#" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Export</a>
-                    <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</a>
-                </div>
-                @include('admin.years.create')
-                @if (session('status'))
-                    <div class="alert alert-success alert-dismissable">
-                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                        {{session('status')}}
+        </div>
+        <!-- row -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Daftar Mata Pelajaran</h4>
+                            @include('admin.years.create')
+                            <a data-toggle="modal"  href="#store" class="btn mb-4 btn-rounded btn-primary btn-sm"><i class="fa fa-plus"></i> Tambah</a>
+                            <a href="#" class="btn mb-4 btn-rounded btn-success btn-sm text-white"><i class="fas fa-download"></i> Ekspor</a>
+                            <a href="#" class="btn mb-4 btn-rounded btn-info btn-sm pull-right"><i class="fa fa-print"></i> Cetak</a>
+                            @if (session('notif'))
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+                                    {{session('notif')}}
+                                </div>
+                            @endif
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">No</th>
+                                            <th>Semester 1</th>
+                                            <th>Semester 2</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                @endif
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover dataTables-example" style="border-spacing:0px;">
-                        <thead>
-                            <tr>
-                                <th style="width: 20px;">No</th>
-                                <th>Semester 1</th>
-                                <th>Semester 2</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-</div>
 @endsection
 @section('script')
-    <!-- Jasny -->
-    <script src="{{asset('inspinia/js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
-    <!-- iCheck -->
-    <script src="{{asset('inspinia/js/plugins/iCheck/icheck.min.js')}}"></script>
+    <script src="{{asset('qlab/plugins/tables/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('qlab/plugins/tables/js/datatable/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('qlab/plugins/tables/js/datatable-init/datatable-basic.min.js')}}"></script>
     <script>
         $(document).ready(function(){
             var table;

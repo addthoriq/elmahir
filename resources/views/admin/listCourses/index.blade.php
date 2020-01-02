@@ -1,5 +1,5 @@
 @extends('admin.layouts2.app')
-@section('title', 'Daftar User')
+@section('title', 'Daftar Mata Pelajaran')
 @section('style')
     <link href="{{asset('qlab/plugins/tables/css/datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 @endsection
@@ -9,19 +9,18 @@
             <div class="col p-md-0">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
-                    <li class="breadcrumb-item active"><a href="{{route('user.index')}}">Daftar User</a></li>
+                    <li class="breadcrumb-item active"><a href="{{route('list-course.index')}}">Daftar Mata Pelajaran</a></li>
                 </ol>
             </div>
         </div>
         <!-- row -->
-
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Daftar User</h4>
-                            <a href="{{route('user.create')}}" class="btn mb-4 btn-rounded btn-primary btn-sm"><i class="fa fa-plus"></i> Tambah</a>
+                            <h4 class="card-title">Daftar Mata Pelajaran</h4>
+                            <a href="{{route('list-course.create')}}" class="btn mb-4 btn-rounded btn-primary btn-sm"><i class="fa fa-plus"></i> Tambah</a>
                             <a href="#" class="btn mb-4 btn-rounded btn-success btn-sm text-white"><i class="fas fa-download"></i> Ekspor</a>
                             <a href="#" class="btn mb-4 btn-rounded btn-info btn-sm pull-right"><i class="fa fa-print"></i> Cetak</a>
                             @if (session('notif'))
@@ -35,10 +34,8 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">No</th>
-                                            <th>Avatar</th>
-                                            <th>NIP</th>
-                                            <th>Nama</th>
-                                            <th>Status</th>
+                                            <th>Nama Mapel</th>
+                                            <th>Slug</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -67,10 +64,8 @@
                 order: [[0,'asc']],
                 columns: [
                     { data: 'id', searchable: true, orderable: true},
-                    { data: 'role_id', searchable: true, orderable: true},
                     { data: 'name', searchable: true, orderable: true},
-                    { data: 'email', searchable: true, orderable: true},
-                    { data: 'status', searchable: true, orderable: false},
+                    { data: 'slug', searchable: true, orderable: true},
                     { data: 'action', searchable: false, orderable: false}
                 ],
                 columnDefs: [{

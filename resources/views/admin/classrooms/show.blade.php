@@ -1,124 +1,97 @@
-@extends('admin.layouts.app')
-
-@section('title', 'Tambah Data User')
-
+@extends('admin.layouts2.app')
+@section('title', 'Detail Ruang Kelas')
 @section('style')
-    <link href="{{asset('inspinia/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{asset('inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
-    <link href="{{ asset('inspinia/css/plugins/chartist/chartist.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('inspinia/css/plugins/iCheck/custom.css') }}" rel="stylesheet">
+    <link href="{{asset('qlab/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet">
+    <link href="{{asset('jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
+    <style media="screen">
+        .fileinput-preview.fileinput-exists.img-thumbnail img{
+            max-width: 100%;
+        }
+    </style>
 @endsection
-
 @section('content')
-    <div class="row wrapper white-bg page-heading">
-        <div class="col-lg-10">
-            <h2>Data Manajemen Kelas</h2>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{{ route('home.index') }}">Beranda</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{{ route('classroom.index') }}">Manajemen Kelas</a>
-                </li>
-                <li class="breadcrumb-item active">
-                    <strong>Detail Kelas</strong>
-                </li>
-            </ol>
+    <div class="content-body">
+        <div class="row page-titles mx-0">
+            <div class="col pd-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('classroom.index')}}">Daftar Ruang Kelas</a></li>
+                    <li class="breadcrumb-item active"><a href="">Detail Ruang Kelas</a></li>
+                </ol>
+            </div>
         </div>
-    </div>
-
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-title">
-                        <h5>Profil Data Kelas</h5>
-                        <div class="ibox-tools">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li>
-                                    <a data-toggle="modal" class="dropdown-item" href="#edit">Ubah Profil Kelas</a>
-                                </li>
-                            </ul>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        {{-- Modal disini --}}
                         @include('admin.classrooms.edit')
-                    </div>
-
-                    <div class="ibox-content">
-                        @if (session('notif'))
-                            <div class="alert alert-success alert-dismissable">
-                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                {{session('notif')}}
+                        <div class="card-body">
+                            <a data-toggle="modal" class="btn btn-primary btn-sm mb-3" href="#edit"><i class="fa fa-wrench"></i> Ubah Profil Kelas</a>
+                            @if (session('notif'))
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+                                    {{session('notif')}}
+                                </div>
+                            @endif
+                            <div class="card-title">
+                                <h5>Informasi Kelas {{$data->name}}</h5>
                             </div>
-                        @endif
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <th>Nama Kelas</th>
-                                    <td>{{$data->name}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Wali Kelas</th>
-                                    <td>{{$data->user->name}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Kapasitas Maksimal Siswa</th>
-                                    <td>{{$data->max_student}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Jumlah Siswa</th>
-                                    <td>{{$stds->count()}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Anggota Kelas </th>
-                                    <td>
-                                        <ul>
-                                            @if ($stds)
-                                                @foreach ($stds as $std)
-                                                    <li>{{$std->student->name}}</li>
-                                                @endforeach
-                                            @else
-                                                <i>Belum ada siswa disini</i>
-                                            @endif
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Persentase</th>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="statistic-box mt-0">
+                            <div class="table-responsive">
+                                <table class="table header-border">
+                                    <tbody>
+                                        <tr>
+                                            <th>Nama Kelas</th>
+                                            <td>{{$data->name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Wali Kelas</th>
+                                            <td>{{$data->user->name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Kapasitas Maksimal Siswa</th>
+                                            <td>{{$data->max_student}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Jumlah Siswa</th>
+                                            <td>{{$stds->count()}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Anggota Kelas </th>
+                                            <td>
+                                                <ul>
+                                                    @if ($stds)
+                                                        @foreach ($stds as $std)
+                                                            <li>{{$std->student->name}}</li>
+                                                        @endforeach
+                                                    @else
+                                                        <i>Belum ada siswa disini</i>
+                                                    @endif
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Persentase</th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             <canvas id="siswa" height="50"></canvas>
-                            <div class="m-t">
-                                <small>Data diambil dari data manajemen kesiswaan.</small>
-                            </div>
+                            <form action="{{route('classroom.destroy',$data->id)}}" method="post">
+                                @csrf
+                                @method('PUT')
+                                <a href="{{route('classroom.index')}}" class="btn btn-sm btn-light"><i class="fa fa-chevron-left"></i> Kembali</a>
+                                <button type="submit" class="btn btn-sm btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus kelas {{$data->name}}?`)'><i class="fas fa-trash"></i> Hapus</button>
+                            </form>
                         </div>
-                        <form action="{{route('classroom.destroy',$data->id)}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <a href="{{route('classroom.index')}}" class="btn btn-success"><i class="fa fa-chevron-left"></i> Kembali</a>
-                            <button type="submit" class="btn btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin menghapus data ini?`)'><i class="fa fa-trash"></i> Hapus</button>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-
 @section('script')
-    <!-- iCheck -->
-    <script src="{{ asset('inspinia/js/plugins/iCheck/icheck.min.js') }}"></script>
-    <!-- ChartJS-->
-    <script src="{{asset('inspinia/js/plugins/chartJs/Chart.min.js')}}"></script>
+    <script src="{{asset('qlab/js/plugins-init/chartjs-init.js')}}"></script>
     <script>
     var murid     = "{{route('classroom.chartMurid',$data->id)}}";
     $.get(murid, function(response){

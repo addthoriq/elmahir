@@ -15,7 +15,7 @@
                     </div>
                     <div class="form-group">
                         <label>Wali Kelas</label>
-                        <input type="text" value="{{$data->teacher_id}}" name="teacher_id" class="form-control">
+                        <input type="text" value="{{$data->user->name}}" name="user_id" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Kapasitas Kelas</label>

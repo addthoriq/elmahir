@@ -34,7 +34,7 @@
                                 <span class="btn btn-outline-secondary btn-file">
                                     <span class="fileinput-new">Pilih Gambar</span>
                                     <span class="fileinput-exists">Ubah</span>
-                                    <input type="file" name="avatar">
+                                    <input type="file" accept="image/*" name="avatar">
                                 </span>
                                 <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Hapus</a>
                               </div>

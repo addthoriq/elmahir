@@ -4,9 +4,9 @@
         <div class="modal-content">
             <div class="modal-body">
 
-                <h3 class="m-t-none m-b">Ubah profil Pengajar</h3>
-                <p>Mengubah data Informasi profil {{$data->name}}</p>
-                <form method="POST" action="{{route('teacher.profile',$data->id)}}" class="edit">
+                <h3 class="m-t-none m-b">Ubah profil User</h3>
+                <p>Mengubah Informasi pribadi {{$data->name}}</p>
+                <form method="POST" action="{{route('user.profile',$data->id)}}" class="edit">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -79,7 +79,6 @@
                                 <div class="i-checks col-sm-6">
                                     <label>
                                         <input type="radio" value="L" name="gender" {{($data->gender == 'L')?'checked':''}} >
-                                        <i></i>
                                         Laki-Laki
                                     </label>
                                 </div>
@@ -130,13 +129,12 @@
                                 <div class="i-checks col-sm-6">
                                     <label>
                                         <input type="radio" value="1" name="status" {{($data->status)?'checked':''}} >
-                                        Pengajar Aktif
+                                        Aktif
                                     </label>
                                 </div>
                                 <div class="i-checks col-sm-6">
                                     <label>
                                         <input type="radio" value="0" name="status" {{($data->status)?'':'checked'}} >
-                                        <i></i>
                                         Berhenti
                                     </label>
                                 </div>
