@@ -1,17 +1,17 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Materi')
+@section('title', 'Data Mapel')
 
 @section('content')
-<div class="row wrapper white-bg page-heading" id="modal-pop">
+<div class="row wrapper white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Daftar Materi - {{ $course->list_course }}</h2>
+        <h2>Data Mata Pelajaran</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="{{ route('home.index') }}">Beranda</a>
             </li>
             <li class="breadcrumb-item active">
-                <strong>Data Materi</strong>
+                <strong>Data Mata Pelajaran</strong>
             </li>
         </ol>
     </div>
@@ -25,26 +25,31 @@
         <div class="col-lg-12">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>Daftar Materi</h5>
+                <h5>Daftar Mata Pelajaran</h5>
             </div>
             <div class="ibox-content">
-            <div class="mb-3 mt-0">
-                <a href="{{route('section.add', $course->id)}}" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
+                <div class="mb-3 mt-0">
+                <a href="{{ route('course.create') }}" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Tambah</a>
+                <a href="" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Import</a>
+                <a href="" class="btn btn-sm btn-primary"><i class="fa fa-file-zip-o"></i> Import</a>
+                <a href="{{ route('course-detail.index') }}" class="btn btn-sm btn-info"><i class="fa fa-home"> Detail</i></a>
+                <a href="{{ route('course.nonactived') }}" class="btn btn-sm btn-dark pull-right"><i class="fa fa-window-close"></i> Data Nonaktif</a>
             </div>
-            @if (session('status'))
+            @if (session('notif'))
                 <div class="alert alert-success alert-dismissable">
                     <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                    {{session('status')}}
+                    {{session('notif')}}
                 </div>
             @endif
             <div class="table-responsive">
-                <table class="table table-striped table-hover dataTables-course" style="border-spacing:0px;">
+                <table class="table table-striped table-hover dataTables-example" style="border-spacing:0px;">
                     <thead>
                         <tr>
                             <th style="width: 20px;">#</th>
-                            <th>Judul Materi</th>
-                            <th>Konten</th>
-                            <th>Post at</th>
+                            <th>Kelas</th>
+                            <th>Mata Pelajaran</th>
+                            <th>Pengajar</th>
+                            <th>Asisten</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -63,17 +68,18 @@
     <script type="text/javascript">
         var table;
         $(function() {
-            table = $('.dataTables-course').DataTable({
+            table = $('.dataTables-example').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: '{{$ajax}}',
                 order: [[0,'asc']],
                 columns: [
                     { data: 'id', searchable: true, orderable: true},
-                    { data: 'title', searchable: true, orderable: true},
-                    { data: 'file', searchable: true, orderable: true},
-                    { data: 'created_at', searchable: true, orderable: true},
-                    { data: 'action', searchable: true, orderable: true}
+                    { data: 'classroom', searchable: true, orderable: true},
+                    { data: 'list_course', searchable: true, orderable: true},
+                    { data: 'user_id', searchable: true, orderable: true},
+                    { data: 'assistant', searchable: true, orderable: false},
+                    { data: 'action', searchable: false, orderable: false}
                 ],
                 columnDefs: [{
                   "targets": 0,

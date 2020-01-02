@@ -1,48 +1,51 @@
-<div class="modal inmodal fade" id="fileModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-            <div class="modal-header py-2">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <div class="d-flex justify-content-start pl-2 align-items-start flex-column">
-                    <h4 class="modal-title text-align-left">Tambah File Materi</h4>
-                    <h5>{{ $section->title }}</h5>
+<div class="modal fade" id="fileModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tambah File Materi</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <form id="file" action="{{route('section.addFile', $section->id)}}" class="wizard-big" method="POST" enctype="multipart/form-data">
+                @csrf
+                @if (Request::is('section/*/home'))
+                    <input type="hidden" name="sectionId" value="{{ $section->id }}">
+                @else
+                    <input type="hidden" name="fileId" value="{{ $files->id }}">
+                @endif
+            <div class="modal-body" id="app">
+                <div class="row" v-for="n in file" :key="index">
+                    <div class="col-md-10">
+                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                          <div class="form-control" data-trigger="fileinput">
+                            <span class="fileinput-filename"></span>
+                          </div>
+                          <span class="input-group-append">
+                            <span class="input-group-text fileinput-exists" data-dismiss="fileinput">
+                              Remove
+                            </span>
+
+                            <span class="input-group-text btn-file">
+                              <span class="fileinput-new">Select file</span>
+                              <span class="fileinput-exists">Change</span>
+                              <input type="file" name="file[]" multiple>
+                            </span>
+                          </span>
+                        </div>    
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" @click="delfile()" class="btn btn-danger btn-sm">Hapus</button>
+                    </div>
                 </div>
+                
+                
+                <button type="button" @click="addfile()" class="btn btn-primary btn-sm">Tambah</button>
             </div>
-            <div class="modal-body">
-                <form id="form" action="{{route('section.addFile', $section->id)}}" class="wizard-big" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="row boxs">
-                        <div class="col-md-12">
-                            <h3>Multiple File Upload</h3>
-                            <p>Meng-upload beberapa files sekaligus.</p>
-                            <label for="email">File  *</label>
-                            <div class="erase">
-                                <div class="row bg-muted p-2">
-                                    <div class="col-md-10">
-                                        <div class="fileinput fileinput-new m-0" data-provides="fileinput">
-                                            <span class="btn btn-default btn-file"><span class="fileinput-new">Pilih File...</span>
-                                            <span class="fileinput-exists">Ubah</span><input type="file" name="file[]"/></span>
-                                            <span class="fileinput-filename"></span>
-                                            <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
-                                        </div> 
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="my-3">
-                                <button type="button" class="btn btn-success btn-sm" id="add">
-                                    <i class="fa fa-plus"></i> Tambah
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                    </div>
-                </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
+            </form>
         </div>
     </div>
 </div>

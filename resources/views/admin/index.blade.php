@@ -3,6 +3,7 @@
 @section('title', 'Beranda')
 
 @section('content')
+
 <div class="content-body">
 
     <div class="container-fluid mt-3">
@@ -51,6 +52,7 @@
                         <span class="float-right display-5 opacity-5"><i class="fas fa-chalkboard-teacher"></i></span>
                     </div>
                 </div>
+              </div>
             </div>
             <div class="col-lg-3 col-sm-6">
                 <div class="card gradient-4">
@@ -81,6 +83,10 @@
                         <canvas id="guru" width="500" height="250"></canvas>
                     </div>
                 </div>
+                <div class="card-body">
+                  <canvas id="teacherChart"></canvas>
+                </div>
+              </div>
             </div>
         </div>
     </div>

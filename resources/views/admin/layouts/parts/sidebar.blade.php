@@ -98,9 +98,9 @@
             <li class="text-secondary py-2 px-3" style="background-color: #2F4050">
                 <span class="nav-label">Kompetensi Siswa</span>
             </li>
-            <li class="{{ Request::is('sectioncourse') || Request::is('sectioncourse/*') || Request::is('section/*') ? 'active' : '' }}">
+            {{-- <li class="{{ Request::is('sectioncourse') || Request::is('sectioncourse/*') || Request::is('section/*') ? 'active' : '' }}">
                 <a href="{{ route('sectioncourse.courselist') }}"><i class="fa fa-book"></i> <span class="nav-label">Materi</span></a>
-            </li>
+            </li> --}}
             <li class="{{ Request::is('task') || Request::is('task/*') || Request::is('answertask/*') ? 'active' : '' }}">
                 <a href="{{ route('task.index') }}"><i class="fa fa-tasks"></i> <span class="nav-label">Tugas</span></a>
             </li>

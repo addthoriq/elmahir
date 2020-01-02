@@ -20,9 +20,9 @@ class CreateTasksTable extends Migration
             $table->text('description');
             $table->date('start_periode');
             $table->date('end_periode');
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
-            $table->integer('deleted_by')->nullable();
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');

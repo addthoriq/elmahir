@@ -58,7 +58,6 @@
             $(".text-muted").remove();
             $("#konfirPass").removeClass('text-danger').text('Konfirmasi Password');
             $("#textCPassword").removeClass('text-danger').text("");
-            document.getElementById("tombol").disabled = false;
           }
         })
         $("#nip").bind("keypress", function(e){

@@ -34,8 +34,7 @@ class CourseController extends Controller
         $data     = Course::where('status',1)->get();
         return Datatables::of($data)
         ->editColumn('user_id', function ($index) {
-            return isset($index->user->name) ? $index->user->name : '-';
-        })
+            return isset($index->user->name) ? $index->user->name : '-';        })
         ->addColumn('action', function($index){
             $tag     = Form::open(["url"=>route('course.deactived', $index->id), "method" => "PUT"]);
             $tag    .= "<button type='submit' class='btn btn-xs btn-danger' onclick='javascript:return confirm(`Apakah anda yakin ingin mengakhiri Mata Pelajaran ".$index->list_course." ?`)' ><i class='fa fa-minus-square'></i> Akhiri</button>";

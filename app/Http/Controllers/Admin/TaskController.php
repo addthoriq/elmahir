@@ -39,7 +39,7 @@ class TaskController extends Controller
 
             $view   = "<b>".$title."</b><br>";
             $view   .= "<small>";
-            $view   .= "<b>Pembuat</b> : Suryo Widiyanto, ".$index->created_at->format('d M Y H:i');
+            $view   .= "<b>Pembuat</b> : ".$index->created_by .", ".$index->created_at->format('d M Y H:i');
             $view   .= "</small>";
             return $view;
         })
@@ -91,8 +91,7 @@ class TaskController extends Controller
         $data->description      = $request->description;
         $data->start_periode    = $request->start_periode;
         $data->end_periode      = $request->end_periode;
-        $data->created_by       = 1;
-        $data->created_by       = $request->created_by;
+        $data->created_by       = 'Bambangggg';
         $data->save();
 
         $task    = Task::orderBy('id', 'DESC')->first();
@@ -136,6 +135,7 @@ class TaskController extends Controller
             'description'       => $request->description,
             'start_periode'     => $request->start_periode,
             'end_periode'       => $request->end_periode,
+            'updated_by'        => 'Badung',
         ]);
         return redirect()->route('task.show', $id)->with('notif', 'Data Tugas berhasil diubah');
     }

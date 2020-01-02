@@ -27,8 +27,7 @@ Route::get('/list-course/dbtb', 'Admin\ListCourseController@dbTables')->name('li
 Route::get('/alumni/dbtb', 'Admin\AlumnusController@dbTables')->name('alumni.dbtb');
 Route::get('/task/dbtb', 'Admin\TaskController@dbTables')->name('task.dbtb');
 Route::get('/teacher-deactived/dbtb', 'Admin\UnonController@dbTables')->name('unon.dbtb');
-Route::get('/sectioncourse/dbcourse', 'Admin\SectionCourseController@dbCourse')->name('sectioncourse.dbcourse');
-Route::get('/sectioncourse/{id}/dbsection', 'Admin\SectionCourseController@dbSection')->name('sectioncourse.dbsection');
+Route::get('/section/dbtb', 'Admin\SectionController@dbTables')->name('section.dbtb');
 Route::get('/answertask/{id}/dbtb', 'Admin\AnswerTaskController@dbTables')->name('answertask.dbtb');
 //Json
 Route::get('/home/chartMurid', 'Admin\HomeController@chartMurid')->name('home.chartMurid');
@@ -38,7 +37,7 @@ Route::get('/course/teacher', 'Admin\CourseController@user')->name('course.teach
 //Default
 Route::resource('/home', 'Admin\HomeController');
 Route::resource('/teacher', 'Admin\TeacherController')->except(['destroy']);
-Route::put('/teacher/{id}/profile', 'Admin\TeacherController@updateProfile')->name('teacher.profile');
+Route::put('/teacher-profile/{id}', 'Admin\TeacherController@updateProfile')->name('teacher.profile');
 Route::put('/teacher/{id}/avatar', 'Admin\TeacherController@updateAva')->name('teacher.ava');
 Route::put('/teacher/{id}/nonaktif', 'Admin\TeacherController@nonaktif')->name('teacher.nonaktif');
 Route::put('/teacher/{id}/admin', 'Admin\TeacherController@admin')->name('teacher.admin');
@@ -57,6 +56,7 @@ Route::resource('/list-course', 'Admin\ListCourseController');
 Route::get('/course-nonactived', 'Admin\CourseController@nonActived')->name('course.nonactived');
 Route::put('/course/{id}', 'Admin\CourseController@deActived')->name('course.deactived');
 Route::resource('/course', 'Admin\CourseController')->except(['destroy', 'edit', 'update']);
+
 Route::resource('/student', 'Admin\StudentController')->except(['destroy']);
 Route::put('/student/{id}/profile', 'Admin\StudentController@updateProfile')->name('student.profile');
 Route::put('/student/{id}/avatar', 'Admin\StudentController@updateAva')->name('student.ava');
@@ -66,24 +66,28 @@ Route::get('/alumni', 'Admin\AlumnusController@index')->name('alumni.index');
 Route::get('/alumni/{id}', 'Admin\AlumnusController@show')->name('alumni.show');
 Route::put('/alumni/{id}/profile', 'Admin\AlumnusController@updateProfile')->name('alumni.profile');
 Route::resource('/classroom', 'Admin\ClassroomController');
-Route::resource('/section', 'Admin\SectionController');
 Route::resource('/task', 'Admin\TaskController');
 Route::resource('/answertask', 'Admin\AnswerTaskController');
-Route::get('/sectioncourse/courselist', 'Admin\SectionCourseController@courseList')->name('sectioncourse.courselist');
-Route::get('/sectioncourse/{id}/sectionlist', 'Admin\SectionCourseController@sectionList')->name('sectioncourse.sectionlist');
+
+Route::get('/section/list', 'Admin\SectionController@sectionList')->name('section.list');
 Route::get('/section/{id}/add', 'Admin\SectionController@add')->name('section.add');
 Route::get('/section/{id}/home', 'Admin\SectionController@home')->name('section.home');
 Route::put('section/{id}/updateFile', 'Admin\SectionController@updateFile')->name('section.updateFile');
-Route::delete('section/{id}/deleteFile', 'Admin\SectionController@deleteFile')->name('section.deleteFile');
+Route::get('section/{id}/deleteFileHome', 'Admin\SectionController@deleteFileHome')->name('section.deleteFileHome');
+Route::get('section/{id}/deleteFile', 'Admin\SectionController@deleteFile')->name('section.deleteFile');
 Route::post('section/{id}/addFile', 'Admin\SectionController@addFile')->name('section.addFile');
 Route::get('/section/{id}/file', 'Admin\SectionController@file')->name('section.file');
 Route::get('/section/{id}/fileDownload', 'Admin\SectionController@fileDownload')->name('section.fileDownload');
+Route::resource('/section', 'Admin\SectionController');
+
 Route::patch('/task/{id}', 'Admin\TaskController@restore')->name('task.restore');
 Route::get('/task/{id}/fileDownload', 'Admin\TaskController@fileDownload')->name('task.fileDownload');
 Route::post('/task/{id}/addFile', 'Admin\TaskController@addFile')->name('task.addFile');
+
 Route::get('/answertask/{id}/home', 'Admin\AnswerTaskController@home')->name('answertask.home');
 Route::post('/answertask/{id}/storeScore', 'Admin\AnswerTaskController@storeScore')->name('answertask.storeScore');
 Route::put('/answertask/{id}/updateScore', 'Admin\AnswerTaskController@updateScore')->name('answertask.updateScore');
+
 Route::resource('/user', 'Admin\UserController');
 Route::put('/user/{id}/profile', 'Admin\UserController@updateProfile')->name('user.profile');
 Route::put('/user/{id}/avatar', 'Admin\UserController@updateAva')->name('user.ava');

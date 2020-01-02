@@ -1,6 +1,6 @@
 {{-- Modal --}}
-<div id="editProfile" class="modal fade" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<div id="editProfile" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-body">
 
@@ -31,7 +31,7 @@
                                     <i id="noticeNip"></i>
                                 </div>
                             @endempty
-                            @isset($data->profileTeacher->nik)
+                            @isset($data->profileUser->nik)
                                 <div class="form-group">
                                     <label id="labelNik" for="nik">Nomor Induk Kependudukan (NIK)</label>
                                     <div class="input-group mb-3">
@@ -41,7 +41,7 @@
                                     <i id="noticeNik"></i>
                                 </div>
                             @endisset
-                            @empty ($data->profileTeacher->nik)
+                        @empty ($data->profileUser->nik)
                                 <div class="form-group">
                                     <label id="labelNip" for="nik">Nomor Induk Kependudukan (NIK)</label>
                                     <div class="input-group mb-3">
@@ -100,7 +100,7 @@
                             <div class="form-group">
                                 <label id="labelReligion">Agama </label>
                                 <select id="religion" class="form-control m-b" name="religion">
-                                    <option selected value="{{isset($data->profileTeacher->religion)?$data->profileTeacher->religion:''}}">-- {{isset($data->profileTeacher->religion)?$data->profileTeacher->religion:'Pilih Agama'}} --</option>
+                                    <option selected value="{{isset($data->profileUser->religion)?$data->profileUser->religion:''}}">-- {{isset($data->profileUser->religion)?$data->profileUser->religion:'Pilih Agama'}} --</option>
                                     <option value="Islam">Islam</option>
                                     <option value="Kristen">Kristen</option>
                                     <option value="Katolik">Katolik</option>
