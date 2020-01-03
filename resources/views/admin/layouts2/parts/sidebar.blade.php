@@ -79,10 +79,14 @@
                             <li class="{{ Request::is('user/index')? 'active' : '' }}"><a href="{{ route('user.index') }}">Daftar User</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#" aria-expanded="false">
-                            <i class="icon-settings menu-icon"></i><span class="nav-text">Role</span>
+                    <li class="{{ Request::is('role') || Request::is('role/*')? 'active' : '' }}">
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-people menu-icon"></i><span class="nav-text">Peran & Hak Akses</span>
                         </a>
+                        <ul aria-expanded="false">
+                            <li class="{{ Request::is('role/index')? 'active' : '' }}"><a href="{{ route('role.index') }}">Daftar Peran</a></li>
+                            <li class="{{ Request::is('perm/home')? 'active' : '' }}"><a href="{{ route('perm.home') }}">Daftar Hak Akses</a></li>
+                        </ul>
                     </li>
                     <li>
                         <a href="#" aria-expanded="false">

@@ -95,6 +95,10 @@ Route::put('/user/{id}/aktif', 'Admin\UserController@aktif')->name('user.aktif')
 Route::put('/user/{id}/unon', 'Admin\UserController@unon')->name('user.unon');
 Route::resource('/year', 'Admin\YearController')->except('create');
 
+Route::get('/role', 'Admin\RoleController@index')->name('role.index');
+Route::put('/role/{id}', 'Admin\RoleController@update')->name('role.update');
+Route::get('/perm', 'Admin\RoleController@home')->name('perm.home');
+Route::put('/perm/{id}', 'Admin\RoleController@ubah')->name('perm.ubah');
 
 Route::prefix('studentlog')->group(function () {
 	//Student Index Home
