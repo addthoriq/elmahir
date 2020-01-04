@@ -31,6 +31,9 @@ class SectionController extends Controller
         ->editColumn('created_at', function ($index) {
             return $index->created_at->format('d M Y');
         })
+        ->addColumn('course_id', function ($index) {
+            return isset($index->course->list_course) ? $index->course->list_course." / ".$index->course->classroom : '-';
+        })
         ->addColumn('file', function($index) {
             $isi    = FileSection::where('section_id', $index->id)->get();
             $count  = count($isi);
@@ -44,6 +47,7 @@ class SectionController extends Controller
             return isset($index->course->user->name) ? $index->course->user->name : '-';
         })
         ->addColumn('action', function($index){
+
             $tag     = Form::open(["url"=>route("section.destroy", $index->id), "method" => "DELETE"]);
             $tag    .= "<div class='btn-group'>";
             $tag    .= "<a href='".route('section.home', $index->id)."' class='btn btn-xs btn-primary' data-toggle='tooltip' data-placement='top' title='Lihat'><i class='fa fa-eye'></i></a>";
