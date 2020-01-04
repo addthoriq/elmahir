@@ -25,36 +25,55 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="card-title">Filter</div>
-                        <form action="">
-                            <div class="form-group">
-                                <label for="course">Nama Mapel</label>
-                                <select name="course" class="form-control input-default">
-                                    <option value="">-- Pilih Mapel --</option>
-                                    @foreach ($listCourse as $data)                                        
-                                        <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                    @endforeach
-                                </select>
+                        <div id="accordion-two" class="accordion">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree3" aria-expanded="false" aria-controls="collapseThree3"><i class="fa" aria-hidden="true"></i>Filter <small><i>(belum bisa digunakan)</i></small></h5>
+                                </div>
+                                <div id="collapseThree3" class="collapse" data-parent="#accordion-two">
+                                    <div class="card-body">
+                                        <form action="">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group mb-0">
+                                                        <label for="course">Nama Mapel</label>
+                                                        <select name="course" class="form-control input-default">
+                                                            <option value="">-- Pilih Mapel --</option>
+                                                            @foreach ($listCourse as $data)                                        
+                                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group mb-0">
+                                                        <label for="classroom">Kelas</label>
+                                                        <select name="classroom" class="form-control input-default">
+                                                            <option value="">-- Pilih Kelas --</option>
+                                                            @foreach ($classroom as $data)                                        
+                                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 d-flex align-items-end">
+                                                    <button type="submit" class="btn btn-primary btn-sm"> Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="classroom">Kelas</label>
-                                <select name="classroom" class="form-control input-default">
-                                    <option value="">-- Pilih Kelas --</option>
-                                    @foreach ($classroom as $data)                                        
-                                        <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-sm"> Submit</button>
-                        </form>
-                        <small><i>(belum bisa dipakai)</i></small>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-9">
+        </div>
+        <div class="row">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
@@ -70,6 +89,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Materi</th>
+                                        <th>Mapel</th>
                                         <th>Dibuat</th>
                                         <th>Author</th>
                                         <th>File</th>
@@ -104,6 +124,7 @@
             columns: [
                 { data: 'id', searchable: true, orderable: true},
                 { data: 'title', searchable: true, orderable: true},
+                { data: 'course_id', searchable: true, orderable: true},
                 { data: 'created_at', searchable: true, orderable: true},
                 { data: 'user_id', searchable: true, orderable: true},
                 { data: 'file', searchable: true, orderable: true},
