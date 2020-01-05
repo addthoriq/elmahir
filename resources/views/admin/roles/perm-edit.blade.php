@@ -5,14 +5,25 @@
             <div class="modal-body">
                 <h3 class="m-t-none m-b">Detail Peran</h3>
                 <p>Peran berfungsi sebagai status User dan berpengaruh pada Hak Akses</p>
-                <form method="POST" action="{{route('role.update', $rl->id)}}" class="store">
-                    @csrf
-                    @method('PUT')
-                        <p>{{$rl->permissions()->name}}</p>
-                    <div>
-                        <button type="submit" class="btn btn-sm btn-primary float-right m-t-n-xs"><i class="fa fa-send"></i> Ubah</button>
-                    </div>
-                </form>
+                <div class="basic-form">
+                    <form method="POST" action="{{route('perm.ubah', $rl->id)}}" class="store">
+                        @csrf
+                        @method('PUT')
+                            <div class="form-group">
+                                @foreach ($perms as $p)
+                                <div class="form-check form-check-inline">
+                                    <label>
+                                        <input type="checkbox" name="permissions[]" class="form-check-input" {{$rl->hasPermissions($p->slug)?'checked':''}} value="{{$p->id}}">
+                                        {{$p->name}}
+                                    </label>
+                                </div>
+                                @endforeach
+                            </div>
+                        <div>
+                            <button type="submit" class="btn btn-sm btn-primary float-right m-t-n-xs"><i class="fa fa-send"></i> Ubah</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

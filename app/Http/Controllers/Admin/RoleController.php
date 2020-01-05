@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Role;
+use App\Model\Permission;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
@@ -25,15 +27,14 @@ class RoleController extends Controller
     }
     public function home()
     {
-        $roles     = Role::all();
-        return view($this->folder.'.perm-500', compact('roles'));
+        $roles     = Role::get();
+        $perms     = Permission::get();
+        return view($this->folder.'.perm-index', compact('roles', 'perms'));
     }
     public function ubah(Request $request, $id)
     {
-        Role::findOrFail($id)->update([
-            'name'     => $request->name,
-            'slug'     => Str::slug($request->name,'-')
-        ]);
+        $role = Role::findOrFail($id);
+        $role->permissions()->sync($request->permissions);
         return redirect('/perm')->with('notif', 'Hak Akses berhasil diubah');
     }
 }
