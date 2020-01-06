@@ -4280,7 +4280,8 @@ button.close {
   color: #76838f; }
 
 .carousel {
-  position: relative; }
+  position: relative; 
+display: block;}
 
 .carousel-inner {
   position: relative;
