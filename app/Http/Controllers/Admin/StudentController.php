@@ -13,6 +13,8 @@ use App\Model\ClassHistory;
 use Yajra\Datatables\Datatables;
 use Form;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 use Laravolt\Avatar\Avatar;
 
 class StudentController extends Controller
@@ -27,8 +29,12 @@ class StudentController extends Controller
 
     public function index()
     {
-        $ajax     = route('student.dbtb');
-        return view($this->folder.'.index', compact('ajax'));
+        if (Gate::allows('index-student')) {
+            $ajax     = route('student.dbtb');
+            return view($this->folder.'.index', compact('ajax'));
+        }else {
+            abort(403);
+        }
     }
 
     public function dbTables(Request $request)
@@ -69,61 +75,77 @@ class StudentController extends Controller
 
     public function create()
     {
-        $years     = SchoolYear::where('status',1)->get();
-        $classes     = Classroom::all();
-        return view($this->folder.'.create', compact('years', 'classes'));
+        if (Gate::allows('create-student')) {
+            $years     = SchoolYear::where('status',1)->get();
+            $classes     = Classroom::all();
+            return view($this->folder.'.create', compact('years', 'classes'));
+        }else {
+            abort(403);
+        }
     }
 
     public function store(StudentRequest $request)
     {
-        $data     = new Student;
-        $data->classroom_id = $request->classroom_id;
-        $data->name = $request->name;
-        $data->email = $request->email;
-        $data->password = bcrypt($request->password);
-        $data->nisn     = $request->nisn;
-        $data->gender   = $request->gender;
-        $data->start_year   = $request->start_year;
-        $ava     = $request->file('avatar');
-        if ($ava) {
-            $ava_path     = $ava->store('ava_student', 'public');
-            $data->avatar = $ava_path;
+        if (Gate::allows('create-student')) {
+            $data     = new Student;
+            $data->classroom_id = $request->classroom_id;
+            $data->name = $request->name;
+            $data->email = $request->email;
+            $data->password = bcrypt($request->password);
+            $data->nisn     = $request->nisn;
+            $data->gender   = $request->gender;
+            $data->start_year   = $request->start_year;
+            $ava     = $request->file('avatar');
+            if ($ava) {
+                $ava_path     = $ava->store('ava_student', 'public');
+                $data->avatar = $ava_path;
+            }
+            $data->status   = 1;
+            $data->save();
+            $kelas     = new ClassHistory;
+            $kelas->student_id = $data->id;
+            $kelas->school_year_id = $request->school_year_id;
+            $kelas->classroom_id = $request->classroom_id;
+            $kelas->status     = 1;
+            $kelas->save();
+            return redirect($this->rdr)->with('notif', 'Data Siswa berhasil ditambahkan');
+        }else {
+            abort(403);
         }
-        $data->status   = 1;
-        $data->save();
-        $kelas     = new ClassHistory;
-        $kelas->student_id = $data->id;
-        $kelas->school_year_id = $request->school_year_id;
-        $kelas->classroom_id = $request->classroom_id;
-        $kelas->status     = 1;
-        $kelas->save();
-        return redirect($this->rdr)->with('notif', 'Data Siswa berhasil ditambahkan');
     }
 
     public function show($id)
     {
-        $data      = Student::findOrFail($id);
-        $cata      = Classroom::all();
-        $histories = ClassHistory::where('student_id',$id)->orderBy('created_at', 'desc')->first();
-        $history   = ClassHistory::where('student_id',$id)->get();
-        $classroom = Classroom::all();
-        $years     = SchoolYear::all();
-        return view($this->folder.'.show', compact('data', 'history', 'histories', 'classroom', 'years'));
+        if (Gate::allows('index-student')) {
+            $data      = Student::findOrFail($id);
+            $cata      = Classroom::all();
+            $histories = ClassHistory::where('student_id',$id)->orderBy('created_at', 'desc')->first();
+            $history   = ClassHistory::where('student_id',$id)->get();
+            $classroom = Classroom::all();
+            $years     = SchoolYear::all();
+            return view($this->folder.'.show', compact('data', 'history', 'histories', 'classroom', 'years'));
+        }else {
+            abort(403);
+        }
     }
 
     public function update(Request $request, $id)
     {
-        if (empty($request->password)) {
-            Student::find($id)->update([
-                'email'    => $request->email
-            ]);
+        if (Gate::allows('update-student')) {
+            if (empty($request->password)) {
+                Student::find($id)->update([
+                    'email'    => $request->email
+                ]);
+            }else {
+                Student::find($id)->update([
+                    'email'    => $request->email,
+                    'password'    => bcrypt($request->password)
+                ]);
+            }
+            return redirect()->route('student.show', [$id])->with('notif', 'Akun Login berhasil diubah');
         }else {
-            Student::find($id)->update([
-                'email'    => $request->email,
-                'password'    => bcrypt($request->password)
-            ]);
+            abort(403);
         }
-        return redirect()->route('student.show', [$id])->with('notif', 'Akun Login berhasil diubah');
     }
 
     public function updateProfile(Request $request, $id)

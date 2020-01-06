@@ -12,6 +12,8 @@ use App\Model\ProfileUser;
 use Yajra\Datatables\Datatables;
 use Form;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 use Laravolt\Avatar\Avatar;
 
 class TeacherController extends Controller
@@ -20,14 +22,18 @@ class TeacherController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     protected $folder     = 'admin.teachers';
     protected $rdr        = '/teacher';
 
     public function index()
     {
-        $ajax     = route('teacher.dbtb');
-        return view('admin.teachers.index', compact('ajax'));
+        if (Gate::allows('index-student')) {
+            $ajax     = route('teacher.dbtb');
+            return view('admin.teachers.index', compact('ajax'));
+        }else {
+            abort(403);
+        }
     }
 
     public function dbTables(Request $request)
@@ -64,38 +70,50 @@ class TeacherController extends Controller
 
     public function create()
     {
-        return view($this->folder.'.create');
+        if (Gate::allows('create-teacher')) {
+            return view($this->folder.'.create');
+        }else {
+            abort(403);
+        }
     }
 
     public function store(Request $request)
     {
-        $data                  = new User;
-        $data->role_id         = 4;
-        $data->nip             = $request->nip;
-        $data->name            = $request->name;
-        $data->start_year      = $request->start_year;
-        $data->gender          = $request->gender;
-        $data->email           = $request->email;
-        $data->password        = bcrypt($request->password);
-        $ava                   = $request->file('avatar');        if ($ava) {
-            $ava_path          = $ava->store('ava_teacher', 'public');
-            $data->avatar      = $ava_path;
+        if (Gate::allows('create-teacher')) {
+            $data                  = new User;
+            $data->role_id         = 4;
+            $data->nip             = $request->nip;
+            $data->name            = $request->name;
+            $data->start_year      = $request->start_year;
+            $data->gender          = $request->gender;
+            $data->email           = $request->email;
+            $data->password        = bcrypt($request->password);
+            $ava                   = $request->file('avatar');        if ($ava) {
+                $ava_path          = $ava->store('ava_teacher', 'public');
+                $data->avatar      = $ava_path;
+            }
+            $data->status          = 1;
+            $data->save();
+            return redirect($this->rdr)->with('notif', 'Data Guru berhasil ditambahkan');
+        }else {
+            abort(403);
         }
-        $data->status          = 1;
-        $data->save();
-        return redirect($this->rdr)->with('notif', 'Data Guru berhasil ditambahkan');
     }
 
     public function show($id)
     {
-        $admin     = Role::findOrFail(1);
-        $op1       = Role::findOrFail(2);
-        $op2       = Role::findOrFail(3);
-        $data      = User::findOrFail($id);
-        $years     = SchoolYear::all();
-        $histories = Course::where('user_id', $id)->orderBy('created_at', 'desc')->first();
-        $history   = Course::where('user_id', $id)->get();
-        return view($this->folder.'.show', compact('data', 'admin', 'op1', 'op2', 'histories', 'history', 'years'));
+        if (Gate::allows('update-teacher')) {
+            $admin     = Role::findOrFail(1);
+            $op1       = Role::findOrFail(2);
+            $op2       = Role::findOrFail(3);
+            $data      = User::findOrFail($id);
+            $years     = SchoolYear::all();
+            $histories = Course::where('user_id', $id)->orderBy('created_at', 'desc')->first();
+            $history   = Course::where('user_id', $id)->get();
+            return view($this->folder.'.show', compact('data', 'admin', 'op1', 'op2', 'histories', 'history', 'years'));
+        }else {
+            abort(403);
+        }
     }
 
     public function update(Request $request, $id)

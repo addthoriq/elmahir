@@ -14,7 +14,7 @@
                                 <div class="form-check form-check-inline">
                                     <label>
                                         <input type="checkbox" name="permissions[]" class="form-check-input" {{$rl->hasPermissions($p->slug)?'checked':''}} value="{{$p->id}}">
-                                        {{$p->name}}
+                                        {{$p->slug}}
                                     </label>
                                 </div>
                                 @endforeach

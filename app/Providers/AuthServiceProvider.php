@@ -25,11 +25,19 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        //User only
         Gate::define('isAdmin', function($user){
             return $user->role_id == 1;
         });
-        Gate::define('index-student', 'App\Policies\StudentPolicy@viewAny');
+
+        //Manage Student
+        Gate::define('index-student', 'App\Policies\StudentPolicy@view');
         Gate::define('create-student', 'App\Policies\StudentPolicy@create');
         Gate::define('update-student', 'App\Policies\StudentPolicy@update');
+
+        //Manage Teacher
+        Gate::define('index-teacher', 'App\Policies\TeacherPolicy@view');
+        Gate::define('create-teacher', 'App\Policies\TeacherPolicy@create');
+        Gate::define('update-teacher', 'App\Policies\TeacherPolicy@update');
     }
 }

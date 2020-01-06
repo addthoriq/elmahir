@@ -23,7 +23,6 @@ class PermissionRoleTableSeeder extends Seeder
             ['user', 'nonUser', 'schoolYear', 'listCourse', 'course', 'nonCourse', 'section', 'task', 'role', 'permission'], //Waka Kesiswaan
             ['user', 'nonUser', 'student', 'alumni', 'teacher', 'nonTeacher', 'classroom', 'role', 'permission'], //Waka Kurikulum
             ['user', 'nonUser', 'teacher', 'nonTeacher', 'role', 'permission'], //Pengajar
-            ['user', 'nonUser', 'classroom', 'listCourse', 'course', 'nonCourse', 'section', 'task'], //Pegawai
         ];
 
         $excp = [[]];

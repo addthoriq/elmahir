@@ -5,22 +5,22 @@ namespace App\Policies;
 use App\Model\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class StudentPolicy
+class TeacherPolicy
 {
     use HandlesAuthorization;
 
     public function view(User $user)
     {
-        return $user->role->hasPermissions('index-student');
+        return $user->role->hasPermissions('index-teacher');
     }
 
     public function create(User $user)
     {
-        return $user->role->hasPermissions('create-student');
+        return $user->role->hasPermissions('create-teacher');
     }
     public function update(User $user)
     {
-        return $user->role->hasPermissions('update-student');
+        return $user->role->hasPermissions('update-teacher');
     }
 
     public function delete(User $user)
