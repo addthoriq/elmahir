@@ -14,6 +14,11 @@ use Laravolt\Avatar\Avatar;
 
 class UnonController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     protected $folder     = 'admin.unons';
     protected $rdr        = '/unon';
 

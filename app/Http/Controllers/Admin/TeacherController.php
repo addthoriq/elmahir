@@ -16,6 +16,11 @@ use Laravolt\Avatar\Avatar;
 
 class TeacherController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     protected $folder     = 'admin.teachers';
     protected $rdr        = '/teacher';
 

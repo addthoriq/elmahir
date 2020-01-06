@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     protected $folder     = 'admin.roles';
     public function index()
     {

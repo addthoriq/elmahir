@@ -9,7 +9,7 @@
     <div class="container-fluid mt-3">
         <div class="row mb-3">
           <div class="col-md-6">
-            <h2 class="section-title">Hai, Selamat Datang!</h2>
+            <h2 class="section-title">Hai {{auth()->user()->name}}, Selamat Datang!</h2>
             <p class="section-lead">Sistem E-Learning MI Al Wahdah Yogyakarta.</p>
           </div>
           <div class="col-md-6 d-flex align-items-end justify-content-end py-3">

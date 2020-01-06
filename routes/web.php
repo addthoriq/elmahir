@@ -15,6 +15,12 @@ Route::get('/', function () {
 	return view('welcome');
 });
 Auth::routes();
+Route::get('/logout', 'Auth\LoginController@logout');
+//Menghapus Fitur Registrasi yang terdapat pada fitur Auth
+Route::match(["GET","POST"], "/register",function(){
+    return redirect("/login");
+})->name("register");
+
 //Yajra
 Route::get('/user/dbtb', 'Admin\UserController@dbTables')->name('user.dbtb');
 Route::get('/classroom/dbtb', 'Admin\ClassroomController@dbTables')->name('classroom.dbtb');

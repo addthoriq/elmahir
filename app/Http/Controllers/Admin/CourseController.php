@@ -14,6 +14,11 @@ use Form;
 
 class CourseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     protected $folder     = 'admin.courses';
     protected $rdr        = '/course';
 

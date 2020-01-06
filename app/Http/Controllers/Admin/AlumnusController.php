@@ -14,6 +14,10 @@ use App\Model\SchoolYear;
 
 class AlumnusController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     protected $folder      = 'admin.alumni';
     public function index()
     {

@@ -10,6 +10,11 @@ use Form;
 
 class ListCourseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     protected $folder     = 'admin.listCourses';
     protected $rdr        = '/list-course';
 

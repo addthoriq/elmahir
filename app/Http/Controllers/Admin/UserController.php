@@ -12,6 +12,11 @@ use Form;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     protected $folder     = 'admin.users';
     protected $rdr        = '/user';
     protected $edit       = '/user/edit';

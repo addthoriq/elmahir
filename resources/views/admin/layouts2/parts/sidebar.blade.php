@@ -3,7 +3,7 @@
                 <ul class="metismenu" id="menu">
                     <li class="nav-label text-secondary">Utama</li>
                     <li class="{{ Request::is('home') || Request::is('home/*')? 'active' : '' }}">
-                        <a href="#" aria-expanded="false">
+                        <a href="{{route('home.index')}}" aria-expanded="false">
                             <i class="icon-home menu-icon"></i><span class="nav-text">Beranda</span>
                         </a>
                     </li>

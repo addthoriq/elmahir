@@ -11,7 +11,11 @@ use Form;
 
 class YearController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     protected $folder  = 'admin.years';
     protected $rdr     = '/year';
     public function index()

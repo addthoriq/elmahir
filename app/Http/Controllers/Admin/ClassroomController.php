@@ -11,6 +11,11 @@ use Form;
 
 class ClassroomController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     protected $folder     = 'admin.classrooms';
     protected $rdr        = '/classroom';
 
