@@ -14,7 +14,7 @@
 Route::get('/', function () {
 	return view('welcome');
 });
-// Auth::routes();
+Auth::routes();
 //Yajra
 Route::get('/user/dbtb', 'Admin\UserController@dbTables')->name('user.dbtb');
 Route::get('/classroom/dbtb', 'Admin\ClassroomController@dbTables')->name('classroom.dbtb');
