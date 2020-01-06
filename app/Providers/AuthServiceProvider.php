@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->role_id == 1;
         });
         Gate::define('index-student', 'App\Policies\StudentPolicy@viewAny');
-        Gate::define('index-create', 'App\Policies\StudentPolicy@create');
-        Gate::define('index-update', 'App\Policies\StudentPolicy@update');
+        Gate::define('create-student', 'App\Policies\StudentPolicy@create');
+        Gate::define('update-student', 'App\Policies\StudentPolicy@update');
     }
 }

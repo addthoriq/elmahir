@@ -9,6 +9,8 @@ use App\Model\ProfileUser;
 use App\Model\Role;
 use Yajra\Datatables\Datatables;
 use Form;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -16,15 +18,19 @@ class UserController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     protected $folder     = 'admin.users';
     protected $rdr        = '/user';
     protected $edit       = '/user/edit';
 
     public function index()
     {
-        $ajax     = route('user.dbtb');
-        return view('admin.users.index', compact('ajax'));
+        if (Gate::allows('isAdmin')) {
+            $ajax     = route('user.dbtb');
+            return view('admin.users.index', compact('ajax'));
+        }else {
+            abort(403);
+        }
     }
 
     public function dbTables(Request $request)
@@ -70,35 +76,47 @@ class UserController extends Controller
 
     public function create()
     {
-        $roles = Role::all();
-        return view($this->folder.'.create', compact('roles'));
+        if (Gate::allows('isAdmin')) {
+            $roles = Role::all();
+            return view($this->folder.'.create', compact('roles'));
+        }else {
+            abort(403);
+        }
     }
 
     public function store(Request $request)
     {
-        $data             = new User;
-        $data->role_id    = $request->role_id;
-        $data->nip        = $request->nip;
-        $data->start_year = $request->start_year;
-        $data->gender     = $request->gender;
-        $data->name       = $request->name;
-        $data->email      = $request->email;
-        $data->password   = bcrypt($request->password);
-        $ava  = $request->file('avatar');
-        if ($ava) {
-            $ava_path = $ava->store('ava_user', 'public'); //$ava->store('nama_folder', 'bersifat public')
-            $data->avatar = $ava_path;
+        if (Gate::allows('isAdmin')) {
+            $data             = new User;
+            $data->role_id    = $request->role_id;
+            $data->nip        = $request->nip;
+            $data->start_year = $request->start_year;
+            $data->gender     = $request->gender;
+            $data->name       = $request->name;
+            $data->email      = $request->email;
+            $data->password   = bcrypt($request->password);
+            $ava  = $request->file('avatar');
+            if ($ava) {
+                $ava_path = $ava->store('ava_user', 'public'); //$ava->store('nama_folder', 'bersifat public')
+                $data->avatar = $ava_path;
+            }
+            $data->status   = 1;
+            $data->save();
+            return redirect($this->rdr)->with('notif', 'Data User berhasil ditambahkan');
+        }else {
+            abort(403);
         }
-        $data->status   = 1;
-        $data->save();
-        return redirect($this->rdr)->with('notif', 'Data User berhasil ditambahkan');
     }
 
     public function show($id)
     {
-        $roles     = Role::all();
-        $data      = User::find($id);
-        return view($this->folder.'.show', compact('data', 'roles'));
+        if (Gate::allows('isAdmin')) {
+            $roles     = Role::all();
+            $data      = User::find($id);
+            return view($this->folder.'.show', compact('data', 'roles'));
+        }else {
+            abort(403);
+        }
     }
 
     public function update(Request $request, $id)
@@ -172,20 +190,28 @@ class UserController extends Controller
 
     public function aktif(Request $request, $id)
     {
-        User::findOrFail($id)->update([
-            'status'    => 1,
-        ]);
-        $data = User::findOrFail($id);
-        return redirect($this->rdr)->with('notif', $data->name.' berhasil di aktifkan!');
+        if (Gate::allows('isAdmin')) {
+            User::findOrFail($id)->update([
+                'status'    => 1,
+            ]);
+            $data = User::findOrFail($id);
+            return redirect($this->rdr)->with('notif', $data->name.' berhasil di aktifkan!');
+        }else {
+            abort(403);
+        }
     }
 
     public function unon(Request $request, $id)
     {
-        User::findOrFail($id)->update([
-            'status'    => 0,
-        ]);
-        $data = User::findOrFail($id);
-        return redirect($this->rdr)->with('notif', $data->name.' berhasil di nonaktifkan!');
+        if (Gate::allows('isAdmin')) {
+            User::findOrFail($id)->update([
+                'status'    => 0,
+            ]);
+            $data = User::findOrFail($id);
+            return redirect($this->rdr)->with('notif', $data->name.' berhasil di nonaktifkan!');
+        }else {
+            abort(403);
+        }
     }
 
     public function destroy($id)

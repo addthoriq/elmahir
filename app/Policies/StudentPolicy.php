@@ -65,7 +65,7 @@ class StudentPolicy
      */
     public function delete(User $user, Student $student)
     {
-        // 
+        //
     }
 
     /**
