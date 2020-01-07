@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Model\ListCourse;
 use Yajra\Datatables\Datatables;
 use Form;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
+
 
 class ListCourseController extends Controller
 {
@@ -14,14 +17,18 @@ class ListCourseController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     protected $folder     = 'admin.listCourses';
     protected $rdr        = '/list-course';
 
     public function index()
     {
-        $ajax     = route('listCourse.dbtb');
-        return view($this->folder.'.index', compact('ajax'));
+        if (Gate::allows('index-listcourse')) {
+            $ajax     = route('listCourse.dbtb');
+            return view($this->folder.'.index', compact('ajax'));
+        }else {
+            abort(403);
+        }
     }
 
     public function dbTables(Request $request)
@@ -43,37 +50,53 @@ class ListCourseController extends Controller
 
     public function create()
     {
-        return view($this->folder.'.create');
+        if (Gate::allows('create-listcourse')) {
+            return view($this->folder.'.create');
+        }else {
+            abort(403);
+        }
     }
 
     public function store(Request $request)
     {
-        $request->validate(['name'=>['required']]);
-        foreach ($request->name as $nm) {
-            $mpl           = new ListCourse;
-            $mpl->name     = $nm;
-            $mpl->slug     = \Str::slug($nm, '-');
-            $mpl->save();
+        if (Gate::allows('create-listcourse')) {
+            $request->validate(['name'=>['required']]);
+            foreach ($request->name as $nm) {
+                $mpl           = new ListCourse;
+                $mpl->name     = $nm;
+                $mpl->slug     = \Str::slug($nm, '-');
+                $mpl->save();
+            }
+            return redirect($this->rdr)->with('notif', 'Daftar Mata Pelajaran berhasil ditambahkan');
+        }else {
+            abort(403);
         }
-        return redirect($this->rdr)->with('notif', 'Daftar Mata Pelajaran berhasil ditambahkan');
     }
 
     public function show($id)
     {
-        $data       = ListCourse::findOrFail($id);
-        return view($this->folder.'.show', compact('data'));
+        if (Gate::allows('update-listcourse')) {
+            $data       = ListCourse::findOrFail($id);
+            return view($this->folder.'.show', compact('data'));
+        }else {
+            abort(403);
+        }
     }
 
     public function update(Request $request, $id)
     {
-        if ($request->name == ListCourse::findOrFail($id)->name) {
-            return redirect()->route('list-course.show', [$id])->with('notif', 'Tidak ada perubahan pada Daftar Mata Pelajaran');
+        if (Gate::allows('update-listcourse')) {
+            if ($request->name == ListCourse::findOrFail($id)->name) {
+                return redirect()->route('list-course.show', [$id])->with('notif', 'Tidak ada perubahan pada Daftar Mata Pelajaran');
+            }else {
+                ListCourse::findOrFail($id)->update([
+                    'name'     => $request->name,
+                    'slug'     => \Str::slug($request->name, '-')
+                ]);
+                return redirect()->route('list-course.index')->with('notif', 'Daftar Mata Pelajaran berhasil diubah');
+            }
         }else {
-            ListCourse::findOrFail($id)->update([
-                'name'     => $request->name,
-                'slug'     => \Str::slug($request->name, '-')
-            ]);
-            return redirect()->route('list-course.index')->with('notif', 'Daftar Mata Pelajaran berhasil diubah');
+            abort(403);
         }
     }
 

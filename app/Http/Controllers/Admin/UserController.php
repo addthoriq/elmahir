@@ -25,7 +25,7 @@ class UserController extends Controller
 
     public function index()
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('index-user')) {
             $ajax     = route('user.dbtb');
             return view('admin.users.index', compact('ajax'));
         }else {
@@ -76,7 +76,7 @@ class UserController extends Controller
 
     public function create()
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('create-user')) {
             $roles = Role::all();
             return view($this->folder.'.create', compact('roles'));
         }else {
@@ -86,7 +86,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('create-user')) {
             $data             = new User;
             $data->role_id    = $request->role_id;
             $data->nip        = $request->nip;
@@ -110,7 +110,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('update-user')) {
             $roles     = Role::all();
             $data      = User::find($id);
             return view($this->folder.'.show', compact('data', 'roles'));
@@ -190,7 +190,7 @@ class UserController extends Controller
 
     public function aktif(Request $request, $id)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('update-user')) {
             User::findOrFail($id)->update([
                 'status'    => 1,
             ]);
@@ -203,7 +203,7 @@ class UserController extends Controller
 
     public function unon(Request $request, $id)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('update-nonuser')) {
             User::findOrFail($id)->update([
                 'status'    => 0,
             ]);

@@ -8,6 +8,8 @@ use App\Model\ClassHistory;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Form;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class ClassroomController extends Controller
 {
@@ -15,14 +17,18 @@ class ClassroomController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     protected $folder     = 'admin.classrooms';
     protected $rdr        = '/classroom';
 
     public function index()
     {
-        $ajax     = route('classroom.dbtb');
-        return view($this->folder.'.index', compact('ajax'));
+        if (Gate::allows('index-classroom')) {
+            $ajax     = route('classroom.dbtb');
+            return view($this->folder.'.index', compact('ajax'));
+        }else {
+            abort(403);
+        }
     }
     public function dbTables(Request $request)
     {
@@ -49,27 +55,39 @@ class ClassroomController extends Controller
 
     public function create()
     {
-        return view($this->folder.'.create');
+        if (Gate::allows('create-classroom')) {
+            return view($this->folder.'.create');
+        }else {
+            abort(403);
+        }
     }
 
     public function store(Request $request)
     {
-        $count     = count($request->name);
-        for ($i=0; $i < $count; $i++) {
-            $data                 = new Classroom;
-            $data->user_id        = $request->user_id[$i];
-            $data->name           = $request->name[$i];
-            $data->max_student    = $request->max_student[$i];
-            $data->save();
+        if (Gate::allows('create-classroom')) {
+            $count     = count($request->name);
+            for ($i=0; $i < $count; $i++) {
+                $data                 = new Classroom;
+                $data->user_id        = $request->user_id[$i];
+                $data->name           = $request->name[$i];
+                $data->max_student    = $request->max_student[$i];
+                $data->save();
+            }
+            return redirect($this->rdr)->with('notif', 'Ruang Kelas berhasil ditambahkan');
+        }else {
+            abort(403);
         }
-        return redirect($this->rdr)->with('notif', 'Ruang Kelas berhasil ditambahkan');
     }
 
     public function show($id)
     {
-        $data      = Classroom::findOrFail($id);
-        $stds      = ClassHistory::where([['status', 1],['classroom_id', $id]])->get();
-        return view($this->folder.'.show', compact('data', 'stds'));
+        if (Gate::allows('update-course')) {
+            $data      = Classroom::findOrFail($id);
+            $stds      = ClassHistory::where([['status', 1],['classroom_id', $id]])->get();
+            return view($this->folder.'.show', compact('data', 'stds'));
+        }else {
+            abort(403);
+        }
     }
 
     public function chartMurid($id)
@@ -86,13 +104,17 @@ class ClassroomController extends Controller
 
     public function update(Request $request, $id)
     {
-        Classroom::findOrFail($id)->update([
-            'school_year_id'    => $request->school_year_id,
-            'teacher_id'        => $request->teacher_id,
-            'name'              => $request->name,
-            'max_student'     => $request->max_student,
-        ]);
-        return redirect()->route('classroom.show', [$id])->with('notif', 'Ruang Kelas berhasil diubah');
+        if (Gate::allows('update-course')) {
+            Classroom::findOrFail($id)->update([
+                'school_year_id'    => $request->school_year_id,
+                'teacher_id'        => $request->teacher_id,
+                'name'              => $request->name,
+                'max_student'     => $request->max_student,
+            ]);
+            return redirect()->route('classroom.show', [$id])->with('notif', 'Ruang Kelas berhasil diubah');
+        }else {
+            abort(403);
+        }
     }
 
     public function destroy($id)

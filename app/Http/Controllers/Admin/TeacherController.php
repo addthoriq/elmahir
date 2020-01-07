@@ -28,7 +28,7 @@ class TeacherController extends Controller
 
     public function index()
     {
-        if (Gate::allows('index-student')) {
+        if (Gate::allows('index-teacher')) {
             $ajax     = route('teacher.dbtb');
             return view('admin.teachers.index', compact('ajax'));
         }else {

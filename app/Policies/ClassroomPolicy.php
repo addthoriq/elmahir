@@ -11,16 +11,16 @@ class TeacherPolicy
 
     public function view(User $user)
     {
-        return $user->role->hasPermissions('index-teacher');
+        return $user->role->hasPermissions('index-classroom');
     }
 
     public function create(User $user)
     {
-        return $user->role->hasPermissions('create-teacher');
+        return $user->role->hasPermissions('create-classroom');
     }
     public function update(User $user)
     {
-        return $user->role->hasPermissions('update-teacher');
+        return $user->role->hasPermissions('update-classroom');
     }
 
     public function delete(User $user)
@@ -38,17 +38,17 @@ class TeacherPolicy
         //
     }
 
-    public function viewNonTeacher(User $user)
+    public function viewYear(User $user)
     {
-        return $user->role->hasPermissions('index-nonteacher');
+        return $user->role->hasPermissions('index-schoolyear');
     }
 
-    public function createNonTeacher(User $user)
+    public function createYear(User $user)
     {
-        return $user->role->hasPermissions('create-nonteacher');
+        return $user->role->hasPermissions('create-schoolyear');
     }
-    public function updateNonTeacher(User $user)
+    public function updateYear(User $user)
     {
-        return $user->role->hasPermissions('update-nonteacher');
+        return $user->role->hasPermissions('update-schoolyear');
     }
 }

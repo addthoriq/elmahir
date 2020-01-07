@@ -10,6 +10,8 @@ use App\Model\Course;
 use Yajra\Datatables\Datatables;
 use Form;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 use Laravolt\Avatar\Avatar;
 
 class UnonController extends Controller
@@ -18,14 +20,18 @@ class UnonController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     protected $folder     = 'admin.unons';
     protected $rdr        = '/unon';
 
     public function index()
     {
-        $ajax     = route('unon.dbtb');
-        return view('admin.unons.index', compact('ajax'));
+        if (Gate::allows('index-nonuser')) {
+            $ajax     = route('unon.dbtb');
+            return view('admin.unons.index', compact('ajax'));
+        }else {
+            abort(403);
+        }
     }
 
     public function dbTables(Request $request)
@@ -62,18 +68,26 @@ class UnonController extends Controller
 
     public function show($id)
     {
-        $data      = User::findOrFail($id);
-        $histories = Course::where('user_id', $id)->get();
-        return view($this->folder.'.show', compact('data', 'histories'));
+        if (Gate::allows('update-nonuser')) {
+            $data      = User::findOrFail($id);
+            $histories = Course::where('user_id', $id)->get();
+            return view($this->folder.'.show', compact('data', 'histories'));
+        }else {
+            abort(403);
+        }
     }
 
     public function aktif(Request $request, $id)
     {
-        User::findOrFail($id)->update([
-            'status'    => 1
-        ]);
-        $data     = User::findOrFail($id);
-        return redirect('/teacher')->with('notif', $data->name.' berhasil di aktifkan kembali');
+        if (Gate::allows('update-user')) {
+            User::findOrFail($id)->update([
+                'status'    => 1
+            ]);
+            $data     = User::findOrFail($id);
+            return redirect('/teacher')->with('notif', $data->name.' berhasil di aktifkan kembali');
+        }else {
+            abort(403);
+        }
     }
 
     public function update(Request $request, $id)

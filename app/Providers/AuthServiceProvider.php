@@ -25,15 +25,20 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //User only
-        Gate::define('isAdmin', function($user){
-            return $user->role_id == 1;
-        });
+        //Manage User
+        Gate::define('index-user','App\Policies\UserPolicy@view');
+        Gate::define('create-user','App\Policies\UserPolicy@create');
+        Gate::define('update-user','App\Policies\UserPolicy@update');
+        //Manage Non User
+        Gate::define('index-nonuser','App\Policies\UserPolicy@viewNonUser');
+        Gate::define('create-nonuser','App\Policies\UserPolicy@createNonUser');
+        Gate::define('update-nonuser','App\Policies\UserPolicy@updateNonUser');
+
         //Manage Role
         Gate::define('index-role','App\Policies\RolePolicy@view');
         Gate::define('create-role','App\Policies\RolePolicy@create');
         Gate::define('update-role','App\Policies\RolePolicy@update');
-        //ManagePermission
+        //Manage Permission
         Gate::define('index-permission','App\Policies\RolePolicy@viewPerm');
         Gate::define('create-permission','App\Policies\RolePolicy@createPerm');
         Gate::define('update-permission','App\Policies\RolePolicy@updatePerm');
@@ -51,6 +56,10 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('index-teacher', 'App\Policies\TeacherPolicy@view');
         Gate::define('create-teacher', 'App\Policies\TeacherPolicy@create');
         Gate::define('update-teacher', 'App\Policies\TeacherPolicy@update');
+        //Manage nonTeacher
+        Gate::define('index-nonteacher', 'App\Policies\TeacherPolicy@viewNonTeacher');
+        Gate::define('create-nonteacher', 'App\Policies\TeacherPolicy@createNonTeacher');
+        Gate::define('update-nonteacher', 'App\Policies\TeacherPolicy@updateNonTeacher');
 
         //Manage Course
         Gate::define('index-course','App\Policies\CoursePolicy@view');
@@ -60,10 +69,20 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('index-noncourse','App\Policies\CoursePolicy@viewNonCourse');
         Gate::define('create-noncourse','App\Policies\CoursePolicy@createNonCourse');
         Gate::define('update-noncourse','App\Policies\CoursePolicy@restore');
-        
+
         //Manage List Course
         Gate::define('index-listcourse','App\Policies\CoursePolicy@viewListCourse');
         Gate::define('create-listcourse','App\Policies\CoursePolicy@createListCourse');
         Gate::define('update-listcourse','App\Policies\CoursePolicy@updateListCourse');
+
+        //Manage Classroom
+        Gate::define('index-classroom','App\Policies\ClassroomPolicy@viewListCourse');
+        Gate::define('create-classroom','App\Policies\ClassroomPolicy@createListCourse');
+        Gate::define('update-classroom','App\Policies\ClassroomPolicy@updateListCourse');
+
+        //Manage School Year
+        Gate::define('index-schoolyear','App\Policies\ClassroomPolicy@viewYear');
+        Gate::define('create-schoolyear','App\Policies\ClassroomPolicy@createYear');
+        Gate::define('update-schoolyear','App\Policies\ClassroomPolicy@updateYear');
     }
 }
