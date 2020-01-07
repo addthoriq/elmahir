@@ -11,22 +11,38 @@ use App\Model\User;
 use App\Model\ListCourse;
 use Yajra\Datatables\Datatables;
 use Form;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
+
 
 class CourseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     protected $folder     = 'admin.courses';
     protected $rdr        = '/course';
 
     public function index()
     {
-        $ajax     = route('course.dbtb');
-        return view('admin.courses.index', compact('ajax'));
+        if (Gate::allows('index-course')) {
+            $ajax     = route('course.dbtb');
+            return view('admin.courses.index', compact('ajax'));
+        }else {
+            abort(403);
+        }
     }
 
     public function nonActived()
     {
-        $ajax     = route('course.nondbtb');
-        return view('admin.courses.nonactivated', compact('ajax'));
+        if (Gate::allows('index-noncourse')) {
+            $ajax     = route('course.nondbtb');
+            return view('admin.courses.nonactivated', compact('ajax'));
+        }else {
+            abort(403);
+        }
     }
 
     public function dbTables(Request $request)
@@ -68,33 +84,45 @@ class CourseController extends Controller
 
     public function create()
     {
-        $years      = SchoolYear::all();
-        $classes    = Classroom::all();
-        $courses    = ListCourse::all();
-        return view('admin.courses.create', compact('years', 'classes', 'courses'));
+        if (Gate::allows('create-course')) {
+            $years      = SchoolYear::all();
+            $classes    = Classroom::all();
+            $courses    = ListCourse::all();
+            return view('admin.courses.create', compact('years', 'classes', 'courses'));
+        }else {
+            abort(403);
+        }
     }
 
     public function store(Request $request)
     {
-        $t                         = User::where('name', '=', $request->user_id)->first();
-        foreach ($request->classroom as $cs => $ck) {
-            $kelas                 = new Course;
-            $kelas->user_id        = $t->id;
-            $kelas->school_year_id = $request->school_year_id;
-            $kelas->classroom      = $ck;
-            $kelas->list_course    = $request->list_course;
-            $kelas->assistant      = $request->assistant[$cs];
-            $kelas->status         = 1;
-            $kelas->save();
+        if (Gate::allows('create-course')) {
+            $t                         = User::where('name', '=', $request->user_id)->first();
+            foreach ($request->classroom as $cs => $ck) {
+                $kelas                 = new Course;
+                $kelas->user_id        = $t->id;
+                $kelas->school_year_id = $request->school_year_id;
+                $kelas->classroom      = $ck;
+                $kelas->list_course    = $request->list_course;
+                $kelas->assistant      = $request->assistant[$cs];
+                $kelas->status         = 1;
+                $kelas->save();
+            }
+            return redirect($this->rdr)->with('notif', 'Data Mata Pelajaran berhasil ditambahkan');
+        }else {
+            abort(403);
         }
-        return redirect($this->rdr)->with('notif', 'Data Mata Pelajaran berhasil ditambahkan');
     }
 
     public function deActived(Request $request, $id)
     {
-        Course::where('user_id', $id)->update([
-            'status'    => 0
-        ]);
-        return redirect($this->rdr)->with('notif', 'Data Mata Pelajaran berhasil di nonaktifkan');
+        if (Gate::allows('update-course')) {
+            Course::where('user_id', $id)->update([
+                'status'    => 0
+            ]);
+            return redirect($this->rdr)->with('notif', 'Data Mata Pelajaran berhasil di nonaktifkan');
+        }else {
+            abort(403);
+        }
     }
 }
