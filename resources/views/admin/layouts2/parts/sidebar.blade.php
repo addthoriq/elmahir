@@ -3,7 +3,7 @@
                 <ul class="metismenu" id="menu">
                     <li class="nav-label text-secondary">Utama</li>
                     <li class="{{ Request::is('home') || Request::is('home/*')? 'active' : '' }}">
-                        <a href="#" aria-expanded="false">
+                        <a href="{{ route('home.index') }}" aria-expanded="false">
                             <i class="icon-home menu-icon"></i><span class="nav-text">Beranda</span>
                         </a>
                     </li>
@@ -58,13 +58,13 @@
                     </li>
 
                     <li class="nav-label text-secondary">Kompetensi Siswa</li>
-                    <li>
-                        <a href="#" aria-expanded="false">
+                    <li class="{{ Request::is('section/*')? 'active' : '' }}">
+                        <a href="{{ route('section.index') }}" aria-expanded="false">
                             <i class="icon-book-open menu-icon"></i><span class="nav-text">Materi</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#" aria-expanded="false">
+                    <li class="{{ Request::is('task/*')? 'active' : '' }}">
+                        <a href="{{ route('task.index') }}" aria-expanded="false">
                             <i class="icon-paper-clip menu-icon"></i><span class="nav-text">Tugas Siswa</span>
                         </a>
                     </li>

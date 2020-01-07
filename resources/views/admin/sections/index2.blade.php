@@ -68,7 +68,7 @@
                             		<div class="row">
                             			<div class="col-md-10">
                             				<div class="d-flex flex-column" style="word-wrap: break-word;">
-                            					<a href="{{ route('section.show', $file->id) }}">{{ $file->title }}</a>
+                            					<a href="{{ route('section.detail', $file->id) }}">{{ $file->title }}</a>
                             					<small class="text-secondary">publish : {{ date_format($file->created_at,"d M Y") }}</small>
                             				</div>	
                             			</div>

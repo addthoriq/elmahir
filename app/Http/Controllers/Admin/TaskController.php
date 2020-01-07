@@ -22,8 +22,10 @@ class TaskController extends Controller
 
     public function index()
     {
+        $listCourse = ListCourse::all();
+        $classroom = Classroom::all();
         $ajax     = route('task.dbtb');
-        return view('admin.tasks.index', compact('ajax'));
+        return view('admin.tasks.listTask', compact('ajax', 'listCourse', 'classroom'));
     }
 
     public function dbTables(Request $request)
@@ -49,6 +51,15 @@ class TaskController extends Controller
         ->addColumn('classroom', function($index){
             return $index->course->classroom;
         })
+        ->addColumn('file', function($index) {
+            $isi    = FileTask::where('task_id', $index->id)->get();
+            $count  = count($isi);
+            if ($count < 1) {
+                return "<span class='badge badge-warning'>Kosong</span>";
+            } else {
+                return "<span class='badge badge-primary'>".$count." File</span>";
+            }
+        })
         ->addColumn('action', function($index){
             if ($index->deleted_at !== NULL) {
                 $button = "<button type='submit' class='btn btn-xs btn-primary'><i class='fa fa-check'></i> Terbitkan</button>";
@@ -62,36 +73,38 @@ class TaskController extends Controller
 
             $tag     = Form::open(["url"=>route($stat, $index->id), "method" => $method]);
             $tag    .= "<div class='btn-group'>";
-            $tag    .= "<a href=". route('task.show', $index->id) ." class='btn btn-xs btn-success' ><i class='fa fa-search'></i> Detail</a> ";
+            $tag    .= "<a href=". route('task.show', $index->id) ." class='btn btn-xs btn-primary' ><i class='fa fa-eye'></i></a> ";
             $tag    .= $button;
             $tag    .= "</div>";
             $tag    .= Form::close();
             return $tag;
         })
         ->rawColumns([
-            'id', 'title', 'periode', 'action'
+            'id', 'title', 'periode', 'file', 'action'
         ])
         ->make(true);
     }
 
     public function create()
     {
-        $courses   = Course::all();
-        return view('admin.tasks.create', compact('courses'));
+        $course = Course::all();
+        $listCourse = ListCourse::all();
+        $classroom = Classroom::all();
+        return view('admin.tasks.create', compact('course', 'listCourse', 'classroom'));
     }
 
     public function store(Request $request)
     {
         $filename       = $_FILES['file'];
         $count          = count($request->file('file'));
-
+        
         $data = new Task;
         $data->course_id        = $request->course_id;
         $data->title            = $request->title;
         $data->description      = $request->description;
         $data->start_periode    = $request->start_periode;
         $data->end_periode      = $request->end_periode;
-        $data->created_by       = 'Bambangggg';
+        $data->created_by       = 'Bambang';
         $data->save();
 
         $task    = Task::orderBy('id', 'DESC')->first();
@@ -110,17 +123,24 @@ class TaskController extends Controller
             $file->type_file    = $filename['type'][$i];
             $file->save();
 
-            $ajax     = route('task.dbtb');
-
-            return redirect()->route('task.index', [$ajax])->with('notif', 'Data Materi berhasil ditambahkan');
         }
+            return redirect()->route('task.index')->with('notif', 'Data Materi berhasil ditambahkan');
+    }
+
+    public function detail($id)
+    {
+        $files          = FileTask::find($id);
+        $task           = Task::withTrashed()->find($files->task_id);        
+        $course         = Course::find($task->course_id);
+        $fileTasks      = fileTask::where('task_id', $task->id)->get();
+        return view('admin.tasks.fileView', compact('course', 'fileTasks', 'files', 'task'));
     }
 
     public function show($id)
     {
         $task       = Task::withTrashed()->find($id);
         $fileTask   = fileTask::where('task_id', $id)->get();
-        return view('admin.tasks.show', compact('task', 'fileTask'));
+        return view('admin.tasks.index', compact('task', 'fileTask'));
     }
 
     public function edit($id)
@@ -143,7 +163,7 @@ class TaskController extends Controller
 
     public function destroy($id)
     {
-        $task = Task::findOrFail($id);
+        $task = Task::withTrashed()->findOrFail($id);
         $task->delete();
         return redirect()->route('task.index')->with('notif', 'Data Tugas berhasil ditutup');
     }
@@ -182,7 +202,45 @@ class TaskController extends Controller
             $data->save();
         }
 
-        return redirect()->route('task.show', $id)->with('notif', 'Data File Tugas berhasil ditambah');
+        if ($request->TaskId) {
+            return redirect()->route('task.show', $id)->with('notif', 'Data File Tugas berhasil ditambah');
+        } else {
+            return redirect()->route('task.detail', $request->fileId)->with('notif', 'Data File Tugas berhasil ditambah');
+        }
+    }
+
+    public function deleteFileHome($id)
+    {
+        $file       = FileTask::find($id);
+        $task    = Task::withTrashed()->find($file->task_id);
+
+        //Deleting File
+        $data       = FileTask::findOrFail($id);
+        $data->delete();
+
+        $fileCheck  = FileTask::where('task_id', $task->id)->first();
+
+        return redirect()->route('task.show', [$task->id])->with('notif', 'Data File berhasil dihapus');
+    }
+
+    public function deleteFile($id)
+    {
+        $file       = FileTask::find($id);
+        $task    = Task::withTrashed()->find($file->task_id);
+
+        //Deleting File
+        $data       = FileTask::findOrFail($id);
+        $data->delete();
+
+        $fileCheck  = FileTask::where('task_id', $task->id)->first();
+
+        if (!empty($fileCheck)) {
+            $post   = $fileCheck->id;
+            return redirect()->route('task.detail', [$post])->with('notif', 'Data File berhasil dihapus');
+        } else {
+            $post   = $task->id;
+            return redirect()->route('task.show', [$post])->with('notif', 'Data File berhasil dihapus');
+        }
     }
 
 }

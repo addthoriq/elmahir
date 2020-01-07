@@ -66,12 +66,10 @@ Route::get('/alumni', 'Admin\AlumnusController@index')->name('alumni.index');
 Route::get('/alumni/{id}', 'Admin\AlumnusController@show')->name('alumni.show');
 Route::put('/alumni/{id}/profile', 'Admin\AlumnusController@updateProfile')->name('alumni.profile');
 Route::resource('/classroom', 'Admin\ClassroomController');
-Route::resource('/task', 'Admin\TaskController');
 Route::resource('/answertask', 'Admin\AnswerTaskController');
 
-Route::get('/section/list', 'Admin\SectionController@sectionList')->name('section.list');
 Route::get('/section/{id}/add', 'Admin\SectionController@add')->name('section.add');
-Route::get('/section/{id}/home', 'Admin\SectionController@home')->name('section.home');
+Route::get('/section/{id}/detail', 'Admin\SectionController@detail')->name('section.detail');
 Route::put('section/{id}/updateFile', 'Admin\SectionController@updateFile')->name('section.updateFile');
 Route::get('section/{id}/deleteFileHome', 'Admin\SectionController@deleteFileHome')->name('section.deleteFileHome');
 Route::get('section/{id}/deleteFile', 'Admin\SectionController@deleteFile')->name('section.deleteFile');
@@ -80,9 +78,13 @@ Route::get('/section/{id}/file', 'Admin\SectionController@file')->name('section.
 Route::get('/section/{id}/fileDownload', 'Admin\SectionController@fileDownload')->name('section.fileDownload');
 Route::resource('/section', 'Admin\SectionController');
 
+Route::get('task/{id}/deleteFile', 'Admin\TaskController@deleteFile')->name('task.deleteFile');
+Route::get('task/{id}/deleteFileHome', 'Admin\TaskController@deleteFileHome')->name('task.deleteFileHome');
+Route::get('/task/{id}/detail', 'Admin\TaskController@detail')->name('task.detail');
 Route::patch('/task/{id}', 'Admin\TaskController@restore')->name('task.restore');
 Route::get('/task/{id}/fileDownload', 'Admin\TaskController@fileDownload')->name('task.fileDownload');
 Route::post('/task/{id}/addFile', 'Admin\TaskController@addFile')->name('task.addFile');
+Route::resource('/task', 'Admin\TaskController');
 
 Route::get('/answertask/{id}/home', 'Admin\AnswerTaskController@home')->name('answertask.home');
 Route::post('/answertask/{id}/storeScore', 'Admin\AnswerTaskController@storeScore')->name('answertask.storeScore');
