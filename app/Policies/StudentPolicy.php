@@ -22,18 +22,27 @@ class StudentPolicy
     {
         return $user->role->hasPermissions('update-student');
     }
-
-    public function delete(User $user)
+    public function viewAlumni(User $user)
+    {
+        return $user->role->hasPermissions('index-alumni');
+    }
+    public function createAlumni(User $user)
+    {
+        return $user->role->hasPermissions('create-alumni');
+    }
+    public function updateAlumni(User $user)
+    {
+        return $user->role->hasPermissions('update-alumni');
+    }
+    public function deleteAlumni(User $user)
     {
         //
     }
-
-    public function restore(User $user)
+    public function restoreAlumni(User $user)
     {
         //
     }
-
-    public function forceDelete(User $user)
+    public function forceDeleteAlumni(User $user)
     {
         //
     }
