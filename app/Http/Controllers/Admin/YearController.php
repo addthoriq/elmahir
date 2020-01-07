@@ -8,16 +8,27 @@ use App\Model\ClassHistory;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Form;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
+
 
 class YearController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     protected $folder  = 'admin.years';
     protected $rdr     = '/year';
     public function index()
     {
-        $ajax     = route('year.dbtb');
-        return view('admin.years.index', compact('ajax'));
+        if (Gate::allows('index-schoolyear')) {
+            $ajax     = route('year.dbtb');
+            return view('admin.years.index', compact('ajax'));
+        }else {
+            abort(403);
+        }
     }
     public function dbTables(Request $request)
     {
@@ -42,27 +53,39 @@ class YearController extends Controller
     }
     public function store(Request $request)
     {
-        $data     = new SchoolYear;
-        $data->start_year     = $request->start_year;
-        $data->end_year     = $request->end_year;
-        $data->status     = $request->status;
-        $data->save();
-        return redirect($this->rdr)->with('status','Tahun Ajar berhasil ditambahkan');
+        if (Gate::allows('create-schoolyear')) {
+            $data     = new SchoolYear;
+            $data->start_year     = $request->start_year;
+            $data->end_year     = $request->end_year;
+            $data->status     = $request->status;
+            $data->save();
+            return redirect($this->rdr)->with('status','Tahun Ajar berhasil ditambahkan');
+        }else {
+            abort(403);
+        }
     }
     public function show($id)
     {
-        $data     = SchoolYear::findOrFail($id);
-        return view($this->folder.'.show', compact('data'));
+        if (Gate::allows('update-schoolyear')) {
+            $data     = SchoolYear::findOrFail($id);
+            return view($this->folder.'.show', compact('data'));
+        }else {
+            abort(403);
+        }
     }
     public function update(Request $request, $id)
     {
-        SchoolYear::findOrFail($id)->update([
-            'status'    => 0,
-        ]);
-        ClassHistory::where('status',1)->update([
-            'status'    => 0
-        ]);
-        return redirect($this->rdr)->with('notif', 'Tahun Ajar berhasil diubah');
+        if (Gate::allows('update-schoolyear')) {
+            SchoolYear::findOrFail($id)->update([
+                'status'    => 0,
+            ]);
+            ClassHistory::where('status',1)->update([
+                'status'    => 0
+            ]);
+            return redirect($this->rdr)->with('notif', 'Tahun Ajar berhasil diubah');
+        }else {
+            abort(403);
+        }
     }
     public function destroy($id)
     {

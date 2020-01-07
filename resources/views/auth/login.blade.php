@@ -1,131 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>ELearning | Login</title>
+    <!-- Required meta tags-->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="{{ asset('logins/images/icons/favicon.ico') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('logins/vendor/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('logins/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('logins/fonts/Linearicons-Free-v1.0.0/icon-font.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('logins/css/util.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('logins/css/main.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
 
-    <link href="{{ asset('qlab/css/style.css') }}" rel="stylesheet">
+    <!-- Title Page-->
+    <title>Elearning | Masuk</title>
 
+    <!-- Icons font CSS-->
+    <link href="{{asset('regform/vendor/mdi-font/css/material-design-iconic-font.min.css')}}" rel="stylesheet" media="all">
+    <link href="{{asset('regform/vendor/font-awesome-4.7/css/font-awesome.min.css')}}" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+
+    <!-- Main CSS-->
+    <link href="{{asset('regform/css/main.css')}}" rel="stylesheet" media="all">
 </head>
-<body style="background-color: #666666;">
-    
-    <div class="limiter">
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <div class="login100-form validate-form">
-                    <span class="login100-form-title p-b-43">
-                        ELearning Login
-                    </span>
-                    <p></p>
-
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs mb-3" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home8"><span><i class="ti-home"></i> Siswa</span></a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#profile8"><span><i class="ti-user"></i> Pengajar</span></a>
-                        </li>
-                    </ul>
-                    <!-- Tab panes -->
-                    <div class="tab-content tabcontent-border">
-                        <div class="tab-pane fade show active" id="home8" role="tabpanel">
-                            <div class="p-t-15">
-                                <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-                                    <input class="input100" type="text" name="email" required>
-                                    <span class="focus-input100"></span>
-                                    <span class="label-input100">Email</span>
-                                </div>
-                                <div class="wrap-input100 validate-input" data-validate="Password is required">
-                                    <input class="input100" type="password" name="pass" required>
-                                    <span class="focus-input100"></span>
-                                    <span class="label-input100">Password</span>
-                                </div>
-                                <div class="flex-sb-m w-full p-t-3 p-b-32">
-                                    <div class="contact100-form-checkbox">
-                                        <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-                                        <label class="label-checkbox100" for="ckb1">
-                                            Remember me
-                                        </label>
-                                    </div>
-                                    <div>
-                                        <a href="#" class="txt1">
-                                            Forgot Password?
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="container-login100-form-btn">
-                                    <button class="login100-form-btn">
-                                        Login sebagai Siswa
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="profile8" role="tabpanel">
-                            <div class="p-t-15">
-                                <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-                                    <input class="input100" type="text" name="email" required>
-                                    <span class="focus-input100"></span>
-                                    <span class="label-input100">Email</span>
-                                </div>
-                                <div class="wrap-input100 validate-input" data-validate="Password is required">
-                                    <input class="input100" type="password" name="pass" required>
-                                    <span class="focus-input100"></span>
-                                    <span class="label-input100">Password</span>
-                                </div>
-                                <div class="flex-sb-m w-full p-t-3 p-b-32">
-                                    <div class="contact100-form-checkbox">
-                                        <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-                                        <label class="label-checkbox100" for="ckb1">
-                                            Remember me
-                                        </label>
-                                    </div>
-                                    <div>
-                                        <a href="#" class="txt1">
-                                            Forgot Password?
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="container-login100-form-btn">
-                                    <button class="login100-form-btn">
-                                        Login sebagai Pengajar
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+<body>
+    <div class="page-wrapper bg-blue p-t-100 p-b-100 font-robo">
+        <div class="wrapper wrapper--w960">
+            <div class="card card-2">
+                <div class="card-heading"></div>
+                <div class="card-body">
+                    <h2 class="title"><a href="{{url('/')}}" style="text-decoration: none; color: #000">Elearning El Zakiy</a></h2>
+                    <div class="tab">
+                        <a class="tablinks" onclick="openCity(event, 'siswa')" id="defaultOpen"><i class="fa fa-user"></i> Siswa</a>
+                        <a class="tablinks" onclick="openCity(event, 'pengajar')"><i class="fa fa-users"></i> Pengajar</a>
                     </div>
-
+                    <div id="siswa" class="tabcontent">
+                        <form method="POST">
+                            @csrf
+                            <div class="input-group">
+                                <input required class="input--style-2" type="email" placeholder="Email" name="email">
+                            </div>
+                            <div class="input-group">
+                                <input required class="input--style-2" type="password" placeholder="Kata Sandi" name="password">
+                            </div>
+                            <div class="p-t-10">
+                                <button class="btn btn--radius btn--blue" type="submit">Masuk sebagai Siswa</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="pengajar" class="tabcontent">
+                        <form method="POST" action="{{route('login')}}">
+                            @csrf
+                            <div class="input-group">
+                                <input required class="input--style-2" type="email" placeholder="Email" name="email">
+                            </div>
+                            <div class="input-group">
+                                <input required class="input--style-2" type="password" placeholder="Kata Sandi" name="password">
+                            </div>
+                            <div class="p-t-10">
+                                <button class="btn btn--radius btn--blue" type="submit">Masuk sebagai Pengajar</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                
-                <!-- make random image login -->
-                @php
-                    $indexs = [1 => 1, 2=> 2, 3 => 3, 4=> 4, 5 => 5];
-                    $random = array_rand($indexs, 1);
-                    $img    = "logins/images/bg-0".$random.".jpg";
-                @endphp
-
-                <div class="login100-more" style="background-image: url('{{ asset($img) }}');"></div>
             </div>
         </div>
     </div>
-    
-    
 
-    
-    
-    <script src="{{ asset('logins/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
-    <script src="{{ asset('logins/js/main.js') }}"></script>
+    <!-- Jquery JS-->
+    <script src="{{asset('regform/vendor/jquery/jquery.min.js')}}"></script>
 
-    <script src="{{ asset('qlab/plugins/common/common.min.js') }}"></script>
-    <script src="{{ asset('qlab/js/custom.min.js') }}"></script>
-    <script src="{{ asset('qlab/js/settings.js') }}"></script>
-    <script src="{{ asset('qlab/js/gleek.js') }}"></script>
-    <script src="{{ asset('qlab/js/styleSwitcher.js') }}"></script>
-    
+    <!-- Main JS-->
+    <script src="{{asset('regform/js/global.js')}}"></script>
 </body>
 </html>

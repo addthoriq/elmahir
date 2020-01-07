@@ -9,7 +9,7 @@
     <div class="container-fluid mt-3">
         <div class="row mb-3">
           <div class="col-md-6">
-            <h2 class="section-title">Hai, Selamat Datang!</h2>
+            <h2 class="section-title">Hai {{auth()->user()->name}}, Selamat Datang!</h2>
             <p class="section-lead">Sistem E-Learning MI Al Wahdah Yogyakarta.</p>
           </div>
           <div class="col-md-6 d-flex align-items-end justify-content-end py-3">
@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="row">
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-3 col-sm-3">
                 <div class="card gradient-1">
                     <div class="card-body">
                         <h3 class="card-title text-white">Mata Pelajaran</h3>
@@ -29,7 +29,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-3 col-sm-3">
                 <div class="card gradient-2">
                     <div class="card-body">
                         <h3 class="card-title text-white">Siswa</h3>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-3 col-sm-3">
                 <div class="card gradient-3">
                     <div class="card-body">
                         <h3 class="card-title text-white">Pengajar</h3>
@@ -52,9 +52,8 @@
                         <span class="float-right display-5 opacity-5"><i class="fas fa-chalkboard-teacher"></i></span>
                     </div>
                 </div>
-              </div>
             </div>
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-3 col-sm-3">
                 <div class="card gradient-4">
                     <div class="card-body">
                         <h3 class="card-title text-white">Pegawai</h3>
@@ -83,10 +82,6 @@
                         <canvas id="guru" width="500" height="250"></canvas>
                     </div>
                 </div>
-                <div class="card-body">
-                  <canvas id="teacherChart"></canvas>
-                </div>
-              </div>
             </div>
         </div>
     </div>

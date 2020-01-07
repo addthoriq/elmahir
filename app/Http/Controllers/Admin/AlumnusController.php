@@ -8,17 +8,27 @@ use App\Model\Student;
 use Laravolt\Avatar\Avatar;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 use App\Model\ClassHistory;
 use App\Model\Classroom;
 use App\Model\SchoolYear;
 
 class AlumnusController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     protected $folder      = 'admin.alumni';
     public function index()
     {
-        $ajax     = route('alumni.dbtb');
-        return view($this->folder.'.index', compact('ajax'));
+        if (Gate::allows('index-alumni')) {
+            $ajax     = route('alumni.dbtb');
+            return view($this->folder.'.index', compact('ajax'));
+        }else {
+            abort(403);
+        }
     }
 
     public function dbTables(Request $request)
@@ -52,48 +62,56 @@ class AlumnusController extends Controller
 
     public function show($id)
     {
-        $data      = Student::findOrFail($id);
-        $histories = ClassHistory::where('student_id',$id)->orderBy('created_at', 'desc')->first();
-        $history   = ClassHistory::where('student_id',$id)->get();
-        $classroom = Classroom::all();
-        $years     = SchoolYear::all();
-        return view($this->folder.'.show', compact('data', 'history', 'histories', 'classroom', 'years'));
+        if (Gate::allows('update-alumni')) {
+            $data      = Student::findOrFail($id);
+            $histories = ClassHistory::where('student_id',$id)->orderBy('created_at', 'desc')->first();
+            $history   = ClassHistory::where('student_id',$id)->get();
+            $classroom = Classroom::all();
+            $years     = SchoolYear::all();
+            return view($this->folder.'.show', compact('data', 'history', 'histories', 'classroom', 'years'));
+        }else {
+            abort(403);
+        }
     }
 
     public function updateProfile(Request $request, $id)
     {
-        $cls      = Student::find($id)->classroom_id;
-        $data     = Student::findOrFail($id)->update([
-            'classroom_id' => $cls,
-            'name'    => $request->name,
-            'nisn'    => $request->nisn,
-            'gender'    => $request->gender,
-            'start_year'    => $request->start_year,
-            'status'    => 0,
-        ]);
-        $ps     = ProfileStudent::where('student_id', $id)->exists();
-        if ($ps) {
-            ProfileStudent::findOrFail($id)->update([
-                'nik'      => $request->nik,
-                'address'  => $request->address,
-                'religion' => $request->religion,
-                'place_of_birth' => $request->place_of_birth,
-                'date_of_birth' => $request->date_of_birth,
-                'phone_number' => $request->phone_number
+        if (Gate::allows('update-alumni')) {
+            $cls      = Student::find($id)->classroom_id;
+            $data     = Student::findOrFail($id)->update([
+                'classroom_id' => $cls,
+                'name'    => $request->name,
+                'nisn'    => $request->nisn,
+                'gender'    => $request->gender,
+                'start_year'    => $request->start_year,
+                'status'    => 0,
             ]);
+            $ps     = ProfileStudent::where('student_id', $id)->exists();
+            if ($ps) {
+                ProfileStudent::findOrFail($id)->update([
+                    'nik'      => $request->nik,
+                    'address'  => $request->address,
+                    'religion' => $request->religion,
+                    'place_of_birth' => $request->place_of_birth,
+                    'date_of_birth' => $request->date_of_birth,
+                    'phone_number' => $request->phone_number
+                ]);
+            }else {
+                $std     = Student::findOrFail($id);
+                $prof     = new ProfileStudent;
+                $prof->student_id = $std->id;
+                $prof->nik = $request->nik;
+                $prof->address = $request->address;
+                $prof->religion = $request->religion;
+                $prof->place_of_birth = $request->place_of_birth;
+                $prof->date_of_birth = $request->date_of_birth;
+                $prof->phone_number = $request->phone_number;
+                $prof->save();
+            }
+            return redirect()->route('student.show',[$id])->with('notif', 'Data Informasi Siswa berhasil diubah');
         }else {
-            $std     = Student::findOrFail($id);
-            $prof     = new ProfileStudent;
-            $prof->student_id = $std->id;
-            $prof->nik = $request->nik;
-            $prof->address = $request->address;
-            $prof->religion = $request->religion;
-            $prof->place_of_birth = $request->place_of_birth;
-            $prof->date_of_birth = $request->date_of_birth;
-            $prof->phone_number = $request->phone_number;
-            $prof->save();
+            abort(403);
         }
-        return redirect()->route('student.show',[$id])->with('notif', 'Data Informasi Siswa berhasil diubah');
     }
 
 }
