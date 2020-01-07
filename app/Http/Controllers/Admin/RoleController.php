@@ -23,7 +23,8 @@ class RoleController extends Controller
     {
         if (Gate::allows('index-role')) {
             $roles     = Role::all();
-            return view($this->folder.'.index', compact('roles'));
+            $perms     = Permission::get();
+            return view($this->folder.'.index', compact('roles', 'perms'));
         }else {
             abort(403);
         }
@@ -35,7 +36,9 @@ class RoleController extends Controller
                 'name'     => $request->name,
                 'slug'     => Str::slug($request->name,'-')
             ]);
-            return redirect('/role')->with('notif', 'Role berhasil diubah');
+            $role = Role::findOrFail($id);
+            $role->permissions()->sync($request->permissions);
+            return redirect('/role')->with('notif', 'Role dan Hak Akses berhasil diubah');
         }else {
             abort(403);
         }
@@ -43,9 +46,8 @@ class RoleController extends Controller
     public function home()
     {
         if (Gate::allows('index-permission')) {
-            $roles     = Role::get();
             $perms     = Permission::get();
-            return view($this->folder.'.perm-index', compact('roles', 'perms'));
+            return view($this->folder.'.perm-index', compact('perms'));
         }else {
             abort(403);
         }
@@ -53,8 +55,10 @@ class RoleController extends Controller
     public function ubah(Request $request, $id)
     {
         if (Gate::allows('update-permission')) {
-            $role = Role::findOrFail($id);
-            $role->permissions()->sync($request->permissions);
+            $perm = Permission::findOrFail($id)->update([
+                'name'     => $request->name,
+                'slug'     => Str::slug($request->name,'-')
+            ]);;
             return redirect('/perm')->with('notif', 'Hak Akses berhasil diubah');
         }else {
             abort(403);

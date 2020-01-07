@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Model\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class TeacherPolicy
+class ClassroomPolicy
 {
     use HandlesAuthorization;
 

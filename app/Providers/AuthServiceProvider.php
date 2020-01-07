@@ -76,9 +76,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('update-listcourse','App\Policies\CoursePolicy@updateListCourse');
 
         //Manage Classroom
-        Gate::define('index-classroom','App\Policies\ClassroomPolicy@viewListCourse');
-        Gate::define('create-classroom','App\Policies\ClassroomPolicy@createListCourse');
-        Gate::define('update-classroom','App\Policies\ClassroomPolicy@updateListCourse');
+        Gate::define('index-classroom','App\Policies\ClassroomPolicy@view');
+        Gate::define('create-classroom','App\Policies\ClassroomPolicy@create');
+        Gate::define('update-classroom','App\Policies\ClassroomPolicy@update');
 
         //Manage School Year
         Gate::define('index-schoolyear','App\Policies\ClassroomPolicy@viewYear');

@@ -1,5 +1,9 @@
 @extends('admin.layouts2.app')
 @section('title', 'Daftar Peran')
+@section('style')
+    <link rel="stylesheet" type="text/css" href="{{asset('duallistbox/src/bootstrap-duallistbox.css')}}">
+    <script src="{{asset('duallistbox/src/jquery.bootstrap-duallistbox.js')}}"></script>
+@endsection
 @section('content')
     <div class="content-body">
         <div class="row page-titles mx-0">
@@ -17,8 +21,6 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Daftar Peran</h4>
-                            <a href="#" class="btn mb-4 btn-rounded btn-success btn-sm text-white"><i class="fas fa-download"></i> Ekspor</a>
-                            <a href="#" class="btn mb-4 btn-rounded btn-info btn-sm pull-right"><i class="fa fa-print"></i> Cetak</a>
                             @if (session('notif'))
                                 <div class="alert alert-success alert-dismissible fade show">
                                     <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
@@ -29,10 +31,10 @@
                                 <table class="table table-striped table-hover dataTables-example">
                                     <thead>
                                         <tr>
-                                            <th  class="text-center">No</th>
-                                            <th  class="text-center">Role</th>
-                                            <th  class="text-center">Slug</th>
-                                            <th  class="text-center">Action</th>
+                                            <th class="text-center">No</th>
+                                            <th class="text-center">Peran</th>
+                                            <th class="text-center">Slug</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -41,13 +43,13 @@
                                         @endphp
                                         @foreach ($roles as $rl)
                                             <tr>
-                                                <td>{{$no++}}</td>
-                                                <td>{{$rl->name}}</td>
-                                                <td>{{$rl->slug}}</td>
-                                                <td>
+                                                <td class="text-center">{{$no++}}</td>
+                                                <td class="text-center">{{$rl->name}}</td>
+                                                <td class="text-center">{{$rl->slug}}</td>
+                                                <td class="text-center">
                                                     <a data-toggle="modal" data-target="#{{$rl->slug}}" class="btn btn-xs btn-warning text-white"><i class="fa fa-edit"></i></a>
-                                                    @include('admin.roles.edit')
                                                 </td>
+                                                @include('admin.roles.edit')
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -59,4 +61,7 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+
 @endsection
