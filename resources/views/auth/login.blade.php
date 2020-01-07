@@ -1,74 +1,74 @@
-
 <!DOCTYPE html>
-<html class="h-100" lang="en">
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+
+    <!-- Title Page-->
     <title>Elearning | Masuk</title>
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('qlab/images/favicon.png')}}">
-    <link href="{{asset('qlab/css/style.css')}}" rel="stylesheet">
 
+    <!-- Icons font CSS-->
+    <link href="{{asset('regform/vendor/mdi-font/css/material-design-iconic-font.min.css')}}" rel="stylesheet" media="all">
+    <link href="{{asset('regform/vendor/font-awesome-4.7/css/font-awesome.min.css')}}" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+
+    <!-- Main CSS-->
+    <link href="{{asset('regform/css/main.css')}}" rel="stylesheet" media="all">
 </head>
-
-<body class="h-100">
-    <div id="preloader">
-        <div class="loader">
-            <svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
-            </svg>
-        </div>
-    </div>
-    <div class="login-form-bg h-100">
-        <div class="container h-100">
-            <div class="row justify-content-center h-100">
-                <div class="col-xl-12">
-                    <div class="form-input-content">
-                        <div class="card login-form mb-0">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <img src="{{asset('logins/images/bg-06.jpg')}}" width="100%" class="img-fluid">
-                                    </div>
-                                    <div class="col-6">
-                                        <a class="text-center" href="{{url('/')}}"> <h2>El-Zakiy</h2></a>
-                                        <div class="default-tab">
-                                            <ul class="nav nav-tabs mx-3" role="tablist">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active" data-toggle="tab" href="#std"><span><i class="ti-home"></i></span> Siswa</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#tch"><span><i class="ti-user"></i></span> Pengajar</a>
-                                                </li>
-                                            </ul>
-                                            <div class="tab-content">
-                                                <div class="tab-pane fade show active" id="std" role="tabpanel">
-                                                    <div class="p-t-15">
-                                                        @include('auth.student')
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="tch">
-                                                    <div class="p-t-15">
-                                                        @include('auth.user')
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+<body>
+    <div class="page-wrapper bg-blue p-t-100 p-b-100 font-robo">
+        <div class="wrapper wrapper--w960">
+            <div class="card card-2">
+                <div class="card-heading"></div>
+                <div class="card-body">
+                    <h2 class="title"><a href="{{url('/')}}" style="text-decoration: none; color: #000">Elearning El Zakiy</a></h2>
+                    <div class="tab">
+                        <a class="tablinks" onclick="openCity(event, 'siswa')" id="defaultOpen"><i class="fa fa-user"></i> Siswa</a>
+                        <a class="tablinks" onclick="openCity(event, 'pengajar')"><i class="fa fa-users"></i> Pengajar</a>
+                    </div>
+                    <div id="siswa" class="tabcontent">
+                        <form method="POST">
+                            @csrf
+                            <div class="input-group">
+                                <input required class="input--style-2" type="email" placeholder="Email" name="email">
                             </div>
-                        </div>
+                            <div class="input-group">
+                                <input required class="input--style-2" type="password" placeholder="Kata Sandi" name="password">
+                            </div>
+                            <div class="p-t-10">
+                                <button class="btn btn--radius btn--blue" type="submit">Masuk sebagai Siswa</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="pengajar" class="tabcontent">
+                        <form method="POST" action="{{route('login')}}">
+                            @csrf
+                            <div class="input-group">
+                                <input required class="input--style-2" type="email" placeholder="Email" name="email">
+                            </div>
+                            <div class="input-group">
+                                <input required class="input--style-2" type="password" placeholder="Kata Sandi" name="password">
+                            </div>
+                            <div class="p-t-10">
+                                <button class="btn btn--radius btn--blue" type="submit">Masuk sebagai Pengajar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="{{asset('qlab/plugins/common/common.min.js')}}"></script>
-    <script src="{{asset('qlab/js/custom.min.js')}}"></script>
-    <script src="{{asset('qlab/js/settings.js')}}"></script>
-    <script src="{{asset('qlab/js/gleek.js')}}"></script>
-    <script src="{{asset('qlab/js/styleSwitcher.js')}}"></script>
+    <!-- Jquery JS-->
+    <script src="{{asset('regform/vendor/jquery/jquery.min.js')}}"></script>
+
+    <!-- Main JS-->
+    <script src="{{asset('regform/js/global.js')}}"></script>
 </body>
 </html>

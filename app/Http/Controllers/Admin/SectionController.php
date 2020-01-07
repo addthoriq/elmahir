@@ -87,7 +87,7 @@ class SectionController extends Controller
 
     public function store(Request $request)
     {
-        $filename       = $_FILES['file'];        
+        $filename       = $_FILES['file'];
 
         $count          = count($request->file('file'));
         $data = new Section;
@@ -145,7 +145,7 @@ class SectionController extends Controller
             'title'         => $request->title,
             'description'   => $request->description,
         ]);
-        
+
         if ($request->sectionId) {
             return redirect()->route('section.home', $request->sectionId)->with('notif', 'Data Materi berhasil diubah');
         } else {
