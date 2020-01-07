@@ -2,16 +2,16 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah File Materi</h5>
+                <h5 class="modal-title">Tambah File Tugas</h5>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
-            <form id="file" action="{{route('section.addFile', $section->id)}}" class="wizard-big" method="POST" enctype="multipart/form-data">
+            <form id="file" action="{{route('task.addFile', $task->id)}}" class="wizard-big" method="POST" enctype="multipart/form-data">
                 @csrf
-                @if (Request::is('section/*'))
-                    <input type="hidden" name="sectionId" value="{{ $section->id }}">
-                @else
+                @if (Request::is('task/*/detail'))
                     <input type="hidden" name="fileId" value="{{ $files->id }}">
+                @else
+                    <input type="hidden" name="TaskId" value="{{ $task->id }}">
                 @endif
             <div class="modal-body" id="app">
                 <div class="row" v-for="n in file" :key="index">

@@ -18,8 +18,8 @@ class CreateTasksTable extends Migration
             $table->unsignedBigInteger('course_id');
             $table->string('title');
             $table->text('description');
-            $table->date('start_periode');
-            $table->date('end_periode');
+            $table->date('start_periode')->nullable();
+            $table->date('end_periode')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();

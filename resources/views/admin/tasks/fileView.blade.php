@@ -26,7 +26,7 @@
       <div class="col-md-6 d-flex align-items-end justify-content-end py-3">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('section.index') }}">Daftar Materi</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('task.index') }}">Daftar Materi</a></li>
             <li class="breadcrumb-item active">Detail</li>
         </ol>
       </div>
@@ -34,15 +34,15 @@
     <!-- row -->
 
     <!-- Modal -->
-    @include('admin.sections.editModalSection')
-    @include('admin.sections.addModalFileSection')
+    @include('admin.tasks.modalEditTask')
+    @include('admin.tasks.modalAddFileTask')
 
     <div class="container-fluid">
         <div class="row">
 			<div class="col-md-8">
 				<div class="card">
 					<div class="card-body">
-                        <div class="card-title mb-0">{{ $section->course->list_course }}</div>
+                        <div class="card-title mb-0">{{ $task->course->list_course }}</div>
 						<div class="d-flex justify-content-center mt-3">
                             @if (empty($files->link))
                                 @if (stripos($files->type_file, 'image') !== FALSE)
@@ -54,8 +54,8 @@
                                 <iframe width="560" height="315" src="{{ $files->link }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             @endif
 						</div>
-						<h4 class="text-primary mt-4">{{ $section->title }}</h4>
-						<p>{{ $section->description }}</p>
+						<h4 class="text-primary mt-4">{{ $task->title }}</h4>
+						<p>{{ $task->description }}</p>
                         <button data-toggle="modal" data-target="#materiModal" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i> Ubah</button>
 					</div>
                     <!-- Baris Komentar -->
@@ -73,15 +73,15 @@
                         </div>
                         <div class="basic-list-group mt-3">
                             <ul class="list-group list-group-flush">
-                                @if (empty($fileSections[0]))
+                                @if (empty($fileTasks[0]))
                                     <p>Tidak ada file untuk materi ini. anda bisa menambahkan file sendiri.</p>
                                 @endif
-                                @foreach ($fileSections as $file)
-                                <li class="list-group-item px-2 {{ Request::url() == route('section.detail', $file->id) ? 'onlamp' : '' }}">
+                                @foreach ($fileTasks as $file)
+                                <li class="list-group-item px-2 {{ Request::url() == route('task.detail', $file->id) ? 'onlamp' : '' }}">
                                     <div class="row">
                                         <div class="col-md-10">
                                             <div class="d-flex flex-column acv" style="word-wrap: break-word;">
-                                                <a href="{{ route('section.detail', $file->id) }}">{{ $file->title }}</a>
+                                                <a href="{{ route('task.detail', $file->id) }}">{{ $file->title }}</a>
                                                 <small class="text-secondary">publish : {{ date_format($file->created_at,"d M Y") }}</small>
                                             </div>  
                                         </div>
@@ -91,10 +91,10 @@
                                                 <div class="dropdown-content-body">
                                                     <ul>
                                                         <li>
-                                                            <a href="{{ route('section.fileDownload', $file->id) }}"><i class="icon-cloud-download"></i> <span>Download</span></a>
+                                                            <a href="{{ route('task.fileDownload', $file->id) }}"><i class="icon-cloud-download"></i> <span>Download</span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="{{ route('section.deleteFile', $file->id) }}">
+                                                            <a href="{{ route('task.deleteFile', $file->id) }}">
                                                                 <i class="icon-trash"> </i> <span>Hapus</span>
                                                             <a>
                                                         </li>
