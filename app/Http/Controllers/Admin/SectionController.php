@@ -13,15 +13,21 @@ use App\Model\Classroom;
 use Yajra\Datatables\Datatables;
 use Form;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class SectionController extends Controller
 {
     public function index()
     {
-        $listCourse = ListCourse::all();
-        $classroom = Classroom::all();
-        $ajax     = route('section.dbtb');
-        return view('admin.sections.listSection', compact('ajax', 'listCourse', 'classroom'));
+        if (Gate::allows('index-section')) {
+            $listCourse = ListCourse::all();
+            $classroom = Classroom::all();
+            $ajax     = route('section.dbtb');
+            return view('admin.sections.listSection', compact('ajax', 'listCourse', 'classroom'));
+        }else {
+            abort(403);
+        }
     }
 
     public function dbTables(Request $Request)
@@ -64,64 +70,81 @@ class SectionController extends Controller
 
     public function detail($id)
     {
-        // untuk menemukan data
-        $files          = FileSection::find($id);
-        $section        = Section::find($files->section_id);
-        $course         = Course::find($section->course_id);
-        $fileSections   = fileSection::where('section_id', $section->id)->get();
-        return view('admin.sections.fileView', compact('course', 'fileSections', 'files', 'section'));
+        if (Gate::allows('update-section')) {
+            // untuk menemukan data
+            $files          = FileSection::find($id);
+            $section        = Section::find($files->section_id);
+            $course         = Course::find($section->course_id);
+            $fileSections   = fileSection::where('section_id', $section->id)->get();
+            return view('admin.sections.fileView', compact('course', 'fileSections', 'files', 'section'));
+        }else {
+            abort(403);
+        }
     }
 
     public function show($id)
     {
-        $section = Section::find($id);
-        $fileSections   = FileSection::where('section_id', $id)->get();
-        return view('admin.sections.index2', compact('section', 'fileSections'));
+        if (Gate::allows('update-section')) {
+            $section = Section::find($id);
+            $fileSections   = FileSection::where('section_id', $id)->get();
+            return view('admin.sections.index2', compact('section', 'fileSections'));
+        }else {
+            abort(403);
+        }
     }
 
     public function add($id)
     {
-        $course = Course::find($id);
-        return view('admin.sections.create', compact('course'));
+        if (Gate::allows('create-section')) {
+            $course = Course::find($id);
+            return view('admin.sections.create', compact('course'));
+        }else {
+            abort(403);
+        }
     }
 
     public function create()
     {
-        $course = Course::all();
-        $listCourse = ListCourse::all();
-        $classroom = Classroom::all();
-        return view('admin.sections.create2', compact('course', 'listCourse', 'classroom'));
+        if (Gate::allows('create-section')) {
+            $course = Course::all();
+            $listCourse = ListCourse::all();
+            $classroom = Classroom::all();
+            return view('admin.sections.create2', compact('course', 'listCourse', 'classroom'));
+        }else {
+            abort(403);
+        }
     }
 
     public function store(Request $request)
     {
-        $filename       = $_FILES['file'];
+        if (Gate::allows('create-section')) {
+            $filename       = $_FILES['file'];
+            $count          = count($request->file('file'));
+            $data = new Section;
+            $data->course_id     = $request->course_id;
+            $data->title         = $request->title;
+            $data->description   = $request->description;
+            $data->save();
 
-        $count          = count($request->file('file'));
-        $data = new Section;
-        $data->course_id     = $request->course_id;
-        $data->title         = $request->title;
-        $data->description   = $request->description;
-        $data->save();
+            $section    = Section::orderBy('id', 'DESC')->first();
+            for ($i=0; $i<$count ; $i++) {
+                $file               = new FileSection;
 
-        $section    = Section::orderBy('id', 'DESC')->first();
+                $fileStore = $request->file;
+                if ($fileStore) {
+                    $file_path = $fileStore[$i]->store('file_section', 'public');
+                }
 
-        for ($i=0; $i<$count ; $i++) {
-            $file               = new FileSection;
-
-            $fileStore = $request->file;
-            if ($fileStore) {
-                $file_path = $fileStore[$i]->store('file_section', 'public');
+                $file->section_id   = $section->id;
+                $file->title        = $filename['name'][$i];
+                $file->name_file    = $file_path;
+                $file->type_file    = $filename['type'][$i];
+                $file->save();
             }
-
-            $file->section_id   = $section->id;
-            $file->title        = $filename['name'][$i];
-            $file->name_file    = $file_path;
-            $file->type_file    = $filename['type'][$i];
-            $file->save();
+            return redirect()->route('section.index')->with('notif', 'Data Materi berhasil ditambahkan');
+        }else {
+            abort(403);
         }
-
-        return redirect()->route('section.index')->with('notif', 'Data Materi berhasil ditambahkan');
     }
 
     public function fileDownload($id)
@@ -139,43 +162,50 @@ class SectionController extends Controller
 
     public function update(Request $request, $id)
     {
-        Section::findOrFail($id)->update([
-            'title'         => $request->title,
-            'description'   => $request->description,
-        ]);
+        if (Gate::allows('update-section')) {
+            Section::findOrFail($id)->update([
+                'title'         => $request->title,
+                'description'   => $request->description,
+            ]);
 
-        if ($request->sectionId) {
-            return redirect()->route('section.show', $request->sectionId)->with('notif', 'Data Materi berhasil diubah');
-        } else {
-            return redirect()->route('section.detail', $request->fileId)->with('notif', 'Data Materi berhasil diubah');
+            if ($request->sectionId) {
+                return redirect()->route('section.show', $request->sectionId)->with('notif', 'Data Materi berhasil diubah');
+            } else {
+                return redirect()->route('section.detail', $request->fileId)->with('notif', 'Data Materi berhasil diubah');
+            }
+        }else {
+            abort(403);
         }
     }
 
     public function addFile(Request $request, $id)
     {
-        $filename       = $_FILES['file'];
+        if (Gate::allows('create-section')) {
+            $filename       = $_FILES['file'];
+            $count          = count($request->file('file'));
 
-        $count          = count($request->file('file'));
+            for ($i=0; $i < $count; $i++) {
+                $data               = new FileSection;
 
-        for ($i=0; $i < $count; $i++) {
-            $data               = new FileSection;
+                $fileStore = $request->file;
+                if ($fileStore) {
+                    $file_path = $fileStore[$i]->store('file_section', 'public');
+                }
 
-            $fileStore = $request->file;
-            if ($fileStore) {
-                $file_path = $fileStore[$i]->store('file_section', 'public');
+                $data->section_id   = $id;
+                $data->title        = $filename['name'][$i];
+                $data->name_file    = $file_path;
+                $data->type_file    = $filename['type'][$i];
+                $data->save();
             }
 
-            $data->section_id   = $id;
-            $data->title        = $filename['name'][$i];
-            $data->name_file    = $file_path;
-            $data->type_file    = $filename['type'][$i];
-            $data->save();
-        }
-
-        if ($request->sectionId) {
-            return redirect()->route('section.show', $request->sectionId)->with('notif', 'Data File Materi berhasil ditambah');
-        } else {
-            return redirect()->route('section.detail', $request->fileId)->with('notif', 'Data File Materi berhasil ditambah');
+            if ($request->sectionId) {
+                return redirect()->route('section.show', $request->sectionId)->with('notif', 'Data File Materi berhasil ditambah');
+            } else {
+                return redirect()->route('section.detail', $request->fileId)->with('notif', 'Data File Materi berhasil ditambah');
+            }
+        }else {
+            abort(403);
         }
     }
 

@@ -14,6 +14,8 @@ use App\Model\Course;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Storage;
 use Form;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -22,10 +24,14 @@ class TaskController extends Controller
 
     public function index()
     {
-        $listCourse = ListCourse::all();
-        $classroom = Classroom::all();
-        $ajax     = route('task.dbtb');
-        return view('admin.tasks.listTask', compact('ajax', 'listCourse', 'classroom'));
+        if (Gate::allows('index-task')) {
+            $listCourse = ListCourse::all();
+            $classroom = Classroom::all();
+            $ajax     = route('task.dbtb');
+            return view('admin.tasks.listTask', compact('ajax', 'listCourse', 'classroom'));
+        }else {
+            abort(403);
+        }
     }
 
     public function dbTables(Request $request)
@@ -87,60 +93,76 @@ class TaskController extends Controller
 
     public function create()
     {
-        $course = Course::all();
-        $listCourse = ListCourse::all();
-        $classroom = Classroom::all();
-        return view('admin.tasks.create', compact('course', 'listCourse', 'classroom'));
+        if (Gate::allows('create-task')) {
+            $course = Course::all();
+            $listCourse = ListCourse::all();
+            $classroom = Classroom::all();
+            return view('admin.tasks.create', compact('course', 'listCourse', 'classroom'));
+        }else {
+            abort(403);
+        }
     }
 
     public function store(Request $request)
     {
-        $filename       = $_FILES['file'];
-        $count          = count($request->file('file'));
-        
-        $data = new Task;
-        $data->course_id        = $request->course_id;
-        $data->title            = $request->title;
-        $data->description      = $request->description;
-        $data->start_periode    = $request->start_periode;
-        $data->end_periode      = $request->end_periode;
-        $data->created_by       = 'Bambang';
-        $data->save();
+        if (Gate::allows('create-task')) {
+            $filename       = $_FILES['file'];
+            $count          = count($request->file('file'));
 
-        $task    = Task::orderBy('id', 'DESC')->first();
+            $data = new Task;
+            $data->course_id        = $request->course_id;
+            $data->title            = $request->title;
+            $data->description      = $request->description;
+            $data->start_periode    = $request->start_periode;
+            $data->end_periode      = $request->end_periode;
+            $data->created_by       = 'Bambang';
+            $data->save();
 
-        for ($i=0; $i<$count ; $i++) {
-            $file               = new FileTask;
+            $task    = Task::orderBy('id', 'DESC')->first();
 
-            $fileStore = $request->file;
-            if ($fileStore) {
-                $file_path = $fileStore[$i]->store('file_task', 'public');
+            for ($i=0; $i<$count ; $i++) {
+                $file               = new FileTask;
+
+                $fileStore = $request->file;
+                if ($fileStore) {
+                    $file_path = $fileStore[$i]->store('file_task', 'public');
+                }
+
+                $file->task_id      = $task->id;
+                $file->title        = $filename['name'][$i];
+                $file->name_file    = $file_path;
+                $file->type_file    = $filename['type'][$i];
+                $file->save();
+
             }
-
-            $file->task_id      = $task->id;
-            $file->title        = $filename['name'][$i];
-            $file->name_file    = $file_path;
-            $file->type_file    = $filename['type'][$i];
-            $file->save();
-
-        }
             return redirect()->route('task.index')->with('notif', 'Data Materi berhasil ditambahkan');
+        }else {
+            abort(403);
+        }
     }
 
     public function detail($id)
     {
-        $files          = FileTask::find($id);
-        $task           = Task::withTrashed()->find($files->task_id);        
-        $course         = Course::find($task->course_id);
-        $fileTasks      = fileTask::where('task_id', $task->id)->get();
-        return view('admin.tasks.fileView', compact('course', 'fileTasks', 'files', 'task'));
+        if (Gate::allows('update-task')) {
+            $files          = FileTask::find($id);
+            $task           = Task::withTrashed()->find($files->task_id);
+            $course         = Course::find($task->course_id);
+            $fileTasks      = fileTask::where('task_id', $task->id)->get();
+            return view('admin.tasks.fileView', compact('course', 'fileTasks', 'files', 'task'));
+        }else {
+            abort(403);
+        }
     }
 
     public function show($id)
     {
-        $task       = Task::withTrashed()->find($id);
-        $fileTask   = fileTask::where('task_id', $id)->get();
-        return view('admin.tasks.index', compact('task', 'fileTask'));
+        if (Gate::allows('update-task')) {
+            $task       = Task::withTrashed()->find($id);
+            $fileTask   = fileTask::where('task_id', $id)->get();
+            return view('admin.tasks.index', compact('task', 'fileTask'));
+        }else {
+            abort(403);
+        }
     }
 
     public function edit($id)
@@ -150,14 +172,18 @@ class TaskController extends Controller
 
     public function update(Request $request, $id)
     {
-        Task::withTrashed()->findOrFail($id)->update([
-            'title'             => $request->title,
-            'description'       => $request->description,
-            'start_periode'     => $request->start_periode,
-            'end_periode'       => $request->end_periode,
-            'updated_by'        => 'Badung',
-        ]);
-        return redirect()->route('task.show', $id)->with('notif', 'Data Tugas berhasil diubah');
+        if (Gate::allows('update-task')) {
+            Task::withTrashed()->findOrFail($id)->update([
+                'title'             => $request->title,
+                'description'       => $request->description,
+                'start_periode'     => $request->start_periode,
+                'end_periode'       => $request->end_periode,
+                'updated_by'        => 'Badung',
+            ]);
+            return redirect()->route('task.show', $id)->with('notif', 'Data Tugas berhasil diubah');
+        }else {
+            abort(403);
+        }
     }
 
 
@@ -184,28 +210,32 @@ class TaskController extends Controller
 
     public function addFile(Request $request, $id)
     {
-        $filename       = $_FILES['file'];
-        $count          = count($request->file('file'));
+        if (Gate::allows('create-task')) {
+            $filename       = $_FILES['file'];
+            $count          = count($request->file('file'));
 
-        for ($i=0; $i < $count; $i++) {
-            $data               = new FileTask;
+            for ($i=0; $i < $count; $i++) {
+                $data               = new FileTask;
 
-            $fileStore = $request->file;
-            if ($fileStore) {
-                $file_path = $fileStore[$i]->store('file_task', 'public');
+                $fileStore = $request->file;
+                if ($fileStore) {
+                    $file_path = $fileStore[$i]->store('file_task', 'public');
+                }
+
+                $data->task_id   = $id;
+                $data->title        = $filename['name'][$i];
+                $data->name_file    = $file_path;
+                $data->type_file    = $filename['type'][$i];
+                $data->save();
             }
 
-            $data->task_id   = $id;
-            $data->title        = $filename['name'][$i];
-            $data->name_file    = $file_path;
-            $data->type_file    = $filename['type'][$i];
-            $data->save();
-        }
-
-        if ($request->TaskId) {
-            return redirect()->route('task.show', $id)->with('notif', 'Data File Tugas berhasil ditambah');
-        } else {
-            return redirect()->route('task.detail', $request->fileId)->with('notif', 'Data File Tugas berhasil ditambah');
+            if ($request->TaskId) {
+                return redirect()->route('task.show', $id)->with('notif', 'Data File Tugas berhasil ditambah');
+            } else {
+                return redirect()->route('task.detail', $request->fileId)->with('notif', 'Data File Tugas berhasil ditambah');
+            }
+        }else {
+            abort(403);
         }
     }
 

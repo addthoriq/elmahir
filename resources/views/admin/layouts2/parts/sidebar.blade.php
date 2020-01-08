@@ -86,17 +86,24 @@
                             </ul>
                         </li>
                     @endcan
-                    <li class="nav-label text-secondary">Kompetensi Siswa</li>
-                    <li class="{{ Request::is('section/*')? 'active' : '' }}">
-                        <a href="{{ route('section.index') }}" aria-expanded="false">
-                            <i class="icon-book-open menu-icon"></i><span class="nav-text">Materi</span>
-                        </a>
-                    </li>
-                    <li class="{{ Request::is('task/*')? 'active' : '' }}">
-                        <a href="{{ route('task.index') }}" aria-expanded="false">
-                            <i class="icon-paper-clip menu-icon"></i><span class="nav-text">Tugas Siswa</span>
-                        </a>
-                    </li>
+                    @canany(['index-section', 'index-task'])
+                        <li class="nav-label text-secondary">Kompetensi Siswa</li>
+                        @can ('index-section')
+                            <li class="{{ Request::is('section/*')? 'active' : '' }}">
+                                <a href="{{ route('section.index') }}" aria-expanded="false">
+                                    <i class="icon-book-open menu-icon"></i><span class="nav-text">Materi</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can ('index-task')
+                        <li class="{{ Request::is('task/*')? 'active' : '' }}">
+                                <a href="{{ route('task.index') }}" aria-expanded="false">
+                                    <i class="icon-paper-clip menu-icon"></i><span class="nav-text">Tugas Siswa</span>
+                                </a>
+                        </li>
+                        @endcan
+                    @endcan
+
 
                     <li class="nav-label text-secondary">Pengaturan</li>
                     @can ('index-user')

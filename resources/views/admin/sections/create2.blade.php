@@ -24,7 +24,7 @@
       <div class="col-md-6 d-flex align-items-end justify-content-end py-3">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('section.list') }}">Daftar Materi</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('section.index') }}">Daftar Materi</a></li>
             <li class="breadcrumb-item active">Tambah</li>
         </ol>
       </div>
@@ -68,7 +68,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <div class="card-title">Upload   <small>(optional)</small></div>                        
+                        <div class="card-title">Upload   <small>(optional)</small></div>
                         <div id="accordion-two" class="accordion">
                             <div class="card">
                                 <div class="card-header">
@@ -116,7 +116,7 @@
                                 <option value="1">Publish</option>
                             </select>
                         </div>
-                        <a href="{{ route('section.list') }}" class="btn btn-sm btn-danger">Kembali</a>
+                        <a href="{{ route('section.index') }}" class="btn btn-sm btn-danger">Kembali</a>
                         <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                     </div>
                 </div>

@@ -84,5 +84,14 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('index-schoolyear','App\Policies\ClassroomPolicy@viewYear');
         Gate::define('create-schoolyear','App\Policies\ClassroomPolicy@createYear');
         Gate::define('update-schoolyear','App\Policies\ClassroomPolicy@updateYear');
+
+        //Manage Section
+        Gate::define('index-section','App\Policies\SectionPolicy@view');
+        Gate::define('create-section','App\Policies\SectionPolicy@create');
+        Gate::define('update-section','App\Policies\SectionPolicy@update');
+        //Manage Task
+        Gate::define('index-task','App\Policies\SectionPolicy@viewTask');
+        Gate::define('create-task','App\Policies\SectionPolicy@createTask');
+        Gate::define('update-task','App\Policies\SectionPolicy@updateTask');
     }
 }
