@@ -108,9 +108,9 @@ Route::put('/role/{id}', 'Admin\RoleController@update')->name('role.update');
 Route::get('/perm', 'Admin\RoleController@home')->name('perm.home');
 Route::put('/perm/{id}', 'Admin\RoleController@ubah')->name('perm.ubah');
 
-Route::prefix('studentlog')->group(function () {
+Route::prefix('students')->group(function () {
 	//Student Index Home
-    Route::get('/', 'Student\HomeController@index')->name('s1.index');
-    //Course Detail
+    Route::get('/{id}', 'Student\HomeController@index')->name('s1.index');
+    Route::get('/{id}/detailtask', 'Student\HomeController@showTask')->name('s3.showTask');
     Route::get('/coursedetail', 'Student\CourseDetailController@index')->name('s2.index');
 });
