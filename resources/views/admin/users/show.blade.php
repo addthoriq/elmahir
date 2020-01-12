@@ -1,7 +1,8 @@
 @extends('admin.layouts2.app')
 @section('title', 'Data User')
 @section('style')
-    <link href="{{asset('qlab/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('qlab/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('qlab/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet">
     <link href="{{asset('jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     <style media="screen">
         .fileinput-preview.fileinput-exists.img-thumbnail img{
@@ -38,7 +39,7 @@
                                 </div>
                             </div>
                             @if (session('notif'))
-                                <div class="alert alert-success alert-dismissable">
+                                <div class="alert alert-success alert-dismissable mt-3">
                                     <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
                                     {{session('notif')}}
                                 </div>
@@ -82,8 +83,8 @@
                                         <tr>
                                             <th>NIK</th>
                                             <td>
-                                                @isset($data->profileTeacher->nik)
-                                                    {{$data->profileTeacher->nik}}
+                                                @isset($data->profileUser->nik)
+                                                    {{$data->profileUser->nik}}
                                                 @else
                                                     <i>Data Belum ditambahkan</i>
                                                 @endif
@@ -106,8 +107,8 @@
                                         <tr>
                                             <th>Agama</th>
                                             <td>
-                                                @isset($data->profileTeacher->religion)
-                                                    {{$data->profileTeacher->religion}}
+                                                @isset($data->profileUser->religion)
+                                                    {{$data->profileUser->religion}}
                                                 @else
                                                     <i>Data Belum ditambahkan</i>
                                                 @endif
@@ -117,8 +118,8 @@
                                         <tr>
                                             <th>Alamat</th>
                                             <td>
-                                                @isset($data->profileTeacher->address)
-                                                    {{$data->profileTeacher->address}}
+                                                @isset($data->profileUser->address)
+                                                    {{$data->profileUser->address}}
                                                 @else
                                                     <i>Data Belum ditambahkan</i>
                                                 @endif
@@ -127,8 +128,8 @@
                                         <tr>
                                             <th>TTL</th>
                                             <td>
-                                                @isset($data->profileTeacher->date_of_birth)
-                                                    {{$data->profileTeacher->place_of_birth}}, {{date('d F Y', strtotime($data->profileTeacher->date_of_birth))}}
+                                                @isset($data->profileUser->date_of_birth)
+                                                    {{$data->profileUser->place_of_birth}}, {{date('d F Y', strtotime($data->profileUser->date_of_birth))}}
                                                 @else
                                                     <i>Data Belum ditambahkan</i>
                                                 @endif
@@ -137,8 +138,8 @@
                                         <tr>
                                             <th>Nomor Hp</th>
                                             <td>
-                                                @isset($data->profileTeacher->phone_number)
-                                                    {{$data->profileTeacher->phone_number}}
+                                                @isset($data->profileUser->phone_number)
+                                                    {{$data->profileUser->phone_number}}
                                                 @else
                                                     <i>Data Belum ditambahkan</i>
                                                 @endif

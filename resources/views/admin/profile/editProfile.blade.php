@@ -71,7 +71,7 @@
                                 <label id="labelDate" class="font-normal">Tanggal Lahir</label>
                                 <div class="input-group">
                                     <span class="input-group-append"><span class="input-group-text"><i class="fas fa-calendar-alt"></i></span></span>
-                                    <input type="text" class="form-control" id="mdate" value="{{isset($data->profileUser->date_of_birth)?$data->profileUser->date_of_birth:''}}" id="datepicker-autoclose" placeholder="07/24/1980" name="date_of_birth">
+                                    <input type="text" class="form-control" id="mdate" value="{{isset($data->profileUser->date_of_birth)?$data->profileUser->date_of_birth:''}}" placeholder="07/24/1980" name="date_of_birth">
                                 </div>
                             </div>
                         </div>

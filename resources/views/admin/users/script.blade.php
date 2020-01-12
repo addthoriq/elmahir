@@ -1,10 +1,15 @@
 <!-- Data picker -->
-<script src="{{asset('qlab/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{ asset('qlab/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
+<script src="{{ asset('qlab/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{asset('qlab/js/plugins-init/form-pickers-init.js')}}"></script>
 <!-- Jasny -->
 <script src="{{asset('jasny/jasny-bootstrap.min.js')}}"></script>
 <script>
     $(document).ready(function(){
+        $('#mdate').bootstrapMaterialDatePicker({
+            time: false,
+            clearButton: false
+        });
         $('.custom-file-input').on('change', function() {
             let fileName = $(this).val().split('\\').pop();
             $(this).next('.custom-file-label').addClass("selected").html(fileName);

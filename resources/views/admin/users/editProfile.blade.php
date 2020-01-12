@@ -16,7 +16,7 @@
                                     <label id="labelNip" for="nip">Nomor Induk Pegawai (NIP)</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-id-card"></i></span></div>
-                                        <input required readonly id="nip" name="nip" type="text" value="{{$data->nip}}" class="form-control">
+                                        <input required readonly id="nip" name="nip" maxlength="16" type="text" value="{{$data->nip}}" class="form-control">
                                     </div>
                                     <i id="noticeNip"></i>
                                 </div>
@@ -26,27 +26,27 @@
                                     <label id="labelNip" for="nip">Nomor Induk Pegawai (NIP)</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-id-card"></i></span></div>
-                                        <input required id="nip" name="nip" type="text" value="{{$data->nip}}" class="form-control">
+                                        <input required id="nip" name="nip" maxlength="16" type="text" value="{{$data->nip}}" class="form-control">
                                     </div>
                                     <i id="noticeNip"></i>
                                 </div>
                             @endempty
-                            @isset($data->profileTeacher->nik)
+                            @isset($data->profileUser->nik)
                                 <div class="form-group">
                                     <label id="labelNik" for="nik">Nomor Induk Kependudukan (NIK)</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-address-card"></i></span></div>
-                                        <input required readonly id="nik" type="text" value="{{isset($data->profileTeacher->nik)?$data->profileTeacher->nik:''}}" name="nik" class="form-control">
+                                        <input required readonly id="nik" maxlength="16" type="text" value="{{isset($data->profileUser->nik)?$data->profileUser->nik:''}}" name="nik" class="form-control">
                                     </div>
                                     <i id="noticeNik"></i>
                                 </div>
                             @endisset
-                            @empty ($data->profileTeacher->nik)
+                            @empty ($data->profileUser->nik)
                                 <div class="form-group">
                                     <label id="labelNip" for="nik">Nomor Induk Kependudukan (NIK)</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-address-card"></i></span></div>
-                                        <input required id="nik" type="text" value="{{isset($data->profileTeacher->nik)?$data->profileTeacher->nik:''}}" name="nik" class="form-control">
+                                        <input required id="nik" maxlength="16" type="text" value="{{isset($data->profileUser->nik)?$data->profileUser->nik:''}}" name="nik" class="form-control">
                                     </div>
                                     <i id="noticeNik"></i>
                                 </div>
@@ -71,7 +71,7 @@
                                 <label id="labelDate" class="font-normal">Tanggal Lahir</label>
                                 <div class="input-group">
                                     <span class="input-group-append"><span class="input-group-text"><i class="fas fa-calendar-alt"></i></span></span>
-                                    <input type="text" class="form-control" value="{{isset($data->profileTeacher->date_of_birth)?$data->profileTeacher->date_of_birth:''}}" id="datepicker-autoclose" placeholder="07/24/1980" name="date_of_birth">
+                                    <input type="text" class="form-control" id="mdate" value="{{isset($data->profileUser->date_of_birth)?$data->profileUser->date_of_birth:''}}" placeholder="07/24/1980" name="date_of_birth">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -120,7 +120,7 @@
                                 <label id="labelPhone" for="phone">Nomor Hp</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-phone"></i></span></div>
-                                    <input required id="phone" type="number" value="{{isset($data->profileTeacher->phone_number)?$data->profileTeacher->phone_number:''}}" name="phone_number" class="form-control">
+                                    <input required id="phone" type="text" maxlength="12" value="{{isset($data->profileTeacher->phone_number)?$data->profileTeacher->phone_number:''}}" name="phone_number" class="form-control">
                                 </div>
                                 <i id="noticePhone"></i>
                             </div>

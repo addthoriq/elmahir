@@ -35,7 +35,7 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">No</th>
-                                            <th>Avatar</th>
+                                            <th>Sebagai</th>
                                             <th>NIP</th>
                                             <th>Nama</th>
                                             <th>Status</th>
@@ -64,7 +64,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: '{{$ajax}}',
-                order: [[0,'asc']],
+                order: [[0,'desc']],
                 columns: [
                     { data: 'id', searchable: true, orderable: true},
                     { data: 'role_id', searchable: true, orderable: true},
