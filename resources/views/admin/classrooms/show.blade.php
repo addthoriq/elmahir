@@ -41,7 +41,7 @@
                                 <table class="table header-border">
                                     <tbody>
                                         <tr>
-                                            <th>Nama Kelas</th>
+                                            <th>Kelas</th>
                                             <td>{{$data->name}}</td>
                                         </tr>
                                         <tr>
@@ -50,11 +50,11 @@
                                         </tr>
                                         <tr>
                                             <th>Kapasitas Maksimal Siswa</th>
-                                            <td>{{$data->max_student}}</td>
+                                            <td>{{$data->max_student}} orang</td>
                                         </tr>
                                         <tr>
                                             <th>Jumlah Siswa</th>
-                                            <td>{{$stds->count()}}</td>
+                                            <td>{{$stds->count()}} orang</td>
                                         </tr>
                                         <tr>
                                             <th>Anggota Kelas </th>
@@ -62,7 +62,7 @@
                                                 <ul>
                                                     @if ($stds)
                                                         @foreach ($stds as $std)
-                                                            <li>{{$std->student->name}}</li>
+                                                            <li style="list-style: block"><a href="{{route('student.show',$std->student->id)}}">{{$std->student->name}}</a></li>
                                                         @endforeach
                                                     @else
                                                         <i>Belum ada siswa disini</i>
@@ -77,7 +77,8 @@
                                 </table>
                             </div>
                             <canvas id="siswa" height="50"></canvas>
-                            <form action="{{route('classroom.destroy',$data->id)}}" method="post">
+                            {{-- <form action="{{route('classroom.destroy',$data->id)}}" method="post"> --}}
+                            <form action="#" method="post">
                                 @csrf
                                 @method('PUT')
                                 <a href="{{route('classroom.index')}}" class="btn btn-sm btn-light"><i class="fa fa-chevron-left"></i> Kembali</a>
@@ -92,7 +93,18 @@
 @endsection
 @section('script')
     <script src="{{asset('qlab/js/plugins-init/chartjs-init.js')}}"></script>
+    <script src="{{asset('qlab/plugins/typehead/bootstrap3-typeahead.min.js')}}"></script>
     <script>
+    var guru = "{{route('teacher.json')}}";
+    $.get(guru, function(response){
+        if (response == "") {
+            document.getElementById('user_id').readOnly = true;
+        }else {
+            $('.typeahead').typeahead({
+                source: response
+            });
+        }
+    })
     var murid     = "{{route('classroom.chartMurid',$data->id)}}";
     $.get(murid, function(response){
         var ctx = document.getElementById('siswa').getContext('2d');

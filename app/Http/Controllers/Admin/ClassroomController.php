@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Model\Classroom;
+use App\Model\User;
 use App\Model\ClassHistory;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
@@ -66,9 +67,10 @@ class ClassroomController extends Controller
     {
         if (Gate::allows('create-classroom')) {
             $count     = count($request->name);
+            $t = User::where('name', '=', $request->user_id)->get();
             for ($i=0; $i < $count; $i++) {
                 $data                 = new Classroom;
-                $data->user_id        = $request->user_id[$i];
+                $data->user_id        = $t->id[$i];
                 $data->name           = $request->name[$i];
                 $data->max_student    = $request->max_student[$i];
                 $data->save();
@@ -105,11 +107,12 @@ class ClassroomController extends Controller
     public function update(Request $request, $id)
     {
         if (Gate::allows('update-course')) {
+            $t = User::where('name', '=', $request->user_id)->first();
             Classroom::findOrFail($id)->update([
-                'school_year_id'    => $request->school_year_id,
-                'teacher_id'        => $request->teacher_id,
-                'name'              => $request->name,
-                'max_student'     => $request->max_student,
+                'school_year_id' => $request->school_year_id,
+                'user_id' => $t->id,
+                'name' => $request->name,
+                'max_student' => $request->max_student,
             ]);
             return redirect()->route('classroom.show', [$id])->with('notif', 'Ruang Kelas berhasil diubah');
         }else {

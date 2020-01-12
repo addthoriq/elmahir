@@ -68,6 +68,13 @@ class TeacherController extends Controller
         ->make(true);
     }
 
+    public function teacher()
+    {
+        //JSON untuk AutoComplete
+        $tc     = User::where('role_id',4)->get();
+        return response()->json($tc);
+    }
+
     public function create()
     {
         if (Gate::allows('create-teacher')) {
