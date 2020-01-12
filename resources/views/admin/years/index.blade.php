@@ -64,7 +64,7 @@
                     processing: true,
                     serverSide: true,
                     ajax: '{{$ajax}}',
-                    order: [[0,'asc']],
+                    order: [[0,'desc']],
                     columns: [
                         { data: 'id', searchable: true, orderable: true},
                         { data: 'start_year', searchable: true, orderable: true},
