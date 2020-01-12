@@ -1,6 +1,6 @@
 @extends('admin.layouts2.app')
 
-@section('title', 'Detail Materi')
+@section('title', 'Tambah Materi')
 
 @section('style')
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/4.0.0/css/jasny-bootstrap.min.css">
@@ -24,7 +24,7 @@
       <div class="col-md-6 d-flex align-items-end justify-content-end py-3">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('section.list') }}">Daftar Materi</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('section.index') }}">Daftar Materi</a></li>
             <li class="breadcrumb-item active">Tambah</li>
         </ol>
       </div>
@@ -116,7 +116,7 @@
                                 <option value="1">Publish</option>
                             </select>
                         </div>
-                        <a href="{{ route('section.list') }}" class="btn btn-sm btn-danger">Kembali</a>
+                        <a href="{{ route('section.index') }}" class="btn btn-sm btn-danger">Kembali</a>
                         <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                     </div>
                 </div>
