@@ -43,23 +43,29 @@
       </div>
     @endif
     <div class="row">
-      @foreach ($courses as $course)
+      @php
+        $count1 = count($courses);
+        if ($count1 > 4) {
+          $count1 = 4;
+        }
+      @endphp
+      @for ($i = 0; $i < $count1; $i++)
         <div class="col-12 col-sm-6 col-lg-3">
           <div class="card">
             <div class="card-body">
               <div class="col-md-12 bg-primary text-white rounded py-2">
-                <h5 class="mb-0 text-white"><a href="#" class="text-white">{{ $course->list_course }}</a></h5>
-                <p class="mb-0">{{ $course->classroom }}</p>
+                <h5 class="mb-0 text-white"><a href="#" class="text-white">{{ $courses[$i]->list_course }}</a></h5>
+                <p class="mb-0">{{ $courses[$i]->classroom }}</p>
               </div>
               <p class="text-secondary mb-0 mt-2">Author</p>
-              <h6 class="text-dark">{{ $course->user->name }}</h6>
+              <h6 class="text-dark">{{ $courses[$i]->user->name }}</h6>
               <a href="" class="btn btn-sm btn-success">
                 <i class="fas fa-paperclip"></i> Tugas
               </a>
             </div>
           </div>
         </div>
-      @endforeach
+      @endfor
     </div>
     
     <!-- List Tugas -->
@@ -76,7 +82,13 @@
     </div>
     
     <div class="row">
-      @for ($i = 0; $i < 4; $i++)
+      @php
+        $count2 = count($tasks);
+        if ($count2 > 4) {
+          $count2 = 4;
+        }
+      @endphp
+      @for ($i = 0; $i < $count2; $i++)
         <div class="col-12 col-sm-6 col-lg-3">
           <div class="card">
             <div class="card-body">
