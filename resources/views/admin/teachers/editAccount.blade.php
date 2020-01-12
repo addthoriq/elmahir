@@ -33,7 +33,7 @@
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-lock"></i></span>
                             </div>
-                            <input required id="confirmation_password" name="password" type="password" class="form-control {{$errors->has('confirmation_password')?"border border-danger":""}}">
+                            <input id="confirmation_password" name="password" type="password" class="form-control {{$errors->has('confirmation_password')?"border border-danger":""}}">
                         </div>
                         <i class="text-muted">Password minimal 8 karakter</i>
                         <span id="textCPassword"></span>

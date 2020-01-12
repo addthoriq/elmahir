@@ -24,11 +24,6 @@
                         <label>Ubah Poto Profil</label>
                         <div class="custom-file">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
-                                @if ($data->avatar)
-                                    <div class="fileinput-new img-thumbnail" style="max-width:100%">
-                                      <img src="{{Storage::url($data->avatar)}}" style="max-width:100%">
-                                    </div>
-                                @endif
                               <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: 200px;"></div>
                               <div>
                                 <span class="btn btn-outline-secondary btn-file">
