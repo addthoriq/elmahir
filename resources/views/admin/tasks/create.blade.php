@@ -86,12 +86,12 @@
                         <div class="input-group">
                             <input type="text" class="form-control" name="end_periode" placeholder="{{ date('Y-m-d') }}" id="mdate2">
                             <span class="input-group-append"><span class="input-group-text"><i class="mdi mdi-calendar-check"></i></span></span>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <div class="card-title">Upload   <small>(optional)</small></div>                        
+                        <div class="card-title">Upload   <small>(optional)</small></div>
                         <div id="accordion-two" class="accordion">
                             <div class="card">
                                 <div class="card-header">

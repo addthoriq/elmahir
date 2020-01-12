@@ -108,6 +108,13 @@ Route::put('/role/{id}', 'Admin\RoleController@update')->name('role.update');
 Route::get('/perm', 'Admin\RoleController@home')->name('perm.home');
 Route::put('/perm/{id}', 'Admin\RoleController@ubah')->name('perm.ubah');
 
+Route::get('/profile/{id}', 'Admin\ProfileController@index')->name('profile.index');
+Route::put('/profile/{id}', 'Admin\ProfileController@update')->name('profile.update');
+Route::put('/profile/{id}/unon', 'Admin\ProfileController@unon')->name('profile.unon');
+Route::put('/profile/{id}/profile', 'Admin\ProfileController@updateProfile')->name('profile.profile');
+Route::put('/profile/{id}/avatar', 'Admin\ProfileController@updateAva')->name('profile.ava');
+
+
 Route::prefix('studentlog')->group(function () {
 	//Student Index Home
     Route::get('/', 'Student\HomeController@index')->name('s1.index');
