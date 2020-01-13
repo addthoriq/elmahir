@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Classroom;
 use App\Model\User;
 use App\Model\ClassHistory;
+use App\Model\SchoolYear;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Form;
@@ -57,8 +58,9 @@ class ClassroomController extends Controller
     public function create()
     {
         if (Gate::allows('create-classroom')) {
-            // return view($this->folder.'.create');
-            abort(500); //perbaiki dulu di Student JSON nya
+            $years = SchoolYear::all();
+            return view($this->folder.'.create', compact('years'));
+            // abort(500); //perbaiki dulu di Student JSON nya
         }else {
             abort(403);
         }
@@ -67,14 +69,19 @@ class ClassroomController extends Controller
     public function store(Request $request)
     {
         if (Gate::allows('create-classroom')) {
-            $count     = count($request->name);
-            $t = User::where('name', '=', $request->user_id)->get();
-            for ($i=0; $i < $count; $i++) {
-                $data                 = new Classroom;
-                $data->user_id        = $t->id[$i];
-                $data->name           = $request->name[$i];
-                $data->max_student    = $request->max_student[$i];
-                $data->save();
+            $t = User::where('name', '=', $request->user_id)->first();
+            $data                 = new Classroom;
+            $data->user_id        = $t->id;
+            $data->name           = $request->name;
+            $data->max_student    = $request->max_student;
+            $data->save();
+            foreach ($request->student_id as $std) {
+                $kelas     = new ClassHistory;
+                $kelas->student_id = $std;
+                $kelas->school_year_id = $request->school_year_id;
+                $kelas->classroom_id = $data->id;
+                $kelas->status     = 1;
+                $kelas->save();
             }
             return redirect($this->rdr)->with('notif', 'Ruang Kelas berhasil ditambahkan');
         }else {

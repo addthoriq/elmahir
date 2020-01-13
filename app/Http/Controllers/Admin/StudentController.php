@@ -76,13 +76,10 @@ class StudentController extends Controller
     public function student()
     {
         //JSON untuk AutoComplete
-        $doesnt = Student::where('status',1)->get();
-        $m = ClassHistory::where('status',0)->get();
-
-        $c = Student::whereHas();
-
-        dd($m->student_id);
-        return response()->json($doesnt);
+        $s = Student::where('status',1)->whereHas('classHistories', function($q){
+            $q->where('status',0);
+        })->get();
+        return response()->json($s);
     }
 
     public function create()

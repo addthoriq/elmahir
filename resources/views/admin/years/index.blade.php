@@ -1,5 +1,5 @@
 @extends('admin.layouts2.app')
-@section('title', 'Daftar Mata Pelajaran')
+@section('title', 'Daftar Tahun Ajaran')
 @section('style')
     <link href="{{asset('qlab/plugins/tables/css/datatable/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 @endsection
@@ -19,7 +19,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Daftar Mata Pelajaran</h4>
+                            <h4 class="card-title">Daftar Tahun Ajaran</h4>
                             @include('admin.years.create')
                             <a data-toggle="modal"  href="#store" class="btn mb-4 btn-rounded btn-primary btn-sm"><i class="fa fa-plus"></i> Tambah</a>
                             <a href="#" class="btn mb-4 btn-rounded btn-success btn-sm text-white"><i class="fas fa-download"></i> Ekspor</a>
