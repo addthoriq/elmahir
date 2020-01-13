@@ -1,6 +1,6 @@
 @extends('admin.layouts2.app')
 
-@section('title', 'Detail Materi')
+@section('title', 'Tambah Materi')
 
 @section('style')
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/4.0.0/css/jasny-bootstrap.min.css">
