@@ -68,6 +68,13 @@ class TeacherController extends Controller
         ->make(true);
     }
 
+    public function teacher()
+    {
+        //JSON untuk AutoComplete
+        $tc     = User::where('role_id',4)->get();
+        return response()->json($tc);
+    }
+
     public function create()
     {
         if (Gate::allows('create-teacher')) {
@@ -88,7 +95,8 @@ class TeacherController extends Controller
             $data->gender          = $request->gender;
             $data->email           = $request->email;
             $data->password        = bcrypt($request->password);
-            $ava                   = $request->file('avatar');        if ($ava) {
+            $ava                   = $request->file('avatar');
+            if ($ava) {
                 $ava_path          = $ava->store('ava_teacher', 'public');
                 $data->avatar      = $ava_path;
             }
@@ -232,28 +240,27 @@ class TeacherController extends Controller
 
     public function updateProfile(Request $request, $id)
     {
+        $g = User::findOrFail($id);
         $data     = User::findOrFail($id)->update([
             'name'    => $request->name,
             'nip'    => $request->nip,
-            'gender'    => $request->gender,
+            'gender'    => $g->gender,
             'start_year'    => $request->start_year,
-            'status'    => $request->status,
+            'status'    => $g->status,
         ]);
         $ps     = ProfileUser::where('user_id', $id)->exists();
         if ($ps) {
-            ProfileUser::findOrFail($id)->update([                'nik'      => $request->nik,
+            ProfileUser::where('user_id',$g->id)->update([
+                'nik'      => $request->nik,
                 'address'  => $request->address,
                 'religion' => $request->religion,
                 'place_of_birth' => $request->place_of_birth,
                 'date_of_birth' => $request->date_of_birth,
                 'phone_number' => $request->phone_number
             ]);
-            $guru     = User::findOrFail($id);
-            return redirect()->route('teacher.show',[$id])->with('notif', 'Data Informasi '.$guru->name.' berhasil diubah');
         }else {
-            $std     = User::findOrFail($id);
             $prof     = new ProfileUser;
-            $prof->user_id = $std->id;
+            $prof->user_id = $g->id;
             $prof->nik = $request->nik;
             $prof->address = $request->address;
             $prof->religion = $request->religion;
@@ -261,9 +268,8 @@ class TeacherController extends Controller
             $prof->date_of_birth = $request->date_of_birth;
             $prof->phone_number = $request->phone_number;
             $prof->save();
-            $guru     = User::findOrFail($id)->get();
-            return redirect()->route('teacher.show',[$id])->with('notif', 'Data Informasi '.$guru->name.' berhasil diubah');
         }
+            return redirect()->route('teacher.show',[$id])->with('notif', 'Data Informasi '.$g->name.' berhasil diubah');
     }
 
     public function updateAva(Request $request, $id)

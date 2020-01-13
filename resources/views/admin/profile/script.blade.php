@@ -21,7 +21,30 @@
             calendarWeeks: true,
             autoclose: true
         });
-
+        $("#nik").bind("keypress", function(e){
+            var keyCode = e.which ? e.which : e.keyCode;
+            if (!(keyCode >= 48 && keyCode <= 57)) {
+                return false;
+            }else {
+                return true;
+            }
+        })
+        $("#phone").bind("keypress", function(e){
+            var keyCode = e.which ? e.which : e.keyCode;
+            if (!(keyCode >= 48 && keyCode <= 57)) {
+                return false;
+            }else {
+                return true;
+            }
+        })
+        $("#start_year").bind("keypress", function(e){
+            var keyCode = e.which ? e.which : e.keyCode;
+            if (!(keyCode >= 48 && keyCode <= 57)) {
+                return false;
+            }else {
+                return true;
+            }
+        })
         $("#email").blur(function(){
           var email   = $("#email").val();
           if (email.search('@')>=0) {

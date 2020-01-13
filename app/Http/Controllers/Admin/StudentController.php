@@ -57,8 +57,8 @@ class StudentController extends Controller
             }
         })
         ->addColumn('classroom', function($index){
-            $ch    = Student::findOrFail($index->id)->classroom->name;
-            return $ch;
+            $ch = ClassHistory::where([['status', 1],['student_id', $index->id]])->first();
+            return $ch ? $ch->classroom()->first()->name : null;
         })
         ->addColumn('action', function($index){
             $tag     = Form::open(["url"=>route('student.alumni', $index->id), "method" => "PUT"]);
@@ -68,9 +68,18 @@ class StudentController extends Controller
             return $tag;
         })
         ->rawColumns([
-            'id', 'avatar', 'gender', 'action'
+            'id', 'avatar', 'gender', 'action',
         ])
         ->make(true);
+    }
+
+    public function student()
+    {
+        //JSON untuk AutoComplete
+        $s = Student::where('status',1)->whereHas('classHistories', function($q){
+            $q->where('status',0);
+        })->get();
+        return response()->json($s);
     }
 
     public function create()

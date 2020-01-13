@@ -139,16 +139,17 @@ class UserController extends Controller
 
     public function updateProfile(Request $request, $id)
     {
+        $g = User::findOrFail($id);
         $data     = User::findOrFail($id)->update([
             'name'    => $request->name,
             'nip'    => $request->nip,
-            'gender'    => $request->gender,
+            'gender'    => $g->gender,
             'start_year'    => $request->start_year,
-            'status'    => $request->status,
+            'status'    => $g->status,
         ]);
-        $ps     = ProfileUser::where('teacher_id', $id)->exists();
+        $ps     = ProfileUser::where('user_id', $id)->exists();
         if ($ps) {
-            ProfileUser::findOrFail($id)->update([
+            ProfileUser::where('user_id',$g->id)->update([
                 'nik'      => $request->nik,
                 'address'  => $request->address,
                 'religion' => $request->religion,
@@ -157,9 +158,8 @@ class UserController extends Controller
                 'phone_number' => $request->phone_number
             ]);
         }else {
-            $std     = User::findOrFail($id);
             $prof     = new ProfileUser;
-            $prof->teacher_id = $std->id;
+            $prof->user_id = $g->id;
             $prof->nik = $request->nik;
             $prof->address = $request->address;
             $prof->religion = $request->religion;
@@ -168,8 +168,7 @@ class UserController extends Controller
             $prof->phone_number = $request->phone_number;
             $prof->save();
         }
-        $guru     = User::findOrFail($id);
-        return redirect()->route('teacher.show',[$id])->with('notif', 'Data Informasi '.$guru->name.' berhasil diubah');
+        return redirect()->route('teacher.show',[$id])->with('notif', 'Data Informasi '.$g->name.' berhasil diubah');
     }
 
     public function updateAva(Request $request, $id)

@@ -39,7 +39,8 @@ Route::get('/answertask/{id}/dbtb', 'Admin\AnswerTaskController@dbTables')->name
 Route::get('/home/chartMurid', 'Admin\HomeController@chartMurid')->name('home.chartMurid');
 Route::get('/home/chartGuru', 'Admin\HomeController@chartGuru')->name('home.chartGuru');
 Route::get('/classroom/{id}/chartMurid', 'Admin\ClassroomController@chartMurid')->name('classroom.chartMurid');
-Route::get('/course/teacher', 'Admin\CourseController@user')->name('course.teacher');
+Route::get('/teacher/json', 'Admin\TeacherController@teacher')->name('teacher.json');  //Untuk AutoComplete
+Route::get('/student/json', 'Admin\StudentController@student')->name('student.json');  //Untuk AutoComplete
 //Default
 Route::resource('/home', 'Admin\HomeController');
 Route::resource('/teacher', 'Admin\TeacherController')->except(['destroy']);
@@ -108,6 +109,13 @@ Route::put('/role/{id}', 'Admin\RoleController@update')->name('role.update');
 Route::get('/perm', 'Admin\RoleController@home')->name('perm.home');
 Route::put('/perm/{id}', 'Admin\RoleController@ubah')->name('perm.ubah');
 
+Route::get('/profile/{id}', 'Admin\ProfileController@index')->name('profile.index');
+Route::put('/profile/{id}', 'Admin\ProfileController@update')->name('profile.update');
+Route::put('/profile/{id}/unon', 'Admin\ProfileController@unon')->name('profile.unon');
+Route::put('/profile/{id}/profile', 'Admin\ProfileController@updateProfile')->name('profile.profile');
+Route::put('/profile/{id}/avatar', 'Admin\ProfileController@updateAva')->name('profile.ava');
+
+Route::prefix('studentlog')->group(function () {
 Route::prefix('students')->group(function () {
 	//Student Index Home
     Route::get('/{id}', 'Student\HomeController@index')->name('s1.index');

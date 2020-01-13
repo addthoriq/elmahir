@@ -76,12 +76,6 @@ class CourseController extends Controller
         ->make(true);
     }
 
-    public function user()
-    {
-        $tc     = User::where('role_id',4)->get();
-        return response()->json($tc);
-    }
-
     public function create()
     {
         if (Gate::allows('create-course')) {

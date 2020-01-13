@@ -15,7 +15,7 @@
                     </div>
                     <div class="form-group">
                         <label>Wali Kelas</label>
-                        <input type="text" value="{{$data->user->name}}" name="user_id" class="form-control">
+                        <input type="text" value="{{$data->user->name}}" id="user_id" autocomplete="off" data-provide="typeahead" class="typeahead form-control" name="user_id">
                     </div>
                     <div class="form-group">
                         <label>Kapasitas Kelas</label>

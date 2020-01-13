@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Model\Classroom;
+use App\Model\User;
 use App\Model\ClassHistory;
+use App\Model\SchoolYear;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Form;
@@ -38,7 +40,7 @@ class ClassroomController extends Controller
             return isset($index->user->name) ? $index->user->name : '-';
         })
         ->addColumn('total_student', function($index){
-            return Classhistory::where([['status', 1],['classroom_id', $index->id]])->count();
+            return ClassHistory::where([['status', 1],['classroom_id', $index->id]])->count();
         })
         ->addColumn('action', function($index){
             $tag     = Form::open(["url"=>route('classroom.destroy', $index->id), "method" => "DELETE"]);
@@ -56,7 +58,9 @@ class ClassroomController extends Controller
     public function create()
     {
         if (Gate::allows('create-classroom')) {
-            return view($this->folder.'.create');
+            $years = SchoolYear::all();
+            return view($this->folder.'.create', compact('years'));
+            // abort(500); //perbaiki dulu di Student JSON nya
         }else {
             abort(403);
         }
@@ -65,13 +69,19 @@ class ClassroomController extends Controller
     public function store(Request $request)
     {
         if (Gate::allows('create-classroom')) {
-            $count     = count($request->name);
-            for ($i=0; $i < $count; $i++) {
-                $data                 = new Classroom;
-                $data->user_id        = $request->user_id[$i];
-                $data->name           = $request->name[$i];
-                $data->max_student    = $request->max_student[$i];
-                $data->save();
+            $t = User::where('name', '=', $request->user_id)->first();
+            $data                 = new Classroom;
+            $data->user_id        = $t->id;
+            $data->name           = $request->name;
+            $data->max_student    = $request->max_student;
+            $data->save();
+            foreach ($request->student_id as $std) {
+                $kelas     = new ClassHistory;
+                $kelas->student_id = $std;
+                $kelas->school_year_id = $request->school_year_id;
+                $kelas->classroom_id = $data->id;
+                $kelas->status     = 1;
+                $kelas->save();
             }
             return redirect($this->rdr)->with('notif', 'Ruang Kelas berhasil ditambahkan');
         }else {
@@ -105,11 +115,12 @@ class ClassroomController extends Controller
     public function update(Request $request, $id)
     {
         if (Gate::allows('update-course')) {
+            $t = User::where('name', '=', $request->user_id)->first();
             Classroom::findOrFail($id)->update([
-                'school_year_id'    => $request->school_year_id,
-                'teacher_id'        => $request->teacher_id,
-                'name'              => $request->name,
-                'max_student'     => $request->max_student,
+                'school_year_id' => $request->school_year_id,
+                'user_id' => $t->id,
+                'name' => $request->name,
+                'max_student' => $request->max_student,
             ]);
             return redirect()->route('classroom.show', [$id])->with('notif', 'Ruang Kelas berhasil diubah');
         }else {

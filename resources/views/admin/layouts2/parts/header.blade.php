@@ -138,10 +138,8 @@
                         <span class="activity active"></span>
                         {{-- <img src="{{ asset('qlab/images/user/1.png') }}" height="40" width="40" alt=""> --}}
                         @if (auth()->check())
-                            @if(auth()->user()->poto)
-                                <img src="{{Storage::url(auth()->user()->poto)}}" height="40" width="40">
-                            @elseif(auth()->user()->avatar)
-                                <img src="{{auth()->user()->avatar}}" height="40" width="40">
+                            @if(auth()->user()->avatar)
+                                <img src="{{Storage::url(auth()->user()->avatar)}}" height="40" width="40">
                             @else
                                 <img src="{{Avatar::create(auth()->user()->name)->toBase64()}}" height="40" width="40">
                             @endif
@@ -151,7 +149,7 @@
                         <div class="dropdown-content-body">
                             <ul>
                                 <li>
-                                    <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
+                                    <a href="{{route('profile.index', auth()->user()->id)}}"><i class="icon-user"></i> <span>Profile</span></a>
                                 </li>
                                 <li>
                                     <a href="javascript:void()">

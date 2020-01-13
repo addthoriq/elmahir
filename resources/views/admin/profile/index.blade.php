@@ -16,8 +16,7 @@
             <div class="col pd-md-0">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('user.index')}}">Daftar User</a></li>
-                    <li class="breadcrumb-item active"><a href="">Detail User</a></li>
+                    <li class="breadcrumb-item active"><a href="">Profil dan Pengaturan</a></li>
                 </ol>
             </div>
         </div>
@@ -26,16 +25,16 @@
                 <div class="col-12">
                     <div class="card">
                         {{-- Modal disini --}}
-                        @include('admin.users.edit')
-                        @include('admin.users.editProfile')
-                        @include('admin.users.editAvatar')
+                        @include('admin.profile.edit')
+                        @include('admin.profile.editProfile')
+                        @include('admin.profile.editAvatar')
                         <div class="card-body">
                             <div class="dropdown">
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Ubah User</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Profil dan Pengaturan</button>
                                 <div class="dropdown-menu">
-                                    <a data-toggle="modal" class="dropdown-item" href="#editAccount"><i class="fa fa-wrench"></i> Ubah Akun</a>
-                                    <a data-toggle="modal" class="dropdown-item" href="#editProfile"><i class="fa fa-user"></i> Ubah Profil</a>
-                                    <a data-toggle="modal" class="dropdown-item" href="#editAvatar"><i class="fas fa-image"></i> Ubah Poto Profil</a>
+                                    <a data-toggle="modal" class="dropdown-item" href="#editAccount"><i class="fa fa-wrench"></i> Pengaturan Akun</a>
+                                    <a data-toggle="modal" class="dropdown-item" href="#editProfile"><i class="fa fa-user"></i> Profil</a>
+                                    <a data-toggle="modal" class="dropdown-item" href="#editAvatar"><i class="fas fa-image"></i> Poto Profil</a>
                                 </div>
                             </div>
                             @if (session('notif'))
@@ -51,21 +50,14 @@
                                     <img alt="image" class="rounded-circle mt-2" src="{{Avatar::create($data->name)->toBase64()}}">
                                 @endif
                                 <h4 class="my-3">{{$data->name}}</h4>
-                                @if($data->status)
-                                    <span class='label label-pill label-success'>Aktif</span>
-                                    @if ($data->role_id == 1)
-                                        <span class='label label-pill label-warning'>Admin</span>
-                                    @elseif ($data->role_id == 2)
-                                        <span class='label label-pill label-info'>Operator 1</span>
-                                    @elseif ($data->role_id == 3)
-                                        <span class='label label-pill label-success'>Operator 2</span>
-                                    @elseif ($data->role_id == 4)
-                                        <span class='label label-pill label-primary'>Pengajar</span>
-                                    @else
-                                        <span class='label label-pill label-light'>Pegawai</span>
-                                    @endif
+                                @if ($data->role_id == 1)
+                                    <span class='label label-pill label-warning'>Admin</span>
+                                @elseif ($data->role_id == 2)
+                                    <span class='label label-pill label-info'>Operator 1</span>
+                                @elseif ($data->role_id == 3)
+                                    <span class='label label-pill label-success'>Operator 2</span>
                                 @else
-                                    <span class='label label-pill label-danger'>Pegawai tidak Aktif</span>
+                                    <span class='label label-pill label-primary'>Pengajar</span>
                                 @endif
                             </div>
                             <div class="table-responsive">
@@ -146,25 +138,24 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Dibuat pada</th>
+                                            <th>Akun dibuat pada</th>
                                             <td>
                                                 {{date('d F Y', strtotime($data->created_at))}}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Diubah pada</th>
+                                            <th>Tutup Akun</th>
                                             <td>
-                                                {{date('d F Y', strtotime($data->updated_at))}}
+                                                <form action="{{route('profile.unon',$data->id)}}" method="post">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit" class="btn btn-outline-danger" onclick='javascript:return confirm(`Apakah anda yakin ingin menutup akun ini?`)'>Saya ingin menutup akun ini</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <form action="{{route('user.unon',$data->id)}}" method="post">
-                                    @csrf
-                                    @method('PUT')
-                                    <a href="{{route('user.index')}}" class="btn btn-sm btn-light"><i class="fa fa-chevron-left"></i> Kembali</a>
-                                    <button type="submit" class="btn btn-sm btn-danger pull-right" onclick='javascript:return confirm(`Apakah anda yakin ingin menonaktifkan {{$data->name}} dari Pegawai aktif?`)'><i class="fa fa-minus-square"></i> Nonaktifkan</button>
-                                </form>
+                                <a href="{{route('home.index')}}" class="btn btn-sm btn-light"><i class="fa fa-chevron-left"></i> Kembali</a>
                             </div>
                         </div>
                     </div>
@@ -175,5 +166,5 @@
 @endsection
 
 @section('script')
-    @include('admin.users.script')
+    @include('admin.profile.script')
 @endsection

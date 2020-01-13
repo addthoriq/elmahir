@@ -1,5 +1,5 @@
 @extends('admin.layouts2.app')
-@section('title', 'Data Alumnus')
+@section('title', 'Data Siswa')
 @section('style')
     <link href="{{asset('qlab/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet">
     <link href="{{asset('jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">

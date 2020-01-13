@@ -121,17 +121,17 @@
     </script>
     <script src="{{asset('qlab/plugins/typehead/bootstrap3-typeahead.min.js')}}"></script>
     <script>
-    var teacher = "{{route('course.teacher')}}";
-        $(document).ready(function(){
-            $.get(teacher, function(response){
-                if (response == "") {
-                    document.getElementById('user_id').readOnly = true;
-                }else {
-                    $('.typeahead').typeahead({
-                        source: response
-                    });
-                }
-            })
+    var teacher = "{{route('teacher.json')}}";
+    $(document).ready(function(){
+        $.get(teacher, function(response){
+            if (response == "") {
+                document.getElementById('user_id').readOnly = true;
+            }else {
+                $('.typeahead').typeahead({
+                    source: response
+                });
+            }
         })
+    })
     </script>
 @endsection

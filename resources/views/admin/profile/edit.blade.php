@@ -4,9 +4,9 @@
         <div class="modal-content">
             <div class="modal-body">
 
-                <h3 class="m-t-none m-b">Ubah Akun Login Pengajar</h3>
+                <h3 class="m-t-none m-b">Ubah Akun Login User</h3>
                 <p>Mengubah data Akun Login {{$data->name}}</p>
-                <form method="POST" action="{{route('teacher.update',$data->id)}}" class="edit">
+                <form method="POST" action="{{route('profile.update',$data->id)}}" class="edit">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -14,7 +14,7 @@
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-at"></i></span>
                             </div>
-                            <input required id="email" value="{{$data->email}}" name="email" type="text" class="form-control">
+                            <input id="email" value="{{$data->email}}" name="email" type="text" class="form-control">
                         </div>
                         <span id="textEmail" class="text-danger"></span>
                     </div>
