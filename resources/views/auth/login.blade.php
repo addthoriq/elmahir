@@ -52,9 +52,19 @@
                             <div class="input-group">
                                 <input required class="input--style-2" type="email" placeholder="Email" name="email">
                             </div>
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                             <div class="input-group">
                                 <input required class="input--style-2" type="password" placeholder="Kata Sandi" name="password">
                             </div>
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                             <div class="p-t-10">
                                 <button class="btn btn--radius btn--blue" type="submit">Masuk sebagai Pengajar</button>
                             </div>

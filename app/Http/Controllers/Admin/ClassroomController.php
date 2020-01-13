@@ -57,7 +57,8 @@ class ClassroomController extends Controller
     public function create()
     {
         if (Gate::allows('create-classroom')) {
-            return view($this->folder.'.create');
+            // return view($this->folder.'.create');
+            abort(500); //perbaiki dulu di Student JSON nya
         }else {
             abort(403);
         }

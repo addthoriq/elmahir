@@ -73,6 +73,18 @@ class StudentController extends Controller
         ->make(true);
     }
 
+    public function student()
+    {
+        //JSON untuk AutoComplete
+        $doesnt = Student::where('status',1)->get();
+        $m = ClassHistory::where('status',0)->get();
+
+        $c = Student::whereHas();
+
+        dd($m->student_id);
+        return response()->json($doesnt);
+    }
+
     public function create()
     {
         if (Gate::allows('create-student')) {

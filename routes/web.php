@@ -40,6 +40,7 @@ Route::get('/home/chartMurid', 'Admin\HomeController@chartMurid')->name('home.ch
 Route::get('/home/chartGuru', 'Admin\HomeController@chartGuru')->name('home.chartGuru');
 Route::get('/classroom/{id}/chartMurid', 'Admin\ClassroomController@chartMurid')->name('classroom.chartMurid');
 Route::get('/teacher/json', 'Admin\TeacherController@teacher')->name('teacher.json');  //Untuk AutoComplete
+Route::get('/student/json', 'Admin\StudentController@student')->name('student.json');  //Untuk AutoComplete
 //Default
 Route::resource('/home', 'Admin\HomeController');
 Route::resource('/teacher', 'Admin\TeacherController')->except(['destroy']);
