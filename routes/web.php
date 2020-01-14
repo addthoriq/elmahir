@@ -115,7 +115,6 @@ Route::put('/profile/{id}/unon', 'Admin\ProfileController@unon')->name('profile.
 Route::put('/profile/{id}/profile', 'Admin\ProfileController@updateProfile')->name('profile.profile');
 Route::put('/profile/{id}/avatar', 'Admin\ProfileController@updateAva')->name('profile.ava');
 
-Route::prefix('studentlog')->group(function () {
 Route::prefix('students')->group(function () {
 	//Student Index Home
     Route::get('/{id}', 'Student\HomeController@index')->name('s1.index');
