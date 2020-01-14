@@ -80,6 +80,20 @@
         @endif
       </div>
     </div>
+
+    @if ($tasks == null)
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="alert alert-info alert-has-icon">
+            <div class="alert-icon"><i class="fas fa-exclamation"></i></div>
+              <div class="alert-body">
+                <div class="alert-title">Kosong!</div>
+                Anda tidak memiliki Tugas untuk dikerjakan. Tunggu guru anda memberika tugas.
+            </div>
+          </div>
+        </div>
+      </div>
+    @endif
     
     <div class="row">
       @php
