@@ -118,6 +118,7 @@ Route::put('/profile/{id}/avatar', 'Admin\ProfileController@updateAva')->name('p
 Route::prefix('students')->group(function () {
 	//Student Index Home
     Route::get('/{id}', 'Student\HomeController@index')->name('s1.index');
-    Route::get('/{id}/detailtask', 'Student\HomeController@showTask')->name('s3.showTask');
-    Route::get('/coursedetail', 'Student\CourseDetailController@index')->name('s2.index');
+    Route::get('/{id}/course', 'Student\HomeController@showCourse')->name('s2.showCourse');
+    Route::get('/{id}/course/section', 'Student\HomeController@showSection')->name('s3.showSection');
+    Route::get('/{id}/course/task', 'Student\HomeController@showTask')->name('s4.showTask');
 });
