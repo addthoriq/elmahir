@@ -33,7 +33,7 @@
                         <a class="tablinks" onclick="openCity(event, 'pengajar')"><i class="fa fa-users"></i> Pengajar</a>
                     </div>
                     <div id="siswa" class="tabcontent">
-                        <form method="POST">
+                        <form method="POST" action="{{route('students-login')}}">
                             @csrf
                             <div class="input-group">
                                 <input required class="input--style-2" type="email" placeholder="Email" name="email">

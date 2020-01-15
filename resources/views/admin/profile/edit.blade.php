@@ -6,7 +6,7 @@
 
                 <h3 class="m-t-none m-b">Ubah Akun Login User</h3>
                 <p>Mengubah data Akun Login {{$data->name}}</p>
-                <form method="POST" action="{{route('profile.update',$data->id)}}" class="edit">
+                <form method="POST" action="{{route('profile.update')}}" class="edit">
                     @csrf
                     @method('PUT')
                     <div class="form-group">

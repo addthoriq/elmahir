@@ -149,7 +149,7 @@
                         <div class="dropdown-content-body">
                             <ul>
                                 <li>
-                                    <a href="{{route('profile.index', auth()->user()->id)}}"><i class="icon-user"></i> <span>Profile</span></a>
+                                    <a href="{{route('profile.index')}}"><i class="icon-user"></i> <span>Profile</span></a>
                                 </li>
                                 <li>
                                     <a href="javascript:void()">

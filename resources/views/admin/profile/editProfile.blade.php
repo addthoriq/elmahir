@@ -6,7 +6,7 @@
 
                 <h3 class="m-t-none m-b">Profil Elearning</h3>
                 <p>Mengubah Informasi pribadi</p>
-                <form method="POST" action="{{route('profile.profile',$data->id)}}" class="edit">
+                <form method="POST" action="{{route('profile.profile')}}" class="edit">
                     @csrf
                     @method('PUT')
                     <div class="row">

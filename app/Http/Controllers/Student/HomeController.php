@@ -7,20 +7,27 @@ use App\Model\Course;
 use App\Model\User;
 use App\Model\Student;
 use App\Model\Classroom;
+use App\Model\ClassHistory;
 use App\Model\Section;
 use App\Model\AnswerTask;
 use App\Model\Task;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    public function index($id)
+    public function __construct()
     {
-    	$student = Student::find($id);
-    	$courses = Course::where('classroom', $student->classroom->name)->get();
-    	$tasks = Task::all();
-    	return view('student.index', compact('courses', 'tasks', 'student'));
+        $this->middleware('auth:student');
+    }
+
+    public function index()
+    {
+        $ch = ClassHistory::where('student_id',Auth::user()->id)->first();
+        $courses = Course::where('classroom', $ch->classroom->name)->get();
+        $tasks = Task::all();
+        return view('student.index', compact('courses', 'tasks'));
     }
 
     public function showCourse($id)
