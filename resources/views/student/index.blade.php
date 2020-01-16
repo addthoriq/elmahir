@@ -67,7 +67,7 @@
         </div>
       @endfor
     </div>
-    
+
     <!-- List Tugas -->
     <div class="row">
       <div class="col-md-10">
@@ -94,7 +94,7 @@
         </div>
       </div>
     @endif
-    
+
     <div class="row">
       @php
         $count2 = count($tasks);

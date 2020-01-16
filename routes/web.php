@@ -119,8 +119,14 @@ Route::put('/profile/avatar', 'Admin\ProfileController@updateAva')->name('profil
 
 Route::prefix('students')->group(function () {
 	//Student Index Home
-    Route::get('/{id}', 'Student\HomeController@index')->name('s1.index');
+    Route::get('/home', 'Student\HomeController@index')->name('s1.index');
     Route::get('/{id}/course', 'Student\HomeController@showCourse')->name('s2.showCourse');
     Route::get('/{id}/course/section', 'Student\HomeController@showSection')->name('s3.showSection');
     Route::get('/{id}/course/task', 'Student\HomeController@showTask')->name('s4.showTask');
+	//Student Profile
+	Route::get('/profile', 'Student\ProfileController@index')->name('spr.index');
+	Route::put('/profile', 'Student\ProfileController@update')->name('spr.update');
+	Route::put('/profile/unon', 'Student\ProfileController@unon')->name('spr.unon');
+	Route::put('/profile/profile', 'Student\ProfileController@updateProfile')->name('spr.profile');
+	Route::put('/profile/avatar', 'Student\ProfileController@updateAva')->name('spr.ava');
 });
