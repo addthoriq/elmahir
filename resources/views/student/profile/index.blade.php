@@ -4,6 +4,7 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{asset('stisla/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('stisla/assets/css/components.css')}}">
+    <link rel="stylesheet" href="{{asset('bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}" integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous" />
     <link href="{{asset('jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     <style media="screen">
         .fileinput-preview.fileinput-exists.img-thumbnail img{
@@ -36,7 +37,7 @@
                 <div class="profile-widget-items">
                     <div class="profile-widget-item">
                         <div class="profile-widget-item-label">Kelas</div>
-                        <div class="profile-widget-item-value">{{$ch->classroom->name}}</div>
+                        <div class="profile-widget-item-value">{{$c->classroom->name}}</div>
                     </div>
                 </div>
               </div>
@@ -69,7 +70,7 @@
                  </div>
                  <div class="row">
                      <div class="col-md-12 col-12">
-                         <button class="btn btn-primary" data-toggle="modal" data-target="#edit">Ubah Avatar dan Akun</button>
+                         <button class="btn btn-primary float-right" data-toggle="modal" data-target="#edit"><i class="fas fa-wrench"></i> Ubah Avatar dan Akun</button>
                      </div>
                  </div>
               </div>
@@ -78,64 +79,133 @@
 
           <div class="col-12 col-md-12 col-lg-7">
             <div class="card">
-              <form method="post" class="needs-validation" novalidate="">
+              <form method="post" class="needs-validation" action="{{route('spr.profile')}}">
+                  @csrf
+                  @method('PUT')
                 <div class="card-header">
-                  <h4>Edit Profile</h4>
+                  <h4>Informasi Pribadi</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                      <div class="form-group col-md-6 col-12">
-                        <label>First Name</label>
-                        <input type="text" class="form-control" value="Ujang" required="">
-                        <div class="invalid-feedback">
-                          Please fill in the first name
+                    @isset($data->profileStudent->nik)
+                        <div class="form-group col-md-6 col-12">
+                            <label id="labelNik" for="nik">Nomor Induk Kependudukan (NIK)</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-address-card"></i></span></div>
+                                <input required readonly id="nik" type="text" maxlength="16" value="{{isset($data->profileStudent->nik)?$data->profileStudent->nik:''}}" name="nik" class="form-control">
+                            </div>
+                            <i id="noticeNik"></i>
                         </div>
-                      </div>
-                      <div class="form-group col-md-6 col-12">
-                        <label>Last Name</label>
-                        <input type="text" class="form-control" value="Maman" required="">
-                        <div class="invalid-feedback">
-                          Please fill in the last name
+                    @endisset
+                @empty ($data->profileStudent->nik)
+                        <div class="form-group col-md-6 col-12">
+                            <label id="labelNip" for="nik">Nomor Induk Kependudukan (NIK)</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-address-card"></i></span></div>
+                                <input required id="nik" type="text" maxlength="16" value="{{isset($data->profileStudent->nik)?$data->profileStudent->nik:''}}" name="nik" class="form-control">
+                            </div>
+                            <i id="noticeNik"></i>
                         </div>
-                      </div>
+                    @endempty
+                    <div class="form-group col-md-6 col-12">
+                        <label id="labelReligion">Agama </label>
+                        <select id="religion" class="form-control m-b" name="religion">
+                            <option selected value="{{isset($data->profileStudent->religion)?$data->profileStudent->religion:''}}">-- {{isset($data->profileStudent->religion)?$data->profileStudent->religion:'Pilih Agama'}} --</option>
+                            <option value="Islam">Islam</option>
+                            <option value="Kristen">Kristen</option>
+                            <option value="Katolik">Katolik</option>
+                            <option value="Hindu">Hindu</option>
+                            <option value="Budha">Budha</option>
+                            <option value="Konghucu">Konghucu</option>
+                        </select>
+                    </div>
                     </div>
                     <div class="row">
-                      <div class="form-group col-md-7 col-12">
-                        <label>Email</label>
-                        <input type="email" class="form-control" value="ujang@maman.com" required="">
-                        <div class="invalid-feedback">
-                          Please fill in the email
+                        <div class="form-group col-md-6 col-12">
+                            <label id="labelTtl" for="ttl">Tempat Lahir</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-thumbtack"></i></span></div>
+                                <input id="ttl" type="text" value="{{isset($data->profileStudent->place_of_birth)?$data->profileStudent->place_of_birth:''}}" name="place_of_birth" class="form-control">
+                            </div>
+                            <i id="noticeTtl"></i>
                         </div>
-                      </div>
-                      <div class="form-group col-md-5 col-12">
-                        <label>Phone</label>
-                        <input type="tel" class="form-control" value="">
-                      </div>
+                        <div class="form-group col-md-6 col-12">
+                            <label id="labelDate" class="font-normal">Tanggal Lahir</label>
+                            <div class="input-group">
+                                <span class="input-group-append"><span class="input-group-text"><i class="fas fa-calendar-alt"></i></span></span>
+                                <input type="text" class="form-control datepicker" maxlength="10" id="datepicker" value="{{isset($data->profileStudent->date_of_birth)?$data->profileStudent->date_of_birth:''}}" placeholder="20-05-2000" name="date_of_birth">
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
-                      <div class="form-group col-12">
-                        <label>Bio</label>
-                        <textarea class="form-control summernote-simple">Ujang maman is a superhero name in <b>Indonesia</b>, especially in my family. He is not a fictional character but an original hero in my family, a hero for his children and for his wife. So, I use the name as a user in this template. Not a tribute, I'm just bored with <b>'John Doe'</b>.</textarea>
-                      </div>
+                        <div class="form-group col-md-12 col-12">
+                            <label id="labelAddress" for="address">Alamat</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span></div>
+                                <input required id="address" type="text" value="{{isset($data->profileStudent->address)?$data->profileStudent->address:''}}" name="address" class="form-control">
+                            </div>
+                            <i id="noticeAddress"></i>
+                        </div>
                     </div>
                     <div class="row">
-                      <div class="form-group mb-0 col-12">
-                        <div class="custom-control custom-checkbox">
-                          <input type="checkbox" name="remember" class="custom-control-input" id="newsletter">
-                          <label class="custom-control-label" for="newsletter">Subscribe to newsletter</label>
-                          <div class="text-muted form-text">
-                            You will get new information about products, offers and promotions
-                          </div>
+                        <div class="form-group col-md-12 col-12">
+                            <label id="labelPhone" for="phone">Nomor Hp</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-phone"></i></span></div>
+                                <input required id="phone" type="number" maxlength="12" value="{{isset($data->profileStudent->phone_number)?$data->profileStudent->phone_number:''}}" name="phone_number" class="form-control">
+                            </div>
+                            <i id="noticePhone"></i>
                         </div>
-                      </div>
                     </div>
-                </div>
-                <div class="card-footer text-right">
-                  <button class="btn btn-primary">Save Changes</button>
+                    <div class="row">
+                        <div class="form-group col-md-12 col-12">
+                            <button class="btn btn-primary float-right" type="submit"><i class="fas fa-save"></i> Simpan</button>
+                        </div>
+                    </div>
                 </div>
               </form>
             </div>
           </div>
+
+          <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Riwayat Kelas</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kelas</th>
+                                <th>Tahun Ajaran</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $no     = 1;
+                            @endphp
+                            @foreach ($ch as $h)
+                                <tr>
+                                    <td>{{$no++}}</td>
+                                    <td>{{$h->classroom->name}}</td>
+                                    <td>{{$h->school_year->start_year}}/{{$h->school_year->end_year}}</td>
+                                    <td>
+                                        @if ($h->status)
+                                            <span class='badge badge-success'>Kelas Saat ini</span>
+                                        @else
+                                            <span class='badge badge-danger'>Selesai</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

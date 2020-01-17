@@ -21,8 +21,9 @@ class ProfileController extends Controller
     public function index()
     {
         $data = Student::findOrFail(Auth::user()->id);
-        $ch = ClassHistory::where('student_id',Auth::user()->id)->first();
-        return view($this->folder.'.index', compact('data', 'ch'));
+        $c = ClassHistory::where('student_id',Auth::user()->id)->first();
+        $ch = ClassHistory::where('student_id',Auth::user()->id)->get();
+        return view($this->folder.'.index', compact('data', 'ch', 'c'));
     }
     public function update(Request $request)
     {
@@ -42,9 +43,9 @@ class ProfileController extends Controller
     }
     public function updateProfile(Request $request)
     {
-        $ps     = ProfileStudent::where('user_id', Auth::user()->id)->exists();
+        $ps     = ProfileStudent::where('student_id', Auth::user()->id)->exists();
         if ($ps) {
-            ProfileStudent::where('user_id',$u->id)->update([
+            ProfileStudent::where('student_id',$u->id)->update([
                 'nik'      => $request->nik,
                 'address'  => $request->address,
                 'religion' => $request->religion,
@@ -54,7 +55,7 @@ class ProfileController extends Controller
             ]);
         }else {
             $prof     = new ProfileStudent;
-            $prof->user_id = Auth::user()->id;
+            $prof->student_id = Auth::user()->id;
             $prof->nik = $request->nik;
             $prof->address = $request->address;
             $prof->religion = $request->religion;

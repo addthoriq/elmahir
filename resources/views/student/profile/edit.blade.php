@@ -10,10 +10,10 @@
       <div class="modal-body">
           <ul class="nav nav-pills" id="myTab3" role="tablist">
               <li class="nav-item">
-                <a class="nav-link active" id="home-tab3" data-toggle="tab" href="#home3" role="tab" aria-controls="home" aria-selected="true">Poto Profil</a>
+                <a class="nav-link active" id="home-tab3" data-toggle="tab" href="#home3" role="tab" aria-controls="home" aria-selected="true"><i class="fas fa-image"></i> Poto Profil</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#profile3" role="tab" aria-controls="profile" aria-selected="false">Informasi Akun</a>
+                <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#profile3" role="tab" aria-controls="profile" aria-selected="false"><i class="fas fa-address-card"></i> Informasi Akun</a>
               </li>
           </ul>
           <div class="tab-content" id="myTabContent2">
@@ -36,12 +36,12 @@
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                               <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: 200px;"></div>
                               <div>
-                                <span class="btn btn-outline-secondary btn-file">
+                                <span class="btn btn-outline-dark btn-file">
                                     <span class="fileinput-new">Pilih Gambar</span>
                                     <span class="fileinput-exists">Ubah</span>
                                     <input type="file" accept="image/*" name="avatar">
                                 </span>
-                                <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Hapus</a>
+                                <a href="#" class="btn btn-outline-dark fileinput-exists" data-dismiss="fileinput">Hapus</a>
                               </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label id="labelPass" for="password">Password (Kosongkan Password jika tidak diganti)</label>
+                                <label id="labelPass" for="password">Password (Kosongkan jika tidak diganti)</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">

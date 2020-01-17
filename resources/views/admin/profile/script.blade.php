@@ -8,7 +8,7 @@
     $(document).ready(function(){
         $('#mdate').bootstrapMaterialDatePicker({
             time: false,
-            clearButton: false
+            clearButton: false,
         });
         $('.custom-file-input').on('change', function() {
             let fileName = $(this).val().split('\\').pop();

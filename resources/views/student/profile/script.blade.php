@@ -1,13 +1,36 @@
+<script src="{{asset('bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
 <script src="{{asset('stisla/assets/js/page/bootstrap-modal.js')}}"></script>
 <!-- Jasny -->
 <script src="{{asset('jasny/jasny-bootstrap.min.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function(){
+        $('.datepicker').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            keepEmptyValues: true,
+            language: 'id'
+        });
         $('.custom-file-input').on('change', function() {
             let fileName = $(this).val().split('\\').pop();
             $(this).next('.custom-file-label').addClass("selected").html(fileName);
         });
+        $("#datepicker").bind("keypress", function(e){
+            var keyCode = e.which ? e.which : e.keyCode;
+            if (!(keyCode >= 45 && keyCode <= 57)) {
+                return false;
+            }else {
+                return true;
+            }
+        })
         $("#nisn").bind("keypress", function(e){
+            var keyCode = e.which ? e.which : e.keyCode;
+            if (!(keyCode >= 48 && keyCode <= 57)) {
+                return false;
+            }else {
+                return true;
+            }
+        })
+        $("#nik").bind("keypress", function(e){
             var keyCode = e.which ? e.which : e.keyCode;
             if (!(keyCode >= 48 && keyCode <= 57)) {
                 return false;

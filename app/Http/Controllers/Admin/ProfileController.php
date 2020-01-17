@@ -38,27 +38,19 @@ class ProfileController extends Controller
     }
     public function updateProfile(Request $request)
     {
-        $u = User::findOrFail(Auth::user()->id);
-        $data     = User::findOrFail(Auth::user()->id)->update([
-            'name'    => $request->name,
-            'nip'    => $request->nip,
-            'gender'    => $u->gender,
-            'start_year'    => $request->start_year,
-            'status'    => $u->status,
-        ]);
         $ps     = ProfileUser::where('user_id', Auth::user()->id)->exists();
         if ($ps) {
             ProfileUser::where('user_id',$u->id)->update([
-                'nik'      => $request->nik,
-                'address'  => $request->address,
+                'nik' => $request->nik,
+                'address' => $request->address,
                 'religion' => $request->religion,
                 'place_of_birth' => $request->place_of_birth,
                 'date_of_birth' => $request->date_of_birth,
                 'phone_number' => $request->phone_number
             ]);
         }else {
-            $prof     = new ProfileUser;
-            $prof->user_id = $u->id;
+            $prof = new ProfileUser;
+            $prof->user_id = Auth::user()->id;
             $prof->nik = $request->nik;
             $prof->address = $request->address;
             $prof->religion = $request->religion;
