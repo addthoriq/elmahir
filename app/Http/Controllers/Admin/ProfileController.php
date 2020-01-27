@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\User;
 use App\Model\ProfileUser;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -15,49 +16,41 @@ class ProfileController extends Controller
     }
     protected $folder = 'admin.profile';
     protected $rdr = '/profile';
-    public function index($id)
+    public function index()
     {
-        $data = User::findOrFail($id);
+        $data = User::findOrFail(Auth::user()->id);
         return view($this->folder.'.index', compact('data'));
     }
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         if (empty($request->password)) {
-            User::find($id)->update([
+            User::find(Auth::user()->id)->update([
                 'email'    => $request->email,
             ]);
         }else {
-            User::find($id)->update([
+            User::find(Auth::user()->id)->update([
                 'email'    => $request->email,
                 'password' => bcrypt($request->password),
             ]);
         }
-        $data     = User::findOrFail($id);
-        return redirect()->route('profile.index', [$id])->with('notif', 'Akun anda berhasil diubah');
+        $data     = User::findOrFail(Auth::user()->id);
+        return redirect()->route('profile.index')->with('notif', 'Akun anda berhasil diubah');
     }
-    public function updateProfile(Request $request, $id)
+    public function updateProfile(Request $request)
     {
-        $u = User::findOrFail($id);
-        $data     = User::findOrFail($id)->update([
-            'name'    => $request->name,
-            'nip'    => $request->nip,
-            'gender'    => $u->gender,
-            'start_year'    => $request->start_year,
-            'status'    => $u->status,
-        ]);
-        $ps     = ProfileUser::where('user_id', $id)->exists();
+        $ps     = ProfileUser::where('user_id', Auth::user()->id)->exists();
         if ($ps) {
             ProfileUser::where('user_id',$u->id)->update([
-                'nik'      => $request->nik,
-                'address'  => $request->address,
+                'nik' => $request->nik,
+                'address' => $request->address,
                 'religion' => $request->religion,
                 'place_of_birth' => $request->place_of_birth,
                 'date_of_birth' => $request->date_of_birth,
                 'phone_number' => $request->phone_number
             ]);
         }else {
-            $prof     = new ProfileUser;
-            $prof->user_id = $u->id;
+            $prof = new ProfileUser;
+            $prof->user_id = Auth::user()->id;
             $prof->nik = $request->nik;
             $prof->address = $request->address;
             $prof->religion = $request->religion;
@@ -66,11 +59,11 @@ class ProfileController extends Controller
             $prof->phone_number = $request->phone_number;
             $prof->save();
         }
-        return redirect()->route('profile.index',[$id])->with('notif', 'Data Informasi anda berhasil diubah');
+        return redirect()->route('profile.index')->with('notif', 'Data Informasi anda berhasil diubah');
     }
-    public function updateAva(Request $request, $id)
+    public function updateAva(Request $request)
     {
-        $user     = User::findOrFail($id);
+        $user     = User::findOrFail(Auth::user()->id);
         $ava      = $request->file('avatar');
         if ($ava) {
             if ($user->avatar && file_exists(storage_path('app/public/'.$user->avatar)) ) {
@@ -80,15 +73,15 @@ class ProfileController extends Controller
             $user->avatar = $ava_path;
         }
         $user->save();
-        return redirect()->route('profile.index', [$id])->with('notif', 'Poto Profil anda berhasil diubah');
+        return redirect()->route('profile.index')->with('notif', 'Poto Profil anda berhasil diubah');
     }
-    public function unon(Request $request, $id)
+    public function unon(Request $request)
     {
         // if (Gate::allows('update-nonuser')) {
-            User::findOrFail($id)->update([
+            User::findOrFail(Auth::user()->id)->update([
                 'status'    => 0,
             ]);
-            $data = User::findOrFail($id);
+            $data = User::findOrFail(Auth::user()->id);
             return redirect($this->rdr)->with('notif', 'Akun anda berhasil di tutup!');
         // }else {
         //     abort(403);

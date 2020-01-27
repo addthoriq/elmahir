@@ -17,7 +17,7 @@
                     </div>
                 </div>
 
-                <form method="POST" action="{{route('profile.ava',$data->id)}}" enctype="multipart/form-data">
+                <form method="POST" action="{{route('profile.ava')}}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">

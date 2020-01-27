@@ -137,19 +137,19 @@
                     <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                         <span class="activity active"></span>
                         {{-- <img src="{{ asset('qlab/images/user/1.png') }}" height="40" width="40" alt=""> --}}
-                        @if (auth()->check())
+                        @auth
                             @if(auth()->user()->avatar)
                                 <img src="{{Storage::url(auth()->user()->avatar)}}" height="40" width="40">
                             @else
                                 <img src="{{Avatar::create(auth()->user()->name)->toBase64()}}" height="40" width="40">
                             @endif
-                        @endif
+                        @endauth
                     </div>
                     <div class="drop-down dropdown-profile dropdown-menu">
                         <div class="dropdown-content-body">
                             <ul>
                                 <li>
-                                    <a href="{{route('profile.index', auth()->user()->id)}}"><i class="icon-user"></i> <span>Profile</span></a>
+                                    <a href="{{route('profile.index')}}"><i class="icon-user"></i> <span>Profile</span></a>
                                 </li>
                                 <li>
                                     <a href="javascript:void()">
