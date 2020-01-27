@@ -45,10 +45,10 @@
                 <a class="nav-link" id="guru1" data-toggle="tab" href="#guru" role="tab" aria-controls="guru" aria-selected="false">Guru</a>
               </li>
             </ul>
-            
+
             <div class="tab-content" id="myTabContent2">
               <div class="tab-pane fade show active" id="siswa" role="tabpanel" aria-labelledby="siswa1">
-                <form method="POST" action="#" class="needs-validation" novalidate="">
+                <form method="POST" action="{{route('students-login')}}" class="needs-validation" novalidate="">
                     @csrf
                     <div class="form-group">
                       <label for="email">Email</label>
