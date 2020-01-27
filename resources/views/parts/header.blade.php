@@ -8,7 +8,7 @@
 </div>
 
 <!-- ***** Header Area Start ***** -->
-<header class="header_area" id="header">
+<header class="header_area" id="header" style="border-bottom: none">
     <div class="container-fluid h-100">
         <div class="row h-100">
             <div class="col-12 h-100">
@@ -23,8 +23,27 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Dokumentasi</a>
                             </li>
+                            @auth ('web')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('login')}}">Masuk</a>
+                                <a class="nav-link" href="{{route('profile.index')}}">{{Auth::user()->name}}</a>
+                            </li>
+                            @elseauth('student')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('spr.index')}}">{{auth('student')->user()->name}}</a>
+                            </li>
+                            @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Hubungi Admin</a>
+                            </li>
+                            @endauth
+                            <li class="nav-item">
+                                @auth('web')
+                                    <a href="{{url('/logout')}}" class="nav-link">Keluar</a>
+                                @elseauth('student')
+                                    <a href="{{url('/students-logout')}}" class="nav-link">Keluar</a>
+                                @else
+                                    <a href="{{route('login')}}" class="nav-link">Masuk</a>
+                                @endauth
                             </li>
                         </ul>
                     </div>

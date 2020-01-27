@@ -18,7 +18,17 @@
                             </div>
                             <h2>Sistem Pembelajaran Elektronik EL-Zakiy</h2>
                             <a href="#" class="btn fancy-btn">Dokumentasi</a>
-                            <a href="{{route('login')}}" class="btn fancy-btn">Masuk</a>
+                            @auth ('web')
+                                @guest
+                                    <a href="{{route('login')}}" class="btn fancy-btn">Masuk</a>
+                                @endguest
+                            @elseauth('student')
+                                @guest('student')
+                                    <a href="{{route('login')}}" class="btn fancy-btn">Masuk</a>
+                                @endguest
+                            @else
+                                <a href="{{route('login')}}" class="btn fancy-btn">Masuk</a>
+                            @endauth
                         </div>
                     </div>
                 </div>
