@@ -35,7 +35,7 @@
         <div class="col-lg-4 col-md-6 col-12 order-lg-1 min-vh-100 order-2 bg-white">
           <div class="pl-4 pr-4 pt-4 mt-5 m-3">
             <h4 class="logo-main">E Learning</h4>
-            <p class="text-muted">Selamat Datang di Sistem ELearning MI Al Wahdah, Silahkan login terlebih dahulu.</p>
+            <p class="text-muted">Selamat Datang, masukkan email dan kata sandi untuk masuk ke akun Anda.</p>
 
             <ul class="nav nav-pills mt-5" id="myTab3" role="tablist">
               <li class="nav-item">

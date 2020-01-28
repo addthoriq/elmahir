@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\Task;
 use App\Model\FileTask;
 use App\Model\Classroom;
+use App\Model\ClassHistory;
 use App\Model\ListCourse;
 use App\Model\AnswerTask;
 use App\Model\FileAnswerTask;
@@ -79,7 +80,7 @@ class TaskController extends Controller
 
             $tag     = Form::open(["url"=>route($stat, $index->id), "method" => $method]);
             $tag    .= "<div class='btn-group'>";
-            $tag    .= "<a href=". route('task.show', $index->id) ." class='btn btn-xs btn-primary' ><i class='fa fa-eye'></i></a> ";
+            $tag    .= "<a href=". route('task.show', $index->id) ." class='btn btn-xs btn-primary'><i class='fa fa-eye'></i></a> ";
             $tag    .= $button;
             $tag    .= "</div>";
             $tag    .= Form::close();
@@ -144,11 +145,14 @@ class TaskController extends Controller
     public function detail($id)
     {
         if (Gate::allows('update-task')) {
-            $files          = FileTask::find($id);
-            $task           = Task::withTrashed()->find($files->task_id);
-            $course         = Course::find($task->course_id);
-            $fileTasks      = fileTask::where('task_id', $task->id)->get();
-            return view('admin.tasks.fileView', compact('course', 'fileTasks', 'files', 'task'));
+            $files = FileTask::find($id);
+            $task = Task::withTrashed()->find($files->task_id);
+            $course = Course::find($task->course_id);
+            $fileTasks = fileTask::where('task_id', $task->id)->get();
+            $class = Classroom::where('name', $task->course->classroom)->firstOrFail();
+            $classHistory = ClassHistory::where('classroom_id', $class->id)->get();
+            $answerTask = AnswerTask::where('task_id', $id)->get();
+            return view('admin.tasks.fileView', compact('course', 'fileTasks', 'files', 'task', 'classHistory', 'class', 'answerTask'));
         }else {
             abort(403);
         }
@@ -157,9 +161,12 @@ class TaskController extends Controller
     public function show($id)
     {
         if (Gate::allows('update-task')) {
-            $task       = Task::withTrashed()->find($id);
-            $fileTask   = fileTask::where('task_id', $id)->get();
-            return view('admin.tasks.index', compact('task', 'fileTask'));
+            $task = Task::withTrashed()->find($id);
+            $fileTask = fileTask::where('task_id', $id)->get();
+            $class = Classroom::where('name', $task->course->classroom)->firstOrFail();
+            $classHistory = ClassHistory::where('classroom_id', $class->id)->get();
+            $answerTask = AnswerTask::where('task_id', $id)->get();
+            return view('admin.tasks.index', compact('task', 'fileTask', 'class', 'classHistory', 'answerTask'));
         }else {
             abort(403);
         }

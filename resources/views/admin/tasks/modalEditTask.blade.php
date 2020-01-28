@@ -1,5 +1,5 @@
 <div class="modal fade" id="taskModal">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" style="max-width: 800px !important">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Edit Tugas</h5>
@@ -22,7 +22,7 @@
 
                     <div class="form-group">
                         <label>Deskripsi *</label>
-                        <textarea name="description" class="form-control" rows="3">{{ $task->description }}</textarea>
+                        <textarea class="summernote" id="description" name="description">{!! $task->description !!}</textarea>
                     </div>
             </div>
             <div class="modal-footer">

@@ -73,7 +73,6 @@ Route::get('/alumni', 'Admin\AlumnusController@index')->name('alumni.index');
 Route::get('/alumni/{id}', 'Admin\AlumnusController@show')->name('alumni.show');
 Route::put('/alumni/{id}/profile', 'Admin\AlumnusController@updateProfile')->name('alumni.profile');
 Route::resource('/classroom', 'Admin\ClassroomController');
-Route::resource('/answertask', 'Admin\AnswerTaskController');
 
 Route::get('/section/{id}/add', 'Admin\SectionController@add')->name('section.add');
 Route::get('/section/{id}/detail', 'Admin\SectionController@detail')->name('section.detail');
@@ -94,8 +93,8 @@ Route::post('/task/{id}/addFile', 'Admin\TaskController@addFile')->name('task.ad
 Route::resource('/task', 'Admin\TaskController');
 
 Route::get('/answertask/{id}/home', 'Admin\AnswerTaskController@home')->name('answertask.home');
-Route::post('/answertask/{id}/storeScore', 'Admin\AnswerTaskController@storeScore')->name('answertask.storeScore');
-Route::put('/answertask/{id}/updateScore', 'Admin\AnswerTaskController@updateScore')->name('answertask.updateScore');
+Route::get('/answertask/{parameter1}+{parameter2}/view', 'Admin\AnswerTaskController@view')->name('answertask.view');
+Route::resource('/answertask', 'Admin\AnswerTaskController');
 
 Route::resource('/user', 'Admin\UserController');
 Route::put('/user/{id}/profile', 'Admin\UserController@updateProfile')->name('user.profile');
