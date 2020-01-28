@@ -14,14 +14,13 @@
 Route::get('/', function () {
 	return view('welcome');
 });
-Auth::routes();
+// Auth::routes();
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login')->middleware('guest:student');
+Route::post('/login', 'Auth\LoginController@login')->name('login');
 Route::get('/logout', 'Auth\LoginController@logout');
-Route::post('students-login', 'AuthStudent\LoginController@login')->name('students-login');
+Route::get('/masuk', 'AuthStudent\LoginController@showLoginForm')->name('students.masuk');
+Route::post('/students-login', 'AuthStudent\LoginController@login')->name('students-login');
 Route::get('/students-logout', 'AuthStudent\LoginController@logout');
-//Menghapus Fitur Registrasi yang terdapat pada fitur Auth
-Route::match(["GET","POST"], "/register",function(){
-    return redirect("/login");
-})->name("register");
 
 //Yajra
 Route::get('/user/dbtb', 'Admin\UserController@dbTables')->name('user.dbtb');

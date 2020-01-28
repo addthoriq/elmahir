@@ -25,6 +25,15 @@
                             </li>
                             @auth ('web')
                             <li class="nav-item">
+                                <a class="nav-link" href="{{route('home.index')}}">Dashboard</a>
+                            </li>
+                            @elseauth('student')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('s1.index')}}">Dashboard</a>
+                            </li>
+                            @endauth
+                            @auth ('web')
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{route('profile.index')}}">{{Auth::user()->name}}</a>
                             </li>
                             @elseauth('student')

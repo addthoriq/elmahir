@@ -22,11 +22,16 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     protected $guard = 'student';
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     public function __construct()
     {
-        $this->middleware('guest:student')->except(['logout','showLoginForm']);
+        $this->middleware('guest:student')->except('logout');
+    }
+
+    public function showLoginForm()
+    {
+        return view('auth.masuk');
     }
 
     public function guard()
