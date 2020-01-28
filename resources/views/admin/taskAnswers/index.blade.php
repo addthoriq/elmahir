@@ -1,71 +1,80 @@
-@extends('admin.layouts.app')
+@extends('admin.layouts2.app')
 
-@section('title', 'Tugas')
+@section('title', 'Answer Task')
+
+@section('style')
+<link href="{{ asset('qlab/plugins/tables/css/datatable/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+@endsection
 
 @section('content')
-<div class="row wrapper white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Daftar Tugas Siswa</h2>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="{{ route('home.index') }}">Beranda</a>
-            </li>
-            <li class="breadcrumb-item active">
-                <strong>Data Tugas</strong>
-            </li>
-        </ol>
-    </div>
-</div>
+<div class="content-body">
 
-<div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox ">
-                <div class="ibox-title">
-                    <h5>Daftar Tugas</h5>
-                </div>
-                <div class="ibox-content">
-                    @if (session('notif'))
-                        <div class="alert alert-success alert-dismissable">
-                            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                            {{session('notif')}}
+    <div class="row page-titles mt-3 pb-0">
+      <div class="col-md-6">
+        <h4 class="section-title">Daftar Assessment</h4>
+        <p class="section-lead mt-1"><i class="fas fa-angle-double-right text-primary"></i> Anda bisa melihat daftar siswa yang telah mengumpulkan tugas.</p>
+      </div>
+      <div class="col-md-6 d-flex align-items-end justify-content-end py-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('task.index') }}">Daftar Tugas</a></li>
+            <li class="breadcrumb-item active">Detail</li>
+        </ol>
+      </div>
+    </div>
+    <!-- row -->
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="card-title">Pengajar : {{ $task->course->user->name }}</div>
+                            <div>                                
+                                <a href="#" class="btn btn-info btn-sm"><i class="fa fa-print"></i> Print</a>
+                            </div>
                         </div>
-                    @endif
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover dataTables-example" style="border-spacing:0px;">
-                            <thead>
-                                <tr>
-                                    <th style="width: 20px;">#</th>
-                                    <th>Nama</th>
-                                    <th>Kelas</th>
-                                    <th>Nilai</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table dataTables table-striped" style="border-collapse: none !important; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Siswa</th>
+                                        <th>Status</th>
+                                        <th>Score</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- #/ container -->
 </div>
 @endsection
 
 @section('script')
+    <script src="{{ asset('qlab/plugins/tables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('qlab/plugins/tables/js/datatable/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('qlab/plugins/tables/js/datatable-init/datatable-basic.min.js') }}"></script>
     <script type="text/javascript">
         var table;
         $(function() {
-            table = $('.dataTables-example').DataTable({
+            table = $('.dataTables').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{$ajax}}',
+                ajax: '{{ $ajax }}',
                 order: [[0,'asc']],
                 columns: [
                     { data: 'id', searchable: true, orderable: true},
                     { data: 'student_id', searchable: true, orderable: true},
-                    { data: 'classroom', searchable: true, orderable: true},
+                    { data: 'status', searchable: true, orderable: true},
                     { data: 'score', searchable: true, orderable: true},
                     { data: 'action', searchable: true, orderable: true}
                 ],

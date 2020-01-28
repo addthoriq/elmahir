@@ -96,7 +96,7 @@
                             </li>
                         @endcan
                         @can ('index-task')
-                        <li class="{{ Request::is('task/*')? 'active' : '' }}">
+                        <li class="{{ Request::is('task/*') || Request::is('answertask/*')? 'active' : '' }}">
                                 <a href="{{ route('task.index') }}" aria-expanded="false">
                                     <i class="icon-paper-clip menu-icon"></i><span class="nav-text">Tugas Siswa</span>
                                 </a>
