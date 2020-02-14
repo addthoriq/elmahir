@@ -17,7 +17,6 @@ class StudentsTableSeeder extends Seeder
         $faker 		= Factory::create('id_ID');
     	for ($i=0; $i < 41; $i++) {
             $data[$i]	= [
-                'classroom_id'  => $faker->randomDigitNot(0),
                 'nisn'			=> $faker->numberBetween($min = 190000000000000000, $max = 210000000000000000),
     			'name'			=> $faker->name,
     			'email'			=> $faker->email,
